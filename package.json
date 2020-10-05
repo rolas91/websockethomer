@@ -1,0 +1,20 @@
+{
+  "name": "homer-service",
+  "version": "1.0.0",
+  "description": "servicio socket  para cliente y proveedor en app homer ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "author": "Rolando Sanchez",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
