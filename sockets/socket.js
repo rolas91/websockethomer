@@ -1,7 +1,7 @@
 const {io} = require('../index');
 
 io.on('connection', client => {
-    console.log('cliente conectado', client);
+    console.log('cliente conectado', client.id);
 
     client.on('disconnect', () => {
         console.log('Cliente desconectado')
