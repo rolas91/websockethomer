@@ -1,16 +1,25 @@
 const {io} = require('../index');
-
+let  users = []; 
 io.on('connection', client => {
-    console.log('cliente conectado', client.id);
-    io.emit('add-user', {homer:client.id,"tipo de usuario":"homer"});
-
-    client.on('disconnect', () => {
-        console.log('Cliente desconectado')
-    });
+    socket.on('adduser', function (user) { 
+        socket.user = user; 
+        users[user] = user; 
+        console.log(users); 
+    }); 
     
-    client.on('mensaje', (payload) => {
-        console.log(payload);
+    socket.on('disconnect', function () { 
+        console.log('User: ' + users[socket.user] + ' has disconnected');
+        delete users[socket.user]; console.log(users) 
+    });
 
-        io.emit('mensaje', {admin:'Nuevo mensaje'})
-    })
+    socket.on('update', function () {
+        users[user] = user; 
+        console.log('Current users: ', users); 
+    }); 
+    
+    // client.on('mensaje', (payload) => {
+    //     console.log(payload);
+
+    //     io.emit('mensaje', {admin:'Nuevo mensaje'})
+    // })
 });
