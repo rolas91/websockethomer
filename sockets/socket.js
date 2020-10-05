@@ -15,7 +15,7 @@ io.on('connection', client => {
 
     client.on('update', () => {
         users[user] = user; 
-        console.log('Current users: ', users); 
+        console.log('Current users: ', users.id); 
     }); 
     
     // client.on('mensaje', (payload) => {
