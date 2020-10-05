@@ -4,12 +4,13 @@ io.on('connection', client => {
     client.on('adduser', (user) => { 
         io.user = user; 
         users[user] = user; 
-        console.log(users); 
+        console.log("que esto",users); 
     }); 
     
     client.on('disconnect', () => { 
         console.log('User: ' + users[io.user] + ' has disconnected');
-        delete users[io.user]; console.log(users) 
+        delete users[io.user]; 
+        console.log(users) 
     });
 
     client.on('update', () => {
