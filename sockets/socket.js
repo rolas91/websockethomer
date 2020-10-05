@@ -4,7 +4,7 @@ io.on('connection', client => {
     client.on('adduser', (user) => { 
         io.user = user; 
         users[user] = user; 
-        console.log("que esto",users.id); 
+        console.log("que esto",users[0]); 
     }); 
     
     client.on('disconnect', () => { 
