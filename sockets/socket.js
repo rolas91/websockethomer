@@ -1,18 +1,18 @@
 const {io} = require('../index');
 let  users = []; 
 io.on('connection', client => {
-    client.on('adduser', function (user) { 
-        socket.user = user; 
+    client.on('adduser', (user) => { 
+        io.user = user; 
         users[user] = user; 
         console.log(users); 
     }); 
     
-    client.on('disconnect', function () { 
-        console.log('User: ' + users[socket.user] + ' has disconnected');
-        delete users[socket.user]; console.log(users) 
+    client.on('disconnect', () => { 
+        console.log('User: ' + users[io.user] + ' has disconnected');
+        delete users[io.user]; console.log(users) 
     });
 
-    client.on('update', function () {
+    client.on('update', () => {
         users[user] = user; 
         console.log('Current users: ', users); 
     }); 
