@@ -1,9 +1,10 @@
-let message = document.getElementById('message');
-let username = document.getElementById('username');
-let button = document.getElementById('send');
-let output = document.getElementById('output');
-let actions = document.getElementById('actions');
-
+// let message = document.getElementById('message');
+// let username = document.getElementById('username');
+// let button = document.getElementById('send');
+// let output = document.getElementById('output');
+// let actions = document.getElementById('actions');
+let li = document.createElement("li");
+let providers = [];
 const socket = io();
 socket.on('connect', function(){
     console.log('Conectado al servidor');
@@ -13,11 +14,25 @@ socket.on('disconnect', function(){
     console.log('Desconectado del servidor');
 });
 
-socket.emit('mensaje', {nombre:'Rolando'});
-
-socket.on('mensaje', function(payload){
-    console.log('Escuchando', payload)
+socket.on('adduser', function(data){
+    providers.push(...data)
+    for(let provider of providers){
+        li.innerHTML = provider.id;
+        li.id = provider.id;
+        
+    }
+    document.querySelector("#homeronline").appendChild(li)
 });
+
+socket.on('user disconnected', function(data){
+    document.getElementById(`${data.id}`).remove();
+});
+
+// socket.emit('mensaje', {nombre:'Rolando'});
+
+// socket.on('mensaje', function(payload){
+//     console.log('Escuchando', payload)
+// });
 
 // button.addEventListener('click', function(){
 //     socket.emit('chat:message',{
