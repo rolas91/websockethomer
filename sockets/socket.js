@@ -1,22 +1,19 @@
 const {io} = require('../index');
-let  users = []; 
-io.on('connection', client => {
-    client.on('adduser', (user) => { 
-        io.user = user; 
-        users[user] = user; 
-        console.log("que esto",users[0]); 
+const activeUsers = new Set();
+io.on('connection', socket => {
+   
+    socket.on('adduser', (data) => {
+        socket.userId = data;
+        activeUsers.add(data)
+        io.emit('adduser',[...activeUsers]);
     }); 
     
-    client.on('disconnect', () => { 
-        console.log('User: ' + users[io.user] + ' has disconnected');
-        delete users[io.user]; 
-        console.log(users) 
+    socket.on('disconnect', () => { 
+        activeUsers.delete(socket.userId);
+        io.emit("user disconnected", socket.userId);
     });
 
-    client.on('update', () => {
-        users[user] = user; 
-        console.log('Current users: ', users); 
-    }); 
+   
     
     // client.on('mensaje', (payload) => {
     //     console.log(payload);
