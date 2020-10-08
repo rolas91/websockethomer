@@ -23,9 +23,4 @@ io.on('connection', socket => {
         socket.broadcast.emit('chat:typing',data);
     });
     
-    client.on('mensaje', (payload) => {
-        console.log(payload);
-
-        io.emit('mensaje', {admin:'Nuevo mensaje'})
-    })
 });
