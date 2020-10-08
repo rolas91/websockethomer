@@ -15,17 +15,3 @@ const server = app.listen(port, () => {
 
 module.exports.io = require('socket.io')(server);
 require('./sockets/socket');
-
-
-
-// io.on('connection', (socket) => {
-//     console.log('new connection', socket.id);
-
-//     socket.on('chat:message', (data) => {
-//         io.sockets.emit('chat:message', data)
-//     });
-
-//     socket.on('chat:typing', (data) => {
-//         socket.broadcast.emit('chat:typing',data);
-//     });
-// });

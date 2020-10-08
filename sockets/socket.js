@@ -15,11 +15,17 @@ io.on('connection', socket => {
         console.log('usuario desconectado');
     });
 
-   
-    
-    // client.on('mensaje', (payload) => {
-    //     console.log(payload);
+    socket.on('chat:message', (data) => {
+        io.sockets.emit('chat:message', data)
+    });
 
-    //     io.emit('mensaje', {admin:'Nuevo mensaje'})
-    // })
+    socket.on('chat:typing', (data) => {
+        socket.broadcast.emit('chat:typing',data);
+    });
+    
+    client.on('mensaje', (payload) => {
+        console.log(payload);
+
+        io.emit('mensaje', {admin:'Nuevo mensaje'})
+    })
 });
