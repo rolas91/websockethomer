@@ -4,6 +4,7 @@ let button = document.getElementById('send');
 let output = document.getElementById('output');
 let actions = document.getElementById('actions');
 let div = document.createElement("div");
+let li = document.createElement("li");
 let providers = [];
 const socket = io();
 socket.on('connect', function(){
