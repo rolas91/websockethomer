@@ -1,9 +1,9 @@
-// let message = document.getElementById('message');
-// let username = document.getElementById('username');
-// let button = document.getElementById('send');
-// let output = document.getElementById('output');
-// let actions = document.getElementById('actions');
-let li = document.createElement("li");
+let message = document.getElementById('message');
+let username = document.getElementById('username');
+let button = document.getElementById('send');
+let output = document.getElementById('output');
+let actions = document.getElementById('actions');
+let div = document.createElement("div");
 let providers = [];
 const socket = io();
 socket.on('connect', function(){
@@ -22,6 +22,14 @@ socket.on('adduser', function(data){
         
     }
     document.querySelector("#homeronline").appendChild(li)
+});
+
+socket.on('validaactiveprovider', function(data){
+    providers.push(...data)
+    for(let provider of providers){
+        div.innerHTML = provider;        
+    }
+    document.querySelector("#activos").appendChild(li)
 });
 
 socket.on('user disconnected', function(data){

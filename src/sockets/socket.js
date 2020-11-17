@@ -1,4 +1,5 @@
-const {io} = require('../index');
+const {io} = require('../../index');
+
 const activeUsers = new Set();
 io.on('connection', socket => {
    console.log('usuario conectado')
@@ -7,6 +8,23 @@ io.on('connection', socket => {
         activeUsers.add(data)
         io.emit('adduser',[...activeUsers]);
         console.log('usuario activo');
+        console.log('user add',activeUsers);
+    }); 
+
+    socket.on('validaactiveprovider', (data) => {
+        let dataEntry = data;
+        let sendNewData = [];
+        for(let i = 0; i < dataEntry.length; i++){
+            for(let j = 0; j < activeUsers.length; j++){
+                if(activeUsers[j] == dataEntry[i]){
+                    sendNewData.push(activeUsers[j]);
+                }
+            }
+        }
+        
+        io.emit('validaactiveprovider',[...sendNewData]);
+       
+        console.log('user add',sendNewData);
     }); 
     
     socket.on('disconnect', () => { 

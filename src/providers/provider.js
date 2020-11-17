@@ -1,0 +1,1 @@
+exports.activeUsers = new Set();
