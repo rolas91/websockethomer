@@ -6,6 +6,7 @@ io.on('connection', socket => {
     socket.on('adduser', (data) => {
         socket.userId = data;
         let actives = activeUsers.reduce((acc,item)=>{
+            console.log('ver lo que el cliente',acc, item)
             if(!acc.include(item)){
                 activeUsers.push(data)
             }
