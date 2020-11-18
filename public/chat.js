@@ -16,6 +16,7 @@ socket.on('disconnect', function(){
 });
 
 socket.on('adduser', function(data){
+    console.log(data);
     providers.push(...data)
     for(let provider of providers){
         li.innerHTML = provider.id;
