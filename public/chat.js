@@ -4,7 +4,7 @@ let button = document.getElementById('send');
 let output = document.getElementById('output');
 let actions = document.getElementById('actions');
 let div = document.createElement("div");
-let li = document.createElement("li");
+let li ;
 let providers = [];
 const socket = io();
 socket.on('connect', function(){
@@ -19,8 +19,10 @@ socket.on('adduser', function(data){
     console.log(data);
     providers.push({id:data})
     for(let provider of providers){
+        li = document.createElement("li");
         li.innerHTML = provider.id;
         li.id = provider.id;
+    
         document.querySelector("#homeronline").appendChild(li)
     }
    
