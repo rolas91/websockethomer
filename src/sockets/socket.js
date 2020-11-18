@@ -7,7 +7,7 @@ io.on('connection', socket => {
         socket.userId = data;
         let actives = activeUsers.reduce((acc,item)=>{
             if(!acc.include(item)){
-                activeUsers.add(data)
+                activeUsers.push(data)
             }
             return acc;
         },[]);
