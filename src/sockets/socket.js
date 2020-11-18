@@ -6,7 +6,8 @@ io.on('connection', socket => {
     socket.on('adduser', (data) => {
         socket.userId = data;
         activeUsers.map(result => {
-            if(activeUsers != data){
+            console.log(result);
+            if(result != data){
                 activeUsers.push(data)
             }
         },[]);
