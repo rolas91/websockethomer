@@ -35,7 +35,7 @@ socket.on('validaactiveprovider', function(data){
 });
 
 socket.on('user disconnected', function(data){
-    document.getElementById(`${data.id}`).remove();
+    document.getElementById(`${data}`).remove();
 });
 
 socket.emit('mensaje', {nombre:'Rolando'});
