@@ -5,6 +5,8 @@ io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
         socket.userId = data;
+        console.log('data',data);
+        console.log('socket id', socket);
         if(!activeUsers.includes(socket.userId)){
             activeUsers.push(socket.userId);
             io.emit('adduser',activeUsers);
