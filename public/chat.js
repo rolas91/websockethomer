@@ -27,7 +27,7 @@ socket.on('adduser', function(data){
 });
 
 socket.on('validaactiveprovider', function(data){
-    providers.push(...data)
+    providers.push(data)
     for(let provider of providers){
         div.innerHTML = provider;        
     }
