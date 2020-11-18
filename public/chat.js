@@ -17,18 +17,15 @@ socket.on('disconnect', function(){
 });
 
 socket.on('adduser', function(data){
-    console.log(data);
-    providers.push({id:data})
-    for(let i = 0; i < providers.length; i++){
+   
+    for(let i = 0; i < data.length; i++){
         li = document.createElement("li");
         p = document.createElement("p")
 
-        p.innerHTML = providers[i].id;
-        p.id + providers[i].id;
+        p.innerHTML = data[i];
+        p.id = data[i];
         document.querySelector("#homeronline").appendChild(li).appendChild(p);
-    }
-   
-   
+    } 
 });
 
 socket.on('validaactiveprovider', function(data){
