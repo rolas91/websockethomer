@@ -17,7 +17,7 @@ socket.on('disconnect', function(){
 });
 
 socket.on('adduser', function(data){
-   
+    console.log(data);
     for(let i = 0; i < data.length; i++){
         li = document.createElement("li");
         p = document.createElement("p")
