@@ -5,13 +5,12 @@ io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
         socket.userId = data;
-        
-        activeUsers.push(socket.userId)
-        
-        
-        io.emit('adduser',activeUsers);
-        console.log('usuario activo');
-        console.log('user add',activeUsers);
+        if(!activeUsers.includes(socket.userId)){
+            activeUsers.push(socket.userId);
+            io.emit('adduser',activeUsers);
+            console.log('usuario activo');
+            console.log('user add',activeUsers);
+        }
     }); 
 
     socket.on('validaactiveprovider', (data) => {
