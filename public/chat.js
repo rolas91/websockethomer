@@ -20,8 +20,8 @@ socket.on('adduser', function(data){
     providers.push({id:data})
     for(let i = 0; i < providers.length; i++){
        
-        li.innerHTML = provider[i].id;
-        li.id = provider[i].id;
+        li.innerHTML = providers[i].id;
+        li.id = providers[i].id;
         document.querySelector("#homeronline").appendChild(li);
     }
    
