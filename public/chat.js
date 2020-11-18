@@ -22,9 +22,11 @@ socket.on('adduser', function(data){
         li = document.createElement("li");
         li.innerHTML = provider.id;
         li.id = provider.id;
-    
-        document.querySelector("#homeronline").appendChild(li)
+        
+        console.log(i)
+        
     }
+    document.querySelector("#homeronline").appendChild(li)
    
 });
 
