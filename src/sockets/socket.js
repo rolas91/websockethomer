@@ -11,9 +11,9 @@ io.on('connection', socket => {
             }
         },[]);
         
-        io.emit('adduser',actives);
+        io.emit('adduser',activeUsers);
         console.log('usuario activo');
-        console.log('user add',actives);
+        console.log('user add',activeUsers);
     }); 
 
     socket.on('validaactiveprovider', (data) => {
