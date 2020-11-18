@@ -5,12 +5,10 @@ io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
         socket.userId = data;
-        let actives = activeUsers.reduce((acc,item)=>{
-            console.log('ver lo que el cliente',acc, item)
-            if(!acc.include(item)){
+        activeUsers.map(result => {
+            if(activeUsers != data){
                 activeUsers.push(data)
             }
-            return acc;
         },[]);
         
         io.emit('adduser',actives);
