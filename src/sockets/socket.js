@@ -11,8 +11,8 @@ io.on('connection', socket => {
             }
             return acc;
         },[]);
-        let dataArr = new Set(actives)
-        io.emit('adduser',[...dataArr]);
+        
+        io.emit('adduser',[activeUsers]);
         console.log('usuario activo');
         console.log('user add',dataArr);
     }); 
