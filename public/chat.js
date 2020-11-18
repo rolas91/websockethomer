@@ -4,7 +4,8 @@ let button = document.getElementById('send');
 let output = document.getElementById('output');
 let actions = document.getElementById('actions');
 let div = document.createElement("div");
-let li = document.createElement("li");;
+let li ;
+let p ;
 let providers = [];
 const socket = io();
 socket.on('connect', function(){
@@ -19,10 +20,12 @@ socket.on('adduser', function(data){
     console.log(data);
     providers.push({id:data})
     for(let i = 0; i < providers.length; i++){
-       
-        li.innerHTML = providers[i].id;
-        li.id = providers[i].id;
-        document.querySelector("#homeronline").appendChild(li);
+        li = document.createElement("li");
+        p = document.createElement("p")
+
+        p.innerHTML = providers[i].id;
+        p.id + providers[i].id;
+        document.querySelector("#homeronline").appendChild(li).appendChild(p);
     }
    
    
