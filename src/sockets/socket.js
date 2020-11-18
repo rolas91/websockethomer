@@ -5,10 +5,15 @@ io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
         socket.userId = data;
-        activeUsers.add(data)
-        io.emit('adduser',[...activeUsers]);
+        let actives = activeUsers.reduce((acc,item)=>{
+            if(!acc.include(item)){
+                activeUsers.add(data)
+            }
+            return acc;
+        },[]);
+        io.emit('adduser',[...actives]);
         console.log('usuario activo');
-        console.log('user add',activeUsers);
+        console.log('user add',actives);
     }); 
 
     socket.on('validaactiveprovider', (data) => {
@@ -24,7 +29,7 @@ io.on('connection', socket => {
         
         io.emit('validaactiveprovider',[...sendNewData]);
        
-        console.log('user add',sendNewData);
+        console.log('user validated',sendNewData);
     }); 
     
     socket.on('disconnect', () => { 
