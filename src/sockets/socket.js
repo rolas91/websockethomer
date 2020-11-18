@@ -12,9 +12,9 @@ io.on('connection', socket => {
             return acc;
         },[]);
         
-        io.emit('adduser',[activeUsers]);
+        io.emit('adduser',actives);
         console.log('usuario activo');
-        console.log('user add',dataArr);
+        console.log('user add',actives);
     }); 
 
     socket.on('validaactiveprovider', (data) => {
