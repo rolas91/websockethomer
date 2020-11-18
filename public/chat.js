@@ -21,9 +21,9 @@ socket.on('adduser', function(data){
     for(let provider of providers){
         li.innerHTML = provider.id;
         li.id = provider.id;
-        
+        document.querySelector("#homeronline").appendChild(li)
     }
-    document.querySelector("#homeronline").appendChild(li)
+   
 });
 
 socket.on('validaactiveprovider', function(data){
