@@ -5,12 +5,9 @@ io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
         socket.userId = data;
-        activeUsers.map(result => {
-            console.log(result);
-            if(result != data){
-                activeUsers.push(data)
-            }
-        },[]);
+        
+        activeUsers.push(socket.userId)
+        
         
         io.emit('adduser',activeUsers);
         console.log('usuario activo');
