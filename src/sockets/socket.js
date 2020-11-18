@@ -31,6 +31,7 @@ io.on('connection', socket => {
        
         console.log('user validated',sendNewData);
     }); 
+    //probando 
     
     socket.on('disconnect', () => { 
         activeUsers.delete(socket.userId);
