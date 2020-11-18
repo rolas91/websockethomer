@@ -34,7 +34,12 @@ io.on('connection', socket => {
     }); 
     
     socket.on('disconnect', () => { 
-        activeUsers.delete(socket.userId);
+        var i = activeUsers.indexOf( socket.userId );
+ 
+        if ( i !== -1 ) {
+            activeUsers.splice( i, 1 );
+        }
+        // activeUsers.delete(socket.userId);
         io.emit("user disconnected", socket.userId);
         console.log('usuario desconectado');
     });
