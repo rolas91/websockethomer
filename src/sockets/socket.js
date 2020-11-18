@@ -1,6 +1,6 @@
 const {io} = require('../../index');
 
-const activeUsers = new Set();
+const activeUsers = [];
 io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
@@ -11,9 +11,10 @@ io.on('connection', socket => {
             }
             return acc;
         },[]);
-        io.emit('adduser',[...actives]);
+        let dataArr = new Set(actives)
+        io.emit('adduser',[...dataArr]);
         console.log('usuario activo');
-        console.log('user add',actives);
+        console.log('user add',dataArr);
     }); 
 
     socket.on('validaactiveprovider', (data) => {
@@ -31,7 +32,6 @@ io.on('connection', socket => {
        
         console.log('user validated',sendNewData);
     }); 
-    //probando 
     
     socket.on('disconnect', () => { 
         activeUsers.delete(socket.userId);
