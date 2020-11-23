@@ -62,7 +62,7 @@ module.exports.nearBy = async(req, res) => {
     let providers  = await sequelize.query(
         'SELECT * FROM homerproviders WHERE ui = :ui', {
         replacements: {id: ui},
-        type: db.sequelize.QueryTypes.SELECT
+        type: sequelize.QueryTypes.SELECT
       });
 
     res.status(200).json({data:providers});
