@@ -1,5 +1,6 @@
 const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
+
 const activeUsers = [];
 io.on('connection', socket => {
    console.log('usuario conectado')
@@ -8,14 +9,19 @@ io.on('connection', socket => {
 
         // console.log('data',data);
         // console.log('socket id', socket.userId);
+        homerProvider.searchProvider(data.id)
+            .then(result => {
+                if(result.length == 0){
+                    let response = homerProvider.addProvider(data).then(result => {
+                        console.log(result);
+                        io.emit('adduser',response);
+                    });
+                    
+                }
+            })
 
-        let response = homerProvider.addProvider(data).then(result => {
-            console.log(result);
-        });
-        
         // if(!activeUsers.includes(socket.userId)){
             // activeUsers.push(socket.userId);
-            io.emit('adduser',response);
             // console.log('usuario activo');
             // console.log('user add',activeUsers);
         // }
