@@ -15,7 +15,7 @@ module.exports.addProvider = async(data) => {
         if(newProvider){
             let providerId = newProvider.id;
             for(let i=0; i<products.length; i++){
-                await ProductsProvider.create({
+                let newProvider = await ProductsProvider.create({
                     ui:products[i].id,
                     name:products[i].name,
                     providerId:providerId
