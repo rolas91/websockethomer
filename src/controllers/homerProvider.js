@@ -60,7 +60,7 @@ module.exports.deleteProvider = async(ui) => {
 module.exports.nearBy = async(req, res) => {
     const {lat, lng, radio, ui} = req.body;
     let providers  = await db.sequelize.query(
-        'SELECT * FROM homerproviders" WHERE "homerproviders"."ui" = (:ui)', {
+        'SELECT * FROM homerproviders WHERE ui = :ui', {
         replacements: {id: ui},
         type: db.sequelize.QueryTypes.SELECT
       });
