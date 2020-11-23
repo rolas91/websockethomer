@@ -1,5 +1,5 @@
-const {Sequelize} = require('sequelize');
-const {sequelize} = require('../db');
+const Sequelize = require('sequelize');
+const sequelize = require('../db');
 const {ProductsProvider} = require('../models/Productsprovider');
 const HomerProvider = sequelize.define('HomerProvider', {
     id:{
