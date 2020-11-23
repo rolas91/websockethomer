@@ -26,7 +26,7 @@ io.on('connection', socket => {
             }
         }
         
-        io.emit('validaactiveprovider',[...sendNewData]);
+        io.emit('validaactiveprovider',[sendNewData]);
        
         console.log('user validated',sendNewData);
     }); 

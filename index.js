@@ -1,10 +1,12 @@
 const path = require('path');
 require('dotenv').config();
 const express = require('express');
+const sequelize = require('./src/db');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8000;
 const bodyParser = require('body-parser')
+const haversine = require('haversine');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -25,10 +27,30 @@ app.post('/validaactiveprovider', function (req, res) {
         }
     }
     res.status(200).json({sendNewData});
-})
+});
+
+const start = {
+    latitude: 12.1467252,
+    longitude: -86.2780618
+  }
+  12.144459, -86.274280
+  const end = {
+    latitude:  12.144459,
+    longitude: -86.274280
+  }
+
+app.post('/nearby', function(req, res){
+    res.status(200).json(haversine(start, end,{ unit: 'mile'}));
+});
 
 const server = app.listen(port, () => {
     console.log(`connection is successful on port  ${port}`)
+
+    sequelize.sync({force:false}).then(() => {
+        console.log('conexion exitosa a la base de datos');
+    }).catch(error => {
+        console.log('Se ha producido un error', error);
+    });
 });
 
 module.exports.io = require('socket.io')(server);
