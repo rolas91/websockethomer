@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
-const {HomerProvider} = require('../models/HomerProvider');
 
 const ProductsProvider = sequelize.define('productsprovider', {
     id:{
@@ -20,5 +19,4 @@ const ProductsProvider = sequelize.define('productsprovider', {
     timestamps:false
 });
 
-ProductsProvider.belongsTo(HomerProvider)
 module.exports = ProductsProvider;

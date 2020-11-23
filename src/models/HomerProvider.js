@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
-const {ProductsProvider} = require('../models/Productsprovider');
+const ProductsProvider = require('../models/Productsprovider');
 const HomerProvider = sequelize.define('homerprovider', {
     id:{
         type:Sequelize.INTEGER,
