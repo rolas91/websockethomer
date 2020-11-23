@@ -60,11 +60,20 @@ module.exports.deleteProvider = async(ui) => {
 module.exports.nearBy = async(req, res) => {
     const {lat, lng, radio, ui} = req.body;
     let providers  = await sequelize.query(
-        'SELECT * FROM homerproviders WHERE ui = :ui', {
+        `SELECT ui (6371 * ACOS(
+            SIN(RADIANS(lat)) * SIN(RADIANS(${lat})) 
+            + COS(RADIANS(lng - ${lng})) * COS(RADIANS(lat))
+            * COS(RADIANS(${lat}))
+            )
+        )AS distance
+         FROM homerproviders 
+         
+         HAVING distance < 1
+         ORDER BY distance ASC`, {
         replacements: {ui: ui},
         type: sequelize.QueryTypes.SELECT
       });
 
     res.status(200).json({data:providers});
 }
-
+// WHERE ui = :ui
