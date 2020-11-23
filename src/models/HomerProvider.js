@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
 const ProductsProvider = require('../models/Productsprovider');
-module.exports.HomerProvider = sequelize.define('homerprovider', {
+const HomerProvider = sequelize.define('homerprovider', {
     id:{
         type:Sequelize.INTEGER,
         primaryKey:true     
@@ -24,3 +24,4 @@ module.exports.HomerProvider = sequelize.define('homerprovider', {
 HomerProvider.hasMany(ProductsProvider, {foreingKey:'providerId', sourceKey:'id'});
 ProductsProvider.belongsTo(HomerProvider,{foreingKey:'providerId', sourceKey:'id'});
 
+module.exports = HomerProvider;
