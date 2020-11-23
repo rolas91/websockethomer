@@ -70,7 +70,7 @@ module.exports.nearBy = async(req, res) => {
          
          HAVING distance < 1
          ORDER BY distance ASC`, {
-        replacements: {ui: ui},
+        // replacements: {ui: ui},
         type: sequelize.QueryTypes.SELECT
       });
 
