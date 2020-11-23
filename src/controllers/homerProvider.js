@@ -2,9 +2,10 @@ const HomerProvider = require('../models/HomerProvider');
 const ProductsProvider = require('../models/Productsprovider');
 
 module.exports.addProvider = async(data) => {
-    const {id,name, lat, lng, products} = data;
-
     try {
+        console.log(data);
+        const {id,name, lat, lng, products} = data;
+
         let newProvider = await  HomerProvider.create({
             ui:id,
             name:name,
