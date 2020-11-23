@@ -12,17 +12,17 @@ module.exports.addProvider = async(data) => {
             lng:lng
         });
         if(newProvider){
-            for(let i=0; i<products.length; i++){
-                let newProvider = await ProductsProvider.create({
-                    ui:products[i].id,
-                    name:products[i].name,
-                    providerId:newProvider.id
-                })
-            }
+            // for(let i=0; i<products.length; i++){
+            //     let newProvider = await ProductsProvider.create({
+            //         ui:products[i].id,
+            //         name:products[i].name,
+            //         providerId:newProvider.id
+            //     })
+            // }
             
-            return {
-                message:'Provider created successfully',
-            }
+            // return {
+            //     message:'Provider created successfully',
+            // }
         }
     } catch (error) {
         return {
