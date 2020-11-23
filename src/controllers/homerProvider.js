@@ -12,13 +12,13 @@ module.exports.addProvider = async(data) => {
             lat:lat,
             lng:lng
         });
-        console.log(newProvider);
         if(newProvider){
+            let providerId = newProvider.id;
             for(let i=0; i<products.length; i++){
-                let newProvider = await ProductsProvider.create({
+                await ProductsProvider.create({
                     ui:products[i].id,
                     name:products[i].name,
-                    providerId:newProvider.id
+                    providerId:providerId
                 })
             }
             
