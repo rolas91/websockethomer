@@ -61,7 +61,7 @@ module.exports.nearBy = async(req, res) => {
     const {lat, lng, radio, ui} = req.body;
     let providers  = await sequelize.query(
         'SELECT * FROM homerproviders WHERE ui = :ui', {
-        replacements: {id: ui},
+        replacements: {ui: ui},
         type: sequelize.QueryTypes.SELECT
       });
 
