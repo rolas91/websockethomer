@@ -12,6 +12,7 @@ io.on('connection', socket => {
         let response = homerProvider.addProvider(data).then(result => {
             console.log(result);
         });
+        
         // if(!activeUsers.includes(socket.userId)){
             // activeUsers.push(socket.userId);
             io.emit('adduser',response);
