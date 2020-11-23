@@ -12,6 +12,9 @@ const ProductsProvider = sequelize.define('productsprovider', {
     },
     name:{
         type:Sequelize.TEXT
+    },
+    providerId:{
+        type:Sequelize.INTEGER
     }
 },{
     timestamps:false

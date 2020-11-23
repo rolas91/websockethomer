@@ -22,7 +22,7 @@ const HomerProvider = sequelize.define('homerprovider', {
 },{
     timestamps:false
 });
-HomerProvider.hasMany(ProductsProvider, {foreingKey:'providerId', sourceKey:'id'});
-ProductsProvider.belongsTo(HomerProvider,{foreingKey:'providerId', sourceKey:'id'});
+// HomerProvider.hasMany(ProductsProvider, {foreingKey:'providerId', sourceKey:'id'});
+// ProductsProvider.belongsTo(HomerProvider,{foreingKey:'providerId', sourceKey:'id'});
 
 module.exports = HomerProvider;
