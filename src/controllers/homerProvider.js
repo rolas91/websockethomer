@@ -15,14 +15,15 @@ module.exports.addProvider = async(data) => {
         if(newProvider){
             let providerId = newProvider.id;
             for(let i=0; i<products.length; i++){
-                let newProvider = await ProductsProvider.create({
+                await ProductsProvider.create({
                     ui:products[i].id,
                     name:products[i].name,
                     providerId:providerId
-                })
+                });
             }
             return {
                 message:'Provider created successfully',
+                data:newProvider
             }
         }
     } catch (error) {
@@ -38,6 +39,22 @@ module.exports.searchProvider = async(ui) => {
         
     } catch (error) {
         console.log('error'+error)
+    }
+}
+
+module.exports.deleteProvider = async(ui) => {
+    try {
+        await HomerProvider.destroy({where:{ui:ui}});
+        await ProductsProvider.destroy({where:{providerId:ui}});
+        return {
+            message:'Provider was deleted',
+            data:{}
+        }
+    } catch (error) {
+        return {
+            message:'Something goes wrong'+error,
+            data:{}
+        }
     }
 }
 

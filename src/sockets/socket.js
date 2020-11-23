@@ -44,14 +44,16 @@ io.on('connection', socket => {
     }); 
     
     socket.on('disconnect', () => { 
-        var i = activeUsers.indexOf( socket.userId );
+        homerProvider.deleteProvider(socket.userId).then(response => {
+            io.emit("user disconnected", socket.userId);
+        })
+        // var i = activeUsers.indexOf( socket.userId );
  
-        if ( i !== -1 ) {
-            activeUsers.splice( i, 1 );
-        }
+        // if ( i !== -1 ) {
+        //     activeUsers.splice( i, 1 );
+        // }
         // activeUsers.delete(socket.userId);
-        io.emit("user disconnected", socket.userId);
-        console.log('usuario desconectado');
+        // console.log('usuario desconectado');
     });
 
     socket.on('chat:message', (data) => {
