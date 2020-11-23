@@ -57,6 +57,6 @@ module.exports.deleteProvider = async(ui) => {
 }
 
 module.exports.nearBy = async(req, res) => {
-    
+    res.status(200).json({message:'probando con exito'});
 }
 
