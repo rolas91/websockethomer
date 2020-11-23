@@ -1,3 +1,4 @@
+const sequelize = require('../db');
 const HomerProvider = require('../models/HomerProvider');
 const ProductsProvider = require('../models/Productsprovider');
 
@@ -57,6 +58,13 @@ module.exports.deleteProvider = async(ui) => {
 }
 
 module.exports.nearBy = async(req, res) => {
-    res.status(200).json({message:'probando con exito'});
+    const {lat, lng, radio, ui} = req.body;
+    let providers  = await db.sequelize.query(
+        'SELECT * FROM homerproviders" WHERE "homerproviders"."ui" = (:ui)', {
+        replacements: {id: ui},
+        type: db.sequelize.QueryTypes.SELECT
+      });
+
+    res.status(200).json({data:providers});
 }
 
