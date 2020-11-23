@@ -1,10 +1,13 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
 const {ProductsProvider} = require('../models/Productsprovider');
-const HomerProvider = sequelize.define('HomerProvider', {
+const HomerProvider = sequelize.define('homerprovider', {
     id:{
         type:Sequelize.INTEGER,
         primaryKey:true     
+    },
+    ui:{
+        type:Sequelize.INTEGER
     },
     name:{
         type:Sequelize.TEXT

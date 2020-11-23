@@ -1,18 +1,23 @@
 const {io} = require('../../index');
-
+const homerProvider = require('../controllers/homerProvider');
 const activeUsers = [];
 io.on('connection', socket => {
    console.log('usuario conectado')
     socket.on('adduser', (data) => {
         socket.userId = data.id;
+
         console.log('data',data.id);
         console.log('socket id', socket.userId);
-        if(!activeUsers.includes(socket.userId)){
-            activeUsers.push(socket.userId);
-            io.emit('adduser',activeUsers);
-            console.log('usuario activo');
-            console.log('user add',activeUsers);
-        }
+
+        let response = homerProvider.addProvider(data).then(result => {
+            console.log(result);
+        });
+        // if(!activeUsers.includes(socket.userId)){
+            // activeUsers.push(socket.userId);
+            io.emit('adduser',response);
+            // console.log('usuario activo');
+            // console.log('user add',activeUsers);
+        // }
     }); 
 
     socket.on('validaactiveprovider', (data) => {
