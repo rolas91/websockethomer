@@ -13,7 +13,7 @@ module.exports.addProvider = async(data) => {
             lng:lng
         });
         if(newProvider){
-            let providerId = newProvider.id;
+            let providerId = newProvider.ui;
             for(let i=0; i<products.length; i++){
                 await ProductsProvider.create({
                     ui:products[i].id,
