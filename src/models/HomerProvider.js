@@ -4,7 +4,8 @@ const ProductsProvider = require('../models/Productsprovider');
 const HomerProvider = sequelize.define('homerprovider', {
     id:{
         type:Sequelize.INTEGER,
-        primaryKey:true     
+        autoIncrement: true,
+        primaryKey:true,  
     },
     ui:{
         type:Sequelize.INTEGER
