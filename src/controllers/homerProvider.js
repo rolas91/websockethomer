@@ -21,7 +21,6 @@ module.exports.addProvider = async(data) => {
                     providerId:providerId
                 })
             }
-            
             return {
                 message:'Provider created successfully',
             }
