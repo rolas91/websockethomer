@@ -39,9 +39,13 @@ const start = {
     longitude: -86.274280
   }
 
-app.post('/nearby', function(req, res){
-    res.status(200).json(haversine(start, end,{ unit: 'mile'}));
-});
+// app.post('/nearby', function(req, res){
+//     res.status(200).json(haversine(start, end,{ unit: 'mile'}));
+// });
+
+const router = require('./src/routes');
+app.use('/api/v1', router);
+
 
 const server = app.listen(port, () => {
     console.log(`connection is successful on port  ${port}`)

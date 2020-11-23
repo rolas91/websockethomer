@@ -56,3 +56,7 @@ module.exports.deleteProvider = async(ui) => {
     }
 }
 
+module.exports.nearBy = async(req, res) => {
+    
+}
+
