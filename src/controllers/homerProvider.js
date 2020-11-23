@@ -4,11 +4,10 @@ const ProductsProvider = require('../models/Productsprovider');
 module.exports.addProvider = async(data) => {
     try {
         console.log(data);
-        const {id,name, lat, lng, products} = data;
+        const {id, lat, lng, products} = data;
 
         let newProvider = await  HomerProvider.create({
             ui:id,
-            name:name,
             lat:lat,
             lng:lng
         });
@@ -17,7 +16,6 @@ module.exports.addProvider = async(data) => {
             for(let i=0; i<products.length; i++){
                 await ProductsProvider.create({
                     ui:products[i].id,
-                    name:products[i].name,
                     providerId:providerId
                 });
             }

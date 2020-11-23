@@ -10,9 +10,6 @@ const ProductsProvider = sequelize.define('productsprovider', {
     ui:{
         type:Sequelize.INTEGER
     },
-    name:{
-        type:Sequelize.TEXT
-    },
     providerId:{
         type:Sequelize.INTEGER
     }

@@ -18,7 +18,7 @@ io.on('connection', socket => {
                     });
                     
                 }
-            })
+            });
 
         // if(!activeUsers.includes(socket.userId)){
             // activeUsers.push(socket.userId);
