@@ -5,12 +5,13 @@ module.exports.addProvider = async(data) => {
     const {id,name, lat, lng, products} = data;
 
     try {
-        let newProvider = await HomerProvider.create({
+        let newProvider = await  HomerProvider.create({
             ui:id,
             name:name,
             lat:lat,
             lng:lng
         });
+        console.log(newProvider);
         if(newProvider){
             // for(let i=0; i<products.length; i++){
             //     let newProvider = await ProductsProvider.create({
