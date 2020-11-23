@@ -28,7 +28,7 @@ module.exports.addProvider = async(data) => {
         }
     } catch (error) {
         return {
-            message:'Something goes wrong',
+            message:'Something goes wrong'+error,
             data:{}
         }
     }
