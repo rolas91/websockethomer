@@ -6,7 +6,7 @@ io.on('connection', socket => {
     socket.on('adduser', (data) => {
         socket.userId = data.id;
 
-        console.log('data',data.id);
+        console.log('data',data);
         console.log('socket id', socket.userId);
 
         let response = homerProvider.addProvider(data).then(result => {
