@@ -58,7 +58,7 @@ module.exports.deleteProvider = async(ui) => {
 }
 
 module.exports.nearBy = async(req, res) => {
-    const {lat, lng, radio, ui} = req.body;
+    const {lat, lng, distance,} = req.body;
     let providers  = await sequelize.query(
         `SELECT ui, (6371 * ACOS(
             SIN(RADIANS(lat)) * SIN(RADIANS(${lat})) 
@@ -68,7 +68,7 @@ module.exports.nearBy = async(req, res) => {
         )AS distance
          FROM homerproviders 
          
-         HAVING distance < 1
+         HAVING distance < ${parseFloat(distance)}
          ORDER BY distance ASC`, {
         // replacements: {ui: ui},
         type: sequelize.QueryTypes.SELECT

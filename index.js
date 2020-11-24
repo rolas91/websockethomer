@@ -29,16 +29,6 @@ app.post('/validaactiveprovider', function (req, res) {
     res.status(200).json({sendNewData});
 });
 
-const start = {
-    latitude: 12.1467252,
-    longitude: -86.2780618
-  }
-  12.144459, -86.274280
-  const end = {
-    latitude:  12.144459,
-    longitude: -86.274280
-  }
-
 // app.post('/nearby', function(req, res){
 //     res.status(200).json(haversine(start, end,{ unit: 'mile'}));
 // });
