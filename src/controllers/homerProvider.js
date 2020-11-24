@@ -60,14 +60,14 @@ module.exports.deleteProvider = async(ui) => {
 module.exports.nearBy = async(req, res) => {
     const {lat, lng, distance,} = req.body;
     let providers  = await sequelize.query(
-        `SELECT ui,lat,lng, (6371 * ACOS(
+        `SELECT homerproviders.ui,homerproviders.lat,homerproviders.lng,productsproviders.ui, (6371 * ACOS(
             SIN(RADIANS(lat)) * SIN(RADIANS(${lat})) 
             + COS(RADIANS(lng - ${lng})) * COS(RADIANS(lat))
             * COS(RADIANS(${lat}))
             )
         )AS distance
-         FROM homerproviders 
-         
+         FROM homerproviders INNER JOIN
+         productsproviders on homerproviders.ui = productsproviders.providerId
          HAVING distance < ${parseFloat(distance)}
          ORDER BY distance ASC`, {
         // replacements: {ui: ui},
