@@ -1,6 +1,7 @@
-const Sequelize = import('sequelize');
-const sequelize = import('../db');
-const RequestClient = import('../models/StateService');
+const Sequelize = require('sequelize');
+const sequelize = require('../db');
+const RequestClient = require('../models/StateService');
+
 const StateService = sequelize.define('stateservice', {
     id:{
         type: Sequelize.INTEGER,
@@ -13,5 +14,5 @@ const StateService = sequelize.define('stateservice', {
 },{
     timestamps:false
 });
-StateService.hasMany(RequestClient);
+// StateService.hasMany(RequestClient);
 module.exports = StateService;

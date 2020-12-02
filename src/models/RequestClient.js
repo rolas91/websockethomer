@@ -27,7 +27,7 @@ const RequestClient = sequelize.define('requestclient', {
         type: Sequelize.DATE
     },
     hour:{
-        type: Sequelize.Date
+        type: Sequelize.DATE
     }
 },{
     timestamps:false
