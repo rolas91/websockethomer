@@ -1,6 +1,7 @@
 const sequelize = require('../db');
 const HomerProvider = require('../models/HomerProvider');
 const ProductsProvider = require('../models/Productsprovider');
+const RequestClient = require('../models/RequestClient');
 
 module.exports.addProvider = async(data) => {
     try {
@@ -57,10 +58,37 @@ module.exports.deleteProvider = async(ui) => {
     }
 }
 
+module.exports.createService = async(data) => {
+    try {
+        const {clientUi, meClient, productUi, productName, stateServiceId, date, hour} = data;
+        let newService = await RequestClient.create({
+            clientUi: clientUi, 
+            meClient: meClient, 
+            productUi: productUi, 
+            productName: productName, 
+            stateServiceId: stateServiceId, 
+            date: date, 
+            hour: hour
+        });
+        if(newService){
+            return {
+                message:'Provider created successfully',
+                data:newProvider
+            }
+        }
+        
+    } catch (error) {
+        return {
+            message: 'Something goes wrong'+error,
+            data:{}
+        }
+    }
+}
+
 module.exports.nearBy = async(req, res) => {
     const {lat, lng, distance,} = req.body;
     let providers  = await sequelize.query(
-        `SELECT homerproviders.ui,homerproviders.lat,homerproviders.lng,productsproviders.ui, (6371 * ACOS(
+        `SELECT homerproviders.ui,homerproviders.lat,homerproviders.lng, productsproviders.ui, (6371 * ACOS(
             SIN(RADIANS(lat)) * SIN(RADIANS(${lat})) 
             + COS(RADIANS(lng - ${lng})) * COS(RADIANS(lat))
             * COS(RADIANS(${lat}))
