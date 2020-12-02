@@ -58,9 +58,9 @@ module.exports.deleteProvider = async(ui) => {
     }
 }
 
-module.exports.createService = async(data) => {
+module.exports.createService = async(req, res) => {
     try {
-        const {clientUi, meClient, productUi, productName, stateServiceId, date, hour} = data;
+        const {clientUi, meClient, productUi, productName, stateServiceId, date, hour} = req.body;
         let newService = await RequestClient.create({
             clientUi: clientUi, 
             meClient: meClient, 
@@ -71,17 +71,17 @@ module.exports.createService = async(data) => {
             hour: hour
         });
         if(newService){
-            return {
+            res.status(200).json({
                 message:'Provider created successfully',
                 data:newProvider
-            }
+            });
         }
         
     } catch (error) {
-        return {
+        res.status(200).json({
             message: 'Something goes wrong'+error,
             data:{}
-        }
+        });
     }
 }
 
