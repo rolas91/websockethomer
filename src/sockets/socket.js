@@ -34,6 +34,13 @@ io.on('connection', socket => {
             console.log(result);
             io.emit('getordersbyproviders',result)
         });
+
+        setInterval(5000,function(data){
+            homerProvider.getOrderByProvider(socket.userId).then(result => {
+                console.log(result);
+                io.emit('getordersbyproviders',result)
+            });
+        });
     });
 
     socket.on('validaactiveprovider', (data) => {
