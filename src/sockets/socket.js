@@ -27,13 +27,13 @@ io.on('connection', socket => {
         // }
     }); 
 
-    socket.on('getordersbyproviders', () => {
-        console.log('entro a ver las ordenes');
+    socket.on('getordersbyproviders', (data) => {
+        console.log('entro a ver las ordenes'+data);
         homerProvider.getOrderByProvider(socket.userId).then(result => {
             console.log(result);
             io.emit('getOrdersByProviders',result)
         });
-    })
+    });
 
     socket.on('validaactiveprovider', (data) => {
         let dataEntry = data;
