@@ -60,7 +60,7 @@ module.exports.deleteProvider = async(ui) => {
 
 module.exports.createOrders = async(req, res) => {
     try {
-        const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour} = req.body;
+        const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location} = req.body;
         let newService = await Order.create({
             clientUi: clientUi, 
             nameClient: nameClient, 
@@ -68,7 +68,8 @@ module.exports.createOrders = async(req, res) => {
             productName: productName, 
             stateServiceId: stateServiceId, 
             date: date, 
-            hour: hour
+            hour: hour,
+            location:location
         });
         if(newService){
             res.status(200).json({

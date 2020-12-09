@@ -24,10 +24,13 @@ const RequestClient = sequelize.define('order', {
         type: Sequelize.INTEGER
     },
     date:{
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
     },
     hour:{
         type: Sequelize.TIME
+    },
+    location:{
+        type:Sequelize.STRING
     }
 },{
     timestamps:false
