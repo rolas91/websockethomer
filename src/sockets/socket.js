@@ -35,12 +35,12 @@ io.on('connection', socket => {
         //     io.emit('getordersbyproviders',result)
         // });
 
-        setInterval(5000,function(data){
+        setInterval(() => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
                 console.log(result);
                 io.emit('getordersbyproviders',result)
             });
-        });
+        },2000);
     });
 
     socket.on('validaactiveprovider', (data) => {
