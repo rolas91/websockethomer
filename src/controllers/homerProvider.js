@@ -60,7 +60,9 @@ module.exports.deleteProvider = async(ui) => {
 
 module.exports.createOrders = async(req, res) => {
     try {
-        const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location} = req.body;
+        
+        const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location, lat, lng} = req.body;
+        let address = await fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false');
         let newService = await Order.create({
             clientUi: clientUi, 
             nameClient: nameClient, 
@@ -69,7 +71,9 @@ module.exports.createOrders = async(req, res) => {
             stateServiceId: stateServiceId, 
             date: date, 
             hour: hour,
-            location:location
+            location:address,
+            lat:lat,
+            lng:lng
         });
         if(newService){
             res.status(200).json({
