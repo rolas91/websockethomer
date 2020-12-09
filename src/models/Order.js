@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
-const StateService = require('./StateService');
 
 const RequestClient = sequelize.define('order', {
     id: {
@@ -20,8 +19,10 @@ const RequestClient = sequelize.define('order', {
     productName:{
         type: Sequelize.STRING
     },
-    stateServiceId:{
-        type: Sequelize.INTEGER
+    status:{
+        type: Sequelize.ENUM,
+        values: ['solicitado','aceptado' ,'finalizado', 'rechazado', 'cancelado'],
+        defaultValue: 'solicitado'
     },
     date:{
         type: Sequelize.DATEONLY
@@ -35,7 +36,5 @@ const RequestClient = sequelize.define('order', {
 },{
     timestamps:false
 });
-RequestClient.belongsTo(StateService, {
-    foreignKey: "stateServiceId"
-});
+
 module.exports = RequestClient;
