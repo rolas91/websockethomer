@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
-const StateService = require('../models/StateService');
+const StateService = require('./StateService');
 
-const RequestClient = sequelize.define('requestclient', {
+const RequestClient = sequelize.define('order', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -27,7 +27,7 @@ const RequestClient = sequelize.define('requestclient', {
         type: Sequelize.DATE
     },
     hour:{
-        type: Sequelize.DATE
+        type: Sequelize.TIME
     }
 },{
     timestamps:false

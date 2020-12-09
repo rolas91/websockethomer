@@ -27,6 +27,12 @@ io.on('connection', socket => {
         // }
     }); 
 
+    socket.on('getOrdersByProviders', () => {
+        homerProvider.getOrderByProvider(socket.userId).then(result => {
+            io.emit('getOrdersByProviders',result)
+        });
+    })
+
     socket.on('validaactiveprovider', (data) => {
         let dataEntry = data;
         let sendNewData = [];
@@ -43,6 +49,15 @@ io.on('connection', socket => {
         console.log('user validated',sendNewData);
     }); 
     
+    
+    socket.on('chat:message', (data) => {
+        io.sockets.emit('chat:message', data)
+    });
+    
+    socket.on('chat:typing', (data) => {
+        socket.broadcast.emit('chat:typing',data);
+    });
+    
     socket.on('disconnect', () => { 
         homerProvider.deleteProvider(socket.userId).then(response => {
             io.emit("user disconnected", socket.userId);
@@ -55,13 +70,4 @@ io.on('connection', socket => {
         // activeUsers.delete(socket.userId);
         // console.log('usuario desconectado');
     });
-
-    socket.on('chat:message', (data) => {
-        io.sockets.emit('chat:message', data)
-    });
-
-    socket.on('chat:typing', (data) => {
-        socket.broadcast.emit('chat:typing',data);
-    });
-    
 });

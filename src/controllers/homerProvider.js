@@ -1,7 +1,7 @@
 const sequelize = require('../db');
 const HomerProvider = require('../models/HomerProvider');
 const ProductsProvider = require('../models/Productsprovider');
-const RequestClient = require('../models/RequestClient');
+const Order = require('../models/Order');
 
 module.exports.addProvider = async(data) => {
     try {
@@ -58,10 +58,10 @@ module.exports.deleteProvider = async(ui) => {
     }
 }
 
-module.exports.createService = async(req, res) => {
+module.exports.createOrders = async(req, res) => {
     try {
         const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour} = req.body;
-        let newService = await RequestClient.create({
+        let newService = await Order.create({
             clientUi: clientUi, 
             nameClient: nameClient, 
             productUi: productUi, 
@@ -82,6 +82,20 @@ module.exports.createService = async(req, res) => {
             message: 'Something goes wrong'+error,
             data:{}
         });
+    }
+}
+
+module.exports.getOrderByProvider = async(provider) => {
+    try{
+        return await Order.findAll({
+            where:{
+                productUi:provider
+            }
+        })
+    }catch(e){
+        return {
+            message:'Something goes wrong'+error
+        }
     }
 }
 
