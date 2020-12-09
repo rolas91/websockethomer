@@ -34,10 +34,10 @@ const RequestClient = sequelize.define('order', {
         type:Sequelize.STRING
     },
     lat:{
-        type:sequelize.STRING
+        type:Sequelize.STRING
     },
     lng:{
-        type:sequelize.STRING
+        type:Sequelize.STRING
     }
 },{
     timestamps:false
