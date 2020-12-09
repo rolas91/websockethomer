@@ -1,4 +1,5 @@
 const sequelize = require('../db');
+const axios = require('axios');
 const HomerProvider = require('../models/HomerProvider');
 const ProductsProvider = require('../models/Productsprovider');
 const Order = require('../models/Order');
@@ -63,9 +64,8 @@ module.exports.createOrders = async(req, res) => {
         let address = '';
         const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location, lat, lng} = req.body;
         console.log('coord',lat, lng);
-        let googleinfo =  fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false').then(resp => resp.json()).then(response => {
-            console.log(response);
-        });
+        let googleInfo = await axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false');
+        console.log(googleInfo);
         let newService = await Order.create({
             clientUi: clientUi, 
             nameClient: nameClient, 
