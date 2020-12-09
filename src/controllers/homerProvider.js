@@ -90,7 +90,9 @@ module.exports.getOrderByProvider = async(provider) => {
     try{
         return await Order.findAll({
             where:{
-                productUi:provider
+                productUi:provider,
+                status:"solicitado",
+                status:"aceptado"
             }
         })
     }catch(e){
