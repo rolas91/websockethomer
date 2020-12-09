@@ -12,9 +12,9 @@ io.on('connection', socket => {
         homerProvider.searchProvider(data.id)
             .then(result => {
                 if(result.length == 0){
-                    let response = homerProvider.addProvider(data).then(result => {
+                    homerProvider.addProvider(data).then(result => {
                         console.log(result);
-                        io.emit('adduser',response);
+                        io.emit('adduser',result);
                     });
                     
                 }
