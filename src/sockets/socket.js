@@ -32,7 +32,7 @@ io.on('connection', socket => {
         console.log(socket.userId);
         homerProvider.getOrderByProvider(socket.userId).then(result => {
             console.log(result);
-            io.emit('getOrdersByProviders',result)
+            io.emit('getordersbyproviders',result)
         });
     });
 
