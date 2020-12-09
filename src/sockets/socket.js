@@ -28,11 +28,10 @@ io.on('connection', socket => {
     }); 
 
     socket.on('getordersbyproviders', () => {
-        console.log('entro a ver las ordenes'+data);
-        // homerProvider.getOrderByProvider(socket.userId).then(result => {
-        //     console.log(result);
-        //     io.emit('getOrdersByProviders',result)
-        // });
+        homerProvider.getOrderByProvider(socket.userId).then(result => {
+            console.log(result);
+            io.emit('getOrdersByProviders',result)
+        });
     });
 
     socket.on('validaactiveprovider', (data) => {
