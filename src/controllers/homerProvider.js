@@ -89,11 +89,11 @@ module.exports.createOrders = async(req, res) => {
 module.exports.getOrderByProvider = async(provider) => {
     try{
         return await Order.findAll({
-            where:{
+            where:[{
                 productUi:provider,
                 status:"solicitado",
                 status:"aceptado"
-            }
+            }]
         })
     }catch(e){
         return {
