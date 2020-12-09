@@ -71,7 +71,7 @@ module.exports.createOrders = async(req, res) => {
             stateServiceId: stateServiceId, 
             date: date, 
             hour: hour,
-            location:address.results.formatted_address,
+            location:location,
             lat:lat,
             lng:lng
         });
