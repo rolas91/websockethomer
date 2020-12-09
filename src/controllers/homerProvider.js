@@ -62,7 +62,7 @@ module.exports.createOrders = async(req, res) => {
     try {
         
         const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location, lat, lng} = req.body;
-        let address = await fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false');
+        let address = await fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false');
         let newService = await Order.create({
             clientUi: clientUi, 
             nameClient: nameClient, 
@@ -71,7 +71,7 @@ module.exports.createOrders = async(req, res) => {
             stateServiceId: stateServiceId, 
             date: date, 
             hour: hour,
-            location:address,
+            location:address.results.formatted_address,
             lat:lat,
             lng:lng
         });
