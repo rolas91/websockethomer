@@ -27,7 +27,8 @@ io.on('connection', socket => {
         // }
     }); 
 
-    socket.on('getordersbyproviders', () => {
+    socket.on('getordersbyproviders', (data) => { 
+        socket.userId = data.id;
         console.log(socket.userId);
         // homerProvider.getOrderByProvider(socket.userId).then(result => {
         //     console.log(result);
