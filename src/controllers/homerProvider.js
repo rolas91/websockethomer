@@ -65,7 +65,9 @@ module.exports.createOrders = async(req, res) => {
         const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location, lat, lng} = req.body;
         console.log('coord',lat, lng);
         let googleInfo = await axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false');
-        console.log(googleInfo.results);
+        googleInfo.map(res => {
+            console.log(res);
+        })
         let newService = await Order.create({
             clientUi: clientUi, 
             nameClient: nameClient, 
