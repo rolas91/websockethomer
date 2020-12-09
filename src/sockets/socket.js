@@ -30,10 +30,10 @@ io.on('connection', socket => {
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
         console.log(socket.userId);
-        // homerProvider.getOrderByProvider(socket.userId).then(result => {
-        //     console.log(result);
-        //     io.emit('getOrdersByProviders',result)
-        // });
+        homerProvider.getOrderByProvider(socket.userId).then(result => {
+            console.log(result);
+            io.emit('getOrdersByProviders',result)
+        });
     });
 
     socket.on('validaactiveprovider', (data) => {
