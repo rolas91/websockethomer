@@ -14,7 +14,7 @@ io.on('connection', socket => {
             .then(result => {
                 if(result.length == 0){
                     homerProvider.addProvider(data).then(result => {
-                        console.log(result);
+                       
                         io.emit('adduser',result);
                     });
                     
@@ -40,6 +40,7 @@ io.on('connection', socket => {
         setInterval(async() => {
            response = await homerProvider.getOrderByProvider(socket.userId);
         }, 2000);
+        console.log(response);
         return response
     }
 
