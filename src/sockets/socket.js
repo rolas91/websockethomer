@@ -31,7 +31,7 @@ io.on('connection', socket => {
         io.emit('getordersbyproviders',getOrders(data))
     });
 
-    const getOrders = async(data) => {
+    function getOrders(data){
         socket.userId = data.id;  
         let response  = [] 
         setInterval(() => {
