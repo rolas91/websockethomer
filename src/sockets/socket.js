@@ -36,12 +36,7 @@ io.on('connection', socket => {
 
     function getOrders(data){
         socket.userId = data.id;  
-        let response  = [] 
-        setInterval(async() => {
-           response = await homerProvider.getOrderByProvider(socket.userId);
-        }, 2000);
-        console.log(response);
-        return response
+       return  await homerProvider.getOrderByProvider(socket.userId);      
     }
 
     socket.on('validaactiveprovider', (data) => {
