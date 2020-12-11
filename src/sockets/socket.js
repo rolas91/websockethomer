@@ -1,3 +1,4 @@
+const { response } = require('express');
 const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
 
@@ -27,15 +28,16 @@ io.on('connection', socket => {
         // }
     }); 
 
-    socket.on('getordersbyproviders', (data) => { 
-        io.emit('getordersbyproviders',getOrders(data))
+    socket.on('getordersbyproviders', (data) => {
+        let response = getOrders(data)
+        io.emit('getordersbyproviders',response)
     });
 
     function getOrders(data){
         socket.userId = data.id;  
         let response  = [] 
-        setInterval(() => {
-           response =  homerProvider.getOrderByProvider(socket.userId);
+        setInterval(async() => {
+           response = await homerProvider.getOrderByProvider(socket.userId);
         }, 2000);
         return response
     }
