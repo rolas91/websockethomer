@@ -128,3 +128,18 @@ module.exports.nearBy = async(req, res) => {
     res.status(200).json({data:providers});
 }
 // WHERE ui = :ui
+
+module.exports.ordersEnd = async(req, res) => {
+   try{
+        const {provider} = req.body;
+        let response = await Order.findAll({
+            where:{
+                productUi:provider,
+                status:"finalizado",
+            }
+        })
+        res.status(200).json({data:response});
+   }catch(e){
+        console.log(e)
+   }
+}
