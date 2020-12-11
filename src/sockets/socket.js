@@ -28,20 +28,17 @@ io.on('connection', socket => {
     }); 
 
     socket.on('getordersbyproviders', (data) => { 
-        socket.userId = data.id;
-        console.log(socket.userId);
-        homerProvider.getOrderByProvider(socket.userId).then(result => {
-            console.log(result);
-            io.emit('getordersbyproviders',result)
-        });
-
-        // setInterval(() => {
-        //     homerProvider.getOrderByProvider(socket.userId).then(result => {
-        //         console.log(result);
-        //         io.emit('getordersbyproviders',result)
-        //     });
-        // },2000);
+        io.emit('getordersbyproviders',getOrders(data))
     });
+
+    const getOrders = async(data) => {
+        socket.userId = data.id;  
+        let response  = [] 
+        setInterval(() => {
+           response = await homerProvider.getOrderByProvider(socket.userId);
+        }, 2000);
+        return response
+    }
 
     socket.on('validaactiveprovider', (data) => {
         let dataEntry = data;
