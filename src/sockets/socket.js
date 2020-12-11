@@ -35,7 +35,7 @@ io.on('connection', socket => {
         socket.userId = data.id;  
         let response  = [] 
         setInterval(() => {
-           response = await homerProvider.getOrderByProvider(socket.userId);
+           response =  homerProvider.getOrderByProvider(socket.userId);
         }, 2000);
         return response
     }
