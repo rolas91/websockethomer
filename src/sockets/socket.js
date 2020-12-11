@@ -1,4 +1,3 @@
-const { response } = require('express');
 const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
 
@@ -14,7 +13,7 @@ io.on('connection', socket => {
             .then(result => {
                 if(result.length == 0){
                     homerProvider.addProvider(data).then(result => {
-                       
+                        console.log(result);
                         io.emit('adduser',result);
                     });
                     
@@ -28,17 +27,21 @@ io.on('connection', socket => {
         // }
     }); 
 
-    socket.on('getordersbyproviders', (data) => {
-        let response = getOrders(data)
-        console.log(response)
-        io.emit('getordersbyproviders',response)
-    });
-
-    function getOrders(data){
-        socket.userId = data.id;  
+    socket.on('getordersbyproviders', (data) => { 
+        socket.userId = data.id;
         console.log(socket.userId);
-       return  homerProvider.getOrderByProvider(socket.userId);      
-    }
+        // homerProvider.getOrderByProvider(socket.userId).then(result => {
+        //     console.log(result);
+        //     io.emit('getordersbyproviders',result)
+        // });
+
+        setInterval(() => {
+            homerProvider.getOrderByProvider(socket.userId).then(result => {
+                console.log(result);
+                io.emit('getordersbyproviders',result)
+            });
+        },2000);
+    });
 
     socket.on('validaactiveprovider', (data) => {
         let dataEntry = data;
