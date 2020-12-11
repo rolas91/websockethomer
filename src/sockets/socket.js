@@ -30,6 +30,7 @@ io.on('connection', socket => {
 
     socket.on('getordersbyproviders', (data) => {
         let response = getOrders(data)
+        console.log(response)
         io.emit('getordersbyproviders',response)
     });
 
