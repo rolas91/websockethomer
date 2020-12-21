@@ -95,12 +95,18 @@ module.exports.createOrders = async(req, res) => {
 
 module.exports.getOrderByProvider = async(provider) => {
     try{
-        return await Order.findAll({
-            where:{
-                productUi:provider,
-                status:"solicitado"
-            }
-        })
+        // return await Order.findAll({
+        //     where:{
+        //         productUi:provider,
+        //         status:"solicitado"
+        //     }
+        // })
+        return await sequelize.query(
+            `SELECT * FROM orders INNER JOIN
+             productsproviders on productsproviders.ui = orders.productUi
+             where productsproviders.providerId = ${provider} and orders.status = 1`,{
+                type: sequelize.QueryTypes.SELECT
+              });
     }catch(e){
         return {
             message:'Something goes wrong'+error
