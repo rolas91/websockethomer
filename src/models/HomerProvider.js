@@ -15,6 +15,9 @@ const HomerProvider = sequelize.define('homerprovider', {
     },
     lng:{
         type:Sequelize.TEXT
+    },
+    onesignal:{
+        type:Sequelize.TEXT
     }
 },{
     timestamps:false

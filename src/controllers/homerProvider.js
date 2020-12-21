@@ -7,12 +7,13 @@ const Order = require('../models/Order');
 module.exports.addProvider = async(data) => {
     try {
         console.log(data);
-        const {id, lat, lng, products} = data;
+        const {id, lat, lng, products,onesignal} = data;
 
         let newProvider = await  HomerProvider.create({
             ui:id,
             lat:lat,
-            lng:lng
+            lng:lng,
+            onesignal:onesignal
         });
         if(newProvider){
             let providerId = newProvider.ui;
@@ -74,7 +75,7 @@ module.exports.createOrders = async(req, res) => {
             stateServiceId: stateServiceId, 
             date: date, 
             hour: hour,
-            location:'address',
+            location:'Mangua, Nicaragua',
             lat:lat,
             lng:lng
         });
