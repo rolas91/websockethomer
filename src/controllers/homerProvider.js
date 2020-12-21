@@ -119,7 +119,7 @@ module.exports.getOrderByProvider = async(provider) => {
 module.exports.nearBy = async(req, res) => {
     const {lat, lng, distance,} = req.body;
     let providers  = await sequelize.query(
-        `SELECT homerproviders.ui,homerproviders.lat,homerproviders.lng, productsproviders.ui, (6371 * ACOS(
+        `SELECT homerproviders.ui,homerproviders.lat,homerproviders.lng,homerproviders.onesignal, productsproviders.ui, (6371 * ACOS(
             SIN(RADIANS(lat)) * SIN(RADIANS(${lat})) 
             + COS(RADIANS(lng - ${lng})) * COS(RADIANS(lat))
             * COS(RADIANS(${lat}))
