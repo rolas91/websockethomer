@@ -38,6 +38,9 @@ const RequestClient = sequelize.define('order', {
     },
     lng:{
         type:Sequelize.STRING
+    },
+    onesignal:{
+        type:Sequelize.TEXT
     }
 },{
     timestamps:false

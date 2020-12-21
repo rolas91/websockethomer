@@ -63,7 +63,7 @@ module.exports.deleteProvider = async(ui) => {
 module.exports.createOrders = async(req, res) => {
     try {
         let address = '';
-        const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location, lat, lng} = req.body;
+        const {clientUi, nameClient, productUi, productName, stateServiceId, date, hour,location, lat, lng,onesignal} = req.body;
         console.log('coord',lat, lng);
         let googleInfo = await axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false');
        console.log(googleInfo);
@@ -77,7 +77,8 @@ module.exports.createOrders = async(req, res) => {
             hour: hour,
             location:'Mangua, Nicaragua',
             lat:lat,
-            lng:lng
+            lng:lng,
+            onesignal
         });
         if(newService){
             res.status(200).json({
