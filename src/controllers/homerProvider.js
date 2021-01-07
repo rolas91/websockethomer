@@ -106,7 +106,7 @@ module.exports.getOrderByProvider = async(provider) => {
         return await sequelize.query(
             `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
-             where productsproviders.providerId = ${provider} and orders.status = 1`,{
+             where productsproviders.providerId = ${provider} and orders.status = 1, and orders.status = 2, orders.status = 3, orders.status = 4, orders.status = 5`,{
                 type: sequelize.QueryTypes.SELECT
               });
     }catch(e){
@@ -140,7 +140,7 @@ module.exports.nearBy = async(req, res) => {
 module.exports.ordersEnd = async(req, res) => {
    try{
         const {order} = req.body;
-        let { state} = req.body;
+        let { state } = req.body;
         if(state=="solicitado"){
             state = "aceptado"
         }else if(state=="aceptado"){
