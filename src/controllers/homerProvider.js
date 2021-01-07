@@ -139,20 +139,26 @@ module.exports.nearBy = async(req, res) => {
 
 module.exports.ordersEnd = async(req, res) => {
    try{
-        const {provider} = req.body;
-        const { estate} = req.body;
+        const {order} = req.body;
+        const { state} = req.body;
         if(state=="solicitado"){
             state = "aceptado"
         }else if(state=="aceptado"){
+            state == "he llegado"
+        }else if(state=="he llegado"){
             state == "iniciado"
+        }else if(state=="finalizado"){
+            state == "finalizado"
+        }else if(state=="cancelado"){
+            state == "cancelado"
         }
         
-        let response = await Order.findAll({
-            where:{
-                productUi:provider,
-                status:"finalizado",
-            }
-        })
+        let response = await Order.update(
+            {status:state},
+            {where:{
+                id:order                
+            }}
+        )
         res.status(200).json({data:response});
    }catch(e){
         console.log(e)
