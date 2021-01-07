@@ -143,13 +143,13 @@ module.exports.ordersEnd = async(req, res) => {
         let { state } = req.body;
         if(state=="solicitado"){
             state = "aceptado"
-        }else if(state=="aceptado"){
+        }if(state=="aceptado"){
             state == "he llegado"
-        }else if(state=="he llegado"){
+        }if(state=="he llegado"){
             state == "iniciado"
-        }else if(state=="finalizado"){
+        }if(state=="finalizado"){
             state == "finalizado"
-        }else if(state=="cancelado"){
+        }if(state=="cancelado"){
             state == "cancelado"
         }
         
