@@ -141,16 +141,17 @@ module.exports.ordersEnd = async(req, res) => {
    try{
         const {order} = req.body;
         let { state } = req.body;
-        if(state=="solicitado"){
-            state = "aceptado"
-        }if(state=="aceptado"){
-            state == "he llegado"
-        }if(state=="he llegado"){
-            state == "iniciado"
-        }if(state=="finalizado"){
-            state == "finalizado"
-        }if(state=="cancelado"){
-            state == "cancelado"
+        let status = "";
+        if(state==="solicitado"){
+            status = "aceptado"
+        }else if(state==="aceptado"){
+            status == "he llegado"
+        }else if(state==="he llegado"){
+            status == "iniciado"
+        }else if(state==="finalizado"){
+            status == "finalizado"
+        }else if(state==="cancelado"){
+            status == "cancelado"
         }
         
         let response = await Order.update(
