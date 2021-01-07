@@ -140,6 +140,13 @@ module.exports.nearBy = async(req, res) => {
 module.exports.ordersEnd = async(req, res) => {
    try{
         const {provider} = req.body;
+        const { estate} = req.body;
+        if(state=="solicitado"){
+            state = "aceptado"
+        }else if(state=="aceptado"){
+            state == "iniciado"
+        }
+        
         let response = await Order.findAll({
             where:{
                 productUi:provider,
@@ -152,4 +159,11 @@ module.exports.ordersEnd = async(req, res) => {
    }
 }
 
-// module.exports.changeState =
+// module.exports.changeState = async(req, res) => {
+//  try{
+//     const {orderid} = req.body;
+//     let response = await order
+//  }catch(e){
+     
+//  }
+// }
