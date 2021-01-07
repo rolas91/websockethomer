@@ -140,7 +140,7 @@ module.exports.nearBy = async(req, res) => {
 module.exports.ordersEnd = async(req, res) => {
    try{
         const {order} = req.body;
-        const { state} = req.body;
+        let { state} = req.body;
         if(state=="solicitado"){
             state = "aceptado"
         }else if(state=="aceptado"){
