@@ -21,7 +21,7 @@ const RequestClient = sequelize.define('order', {
     },
     status:{
         type: Sequelize.ENUM,
-        values: ['solicitado','aceptado' ,'finalizado', 'rechazado', 'cancelado'],
+        values: ['solicitado','iniciado','aceptado' ,'finalizado', 'rechazado', 'cancelado'],
         defaultValue: 'solicitado'
     },
     date:{
