@@ -141,25 +141,43 @@ module.exports.ordersEnd = async(req, res) => {
    try{
         const {order} = req.body;
         let { state } = req.body;
-      
+        let response;
         if(state==="solicitado"){
-            state = "aceptado"
+            response = await Order.update(
+                {status:"aceptado"},
+                {where:{
+                    id:order                
+                }}
+            )
         }else if(state==="aceptado"){
-            state == "he llegado"
+            response = await Order.update(
+                {status:"he llegado"},
+                {where:{
+                    id:order                
+                }}
+            )
         }else if(state==="he llegado"){
-            state == "iniciado"
+            response = await Order.update(
+                {status:"iniciado"},
+                {where:{
+                    id:order                
+                }}
+            )
         }else if(state==="finalizado"){
-            state == "finalizado"
-        }else if(state==="cancelado"){
-            state == "cancelado"
+            response = await Order.update(
+                {status:"finalizado"},
+                {where:{
+                    id:order                
+                }}
+            )
+        }else if(state==="cancelado"){            
+            response = await Order.update(
+                {status:"cancelado"},
+                {where:{
+                    id:order                
+                }}
+            )
         }
-        
-        let response = await Order.update(
-            {status:state},
-            {where:{
-                id:order                
-            }}
-        )
         res.status(200).json({data:response});
    }catch(e){
         console.log(e)
