@@ -163,7 +163,7 @@ module.exports.ordersEnd = async(req, res) => {
                     id:order                
                 }}
             )
-        }else if(state==="finalizado"){
+        }else if(state==="iniciado"){
             response = await Order.update(
                 {status:"finalizado"},
                 {where:{
