@@ -116,6 +116,26 @@ module.exports.getOrderByProvider = async(provider) => {
     }
 }
 
+module.exports.getOrderByClient = async(client) => {
+    try{
+        // return await Order.findAll({
+        //     where:{
+        //         productUi:provider,
+        //         status:"solicitado"
+        //     }
+        // })
+        return await sequelize.query(
+            `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
+            productsproviders on productsproviders.ui = orders.productUi
+            where orders.clientUi = ${client}`,{
+                type: sequelize.QueryTypes.SELECT
+              });
+    }catch(e){
+        return {
+            message:'Something goes wrong'+error
+        }
+    }
+}
 module.exports.nearBy = async(req, res) => {
     const {lat, lng, distance,} = req.body;
     let providers  = await sequelize.query(
