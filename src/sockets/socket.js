@@ -30,11 +30,7 @@ io.on('connection', socket => {
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
         console.log(socket.userId);
-        // homerProvider.getOrderByProvider(socket.userId).then(result => {
-        //     console.log(result);
-        //     io.emit('getordersbyproviders',result)
-        // });
-
+  
         setInterval(() => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
                 console.log(result);
@@ -46,11 +42,7 @@ io.on('connection', socket => {
     socket.on('getordersbyclients', (data) => { 
         socket.userId = data.id;
         console.log(socket.userId);
-        // homerProvider.getOrderByProvider(socket.userId).then(result => {
-        //     console.log(result);
-        //     io.emit('getordersbyproviders',result)
-        // });
-
+    
         setInterval(() => {
             homerProvider.getOrderByClient(socket.userId).then(result => {
                 console.log(result);

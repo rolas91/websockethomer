@@ -157,7 +157,7 @@ module.exports.nearBy = async(req, res) => {
 }
 // WHERE ui = :ui
 
-module.exports.ordersEnd = async(req, res) => {
+module.exports.ChangeOrders = async(req, res) => {
    try{
         const {order} = req.body;
         let { state } = req.body;
@@ -203,12 +203,3 @@ module.exports.ordersEnd = async(req, res) => {
         console.log(e)
    }
 }
-
-// module.exports.changeState = async(req, res) => {
-//  try{
-//     const {orderid} = req.body;
-//     let response = await order
-//  }catch(e){
-     
-//  }
-// }
