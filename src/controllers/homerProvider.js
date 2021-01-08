@@ -9,6 +9,8 @@ module.exports.addProvider = async(data) => {
         console.log(data);
         const {id, lat, lng, products,onesignal} = data;
 
+        // await HomerProvider.find
+
         let newProvider = await  HomerProvider.create({
             ui:id,
             lat:lat,
