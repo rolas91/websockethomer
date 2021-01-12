@@ -68,35 +68,76 @@ io.on('connection', socket => {
     }); 
     
     
-    socket.on('chat:message', (data) => {
-        io.sockets.emit('chat:message', data)
-    });
+    // socket.on('chat:message', (data) => {
+    //     io.sockets.emit('chat:message', data)
+    // });
     
-    socket.on('chat:typing', (data) => {
-        socket.broadcast.emit('chat:typing',data);
-    });
+    // socket.on('chat:typing', (data) => {
+    //     socket.broadcast.emit('chat:typing',data);
+    // });
     
-    socket.on('set-nickname', (nickname) => {
-        socket.nickname = nickname;
-        io.emit('users-changed', {user: nickname, event: 'joined'});    
-    });
-    socket.on('add-message', (message) => {
-        console.log(message);
-        io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});    
-    });
+    // socket.on('set-nickname', (nickname) => {
+    //     socket.nickname = nickname;
+    //     io.emit('users-changed', {user: nickname, event: 'joined'});    
+    // });
+    // socket.on('add-message', (message) => {
+    //     console.log(message);
+    //     io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});    
+    // });
     
+    
+
+    var userName = '';
+    
+    socket.on('subscribe', function(data) {
+        console.log('subscribe trigged')
+        const room_data = JSON.parse(data)
+        userName = room_data.userName;
+        const roomName = room_data.roomName;
+    
+        socket.join(`${roomName}`)
+        console.log(`Username : ${userName} joined Room Name : ${roomName}`)
+        
+        io.to(`${roomName}`).emit('newUserToChatRoom',userName);
+
+    })
+
+    socket.on('unsubscribe',function(data) {
+        console.log('unsubscribe trigged')
+        const room_data = JSON.parse(data)
+        const userName = room_data.userName;
+        const roomName = room_data.roomName;
+    
+        console.log(`Username : ${userName} leaved Room Name : ${roomName}`)
+        socket.broadcast.to(`${roomName}`).emit('userLeftChatRoom',userName)
+        socket.leave(`${roomName}`)
+    })
+
+    socket.on('newMessage',function(data) {
+        console.log('newMessage triggered')
+
+        const messageData = JSON.parse(data)
+        const messageContent = messageData.messageContent
+        const roomName = messageData.roomName
+        const state = messageData.state
+
+        console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
+
+        const chatData = {
+            userName : userName,
+            messageContent : messageContent,
+            roomName : roomName,
+            state : state
+        }
+        // user.addMessages(chatData.messageContent,chatData.roomName, chatData.state)
+        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
+    })
+
     socket.on('disconnect', () => { 
         homerProvider.deleteProvider(socket.userId).then(response => {
-            io.emit("user disconnected", socket.userId);
-            io.emit('users-changed', {user: socket.nickname, event: 'left'});
+            io.emit("user disconnected", socket.userId);           
         })
-        // var i = activeUsers.indexOf( socket.userId );
- 
-        // if ( i !== -1 ) {
-        //     activeUsers.splice( i, 1 );
-        // }
-        // activeUsers.delete(socket.userId);
-        // console.log('usuario desconectado');
+        io.emit('users-changed', {user: socket.nickname, event: 'left'});
     });
     
 });
