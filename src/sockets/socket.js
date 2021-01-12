@@ -88,6 +88,7 @@ io.on('connection', socket => {
     socket.on('disconnect', () => { 
         homerProvider.deleteProvider(socket.userId).then(response => {
             io.emit("user disconnected", socket.userId);
+            io.emit('users-changed', {user: socket.nickname, event: 'left'});
         })
         // var i = activeUsers.indexOf( socket.userId );
  
