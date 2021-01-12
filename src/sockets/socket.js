@@ -76,6 +76,7 @@ io.on('connection', socket => {
         socket.broadcast.emit('chat:typing',data);
     });
     
+    
     socket.on('disconnect', () => { 
         homerProvider.deleteProvider(socket.userId).then(response => {
             io.emit("user disconnected", socket.userId);
@@ -88,4 +89,5 @@ io.on('connection', socket => {
         // activeUsers.delete(socket.userId);
         // console.log('usuario desconectado');
     });
+    
 });
