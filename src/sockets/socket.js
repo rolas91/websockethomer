@@ -70,15 +70,14 @@ io.on('connection', socket => {
     let userName = '';
     
     socket.on('set-nickname', (data) => {   
-        console.log(data.userName);
-        // const room_data = JSON.parse(data);
-        // userName = room_data.userName;
-        // const roomName = room_data.roomName;
+        const room_data = data;
+        userName = room_data.userName;
+        const roomName = room_data.roomName;
 
-        // socket.join(`${roomName}`)
-        // console.log(`Username : ${userName} joined Room Name : ${roomName}`)
+        socket.join(`${roomName}`)
+        console.log(`Username : ${userName} joined Room Name : ${roomName}`)
 
-        // io.to(`${roomName}`).emit('users-changed', {user: userName, event: 'joined'});    
+        io.to(`${roomName}`).emit('users-changed', {user: userName, event: 'joined'});    
     });
 
     socket.on('add-message', (data) => {
