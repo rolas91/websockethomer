@@ -70,7 +70,6 @@ io.on('connection', socket => {
     let userName = '';
     
     socket.on('set-nickname', (data) => {   
-        console.log(data);
         const room_data = data;
         userName = room_data.userName;
         const roomName = room_data.roomName;
