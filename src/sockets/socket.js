@@ -89,7 +89,7 @@ io.on('connection', socket => {
         
          console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
 
-        socket.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
+        io.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
     });   
     
 
