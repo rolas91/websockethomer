@@ -35,9 +35,10 @@ io.on('connection', socket => {
 
     socket.on('getordersbyclients', (data) => { 
         socket.userId = data.id;
+        socket.join(`${data.id}`)
         setInterval(() => {
             homerProvider.getOrderByClient(socket.userId).then(result => {
-                io.emit('getordersbyclients',result)
+                io.to(`${data.id}`).emit('getordersbyclients',result)
             });
         },2000);
     });
