@@ -82,7 +82,6 @@ io.on('connection', socket => {
     });
 
     socket.on('add-message', (data) => {
-        console.log(data)
         const messageData = data;
         const messageContent = messageData.text
         const roomName = messageData.roomName
