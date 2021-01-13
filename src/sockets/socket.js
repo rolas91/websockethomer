@@ -3,17 +3,14 @@ const homerProvider = require('../controllers/homerProvider');
 
 const activeUsers = [];
 io.on('connection', socket => {
-   console.log('usuario conectado')
+    console.log("usuario conectado")
+    let userName = '';
     socket.on('adduser', (data) => {
         socket.userId = data.id;
-        console.log(socket.userId);
-        // console.log('data',data);
-        // console.log('socket id', socket.userId);
         homerProvider.searchProvider(data.id)
             .then(result => {
                 if(result.length == 0){
                     homerProvider.addProvider(data).then(result => {
-                        console.log(result);
                         io.emit('adduser',result);
                     });
                     
@@ -29,11 +26,8 @@ io.on('connection', socket => {
 
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
-        console.log(socket.userId);
-  
         setInterval(() => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
-                console.log(result);
                 io.emit('getordersbyproviders',result)
             });
         },2000);
@@ -41,11 +35,9 @@ io.on('connection', socket => {
 
     socket.on('getordersbyclients', (data) => { 
         socket.userId = data.id;
-        console.log(socket.userId);
     
         setInterval(() => {
             homerProvider.getOrderByClient(socket.userId).then(result => {
-                console.log(result);
                 io.emit('getordersbyclients',result)
             });
         },2000);
@@ -63,11 +55,9 @@ io.on('connection', socket => {
         }
         
         io.emit('validaactiveprovider',[sendNewData]);
-       
-        console.log('user validated',sendNewData);
     }); 
     
-    let userName = '';
+    
     
     socket.on('set-nickname', (data) => {   
         const room_data = data;
