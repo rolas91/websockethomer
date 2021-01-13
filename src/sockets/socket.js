@@ -82,14 +82,14 @@ io.on('connection', socket => {
     });
 
     socket.on('add-message', (data) => {
-        
+        console.log(data)
         const messageData = data;
         const messageContent = messageData.text
         const roomName = messageData.roomName
         
          console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
 
-        socket.broadcast.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
+        socket.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
     });   
     
 
