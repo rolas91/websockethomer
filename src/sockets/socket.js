@@ -106,9 +106,10 @@ io.on('connection', socket => {
     
 
     socket.on('disconnect', () => { 
-        homerProvider.deleteProvider(socket.userId).then(response => {
-            io.emit("user disconnected", socket.userId);           
-        })
+        // homerProvider.deleteProvider(socket.userId).then(response => {
+                      
+        // })
+        io.emit("user disconnected", socket.userId);
         io.emit('users-changed', {user: userName, event: 'left'});
     });
     
