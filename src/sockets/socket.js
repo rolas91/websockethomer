@@ -67,7 +67,7 @@ io.on('connection', socket => {
         console.log('user validated',sendNewData);
     }); 
     
-    var userName = '';
+    let userName = '';
     
     socket.on('set-nickname', (data) => {   
         const room_data = JSON.parse(data);
