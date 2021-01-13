@@ -70,7 +70,7 @@ io.on('connection', socket => {
     let userName = '';
     
     socket.on('set-nickname', (data) => {   
-        console.log(data);
+        console.log(JSON.parse(data));
         // const room_data = JSON.parse(data);
         // userName = room_data.userName;
         // const roomName = room_data.roomName;
