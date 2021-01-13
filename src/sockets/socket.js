@@ -67,40 +67,30 @@ io.on('connection', socket => {
         console.log('user validated',sendNewData);
     }); 
     
-    
-    // socket.on('chat:message', (data) => {
-    //     io.sockets.emit('chat:message', data)
-    // });
-    
-    // socket.on('chat:typing', (data) => {
-    //     socket.broadcast.emit('chat:typing',data);
-    // });
-    
-    // socket.on('set-nickname', (nickname) => {
-    //     socket.nickname = nickname;
-    //     io.emit('users-changed', {user: nickname, event: 'joined'});    
-    // });
-    // socket.on('add-message', (message) => {
-    //     console.log(message);
-    //     io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});    
-    // });
-    
-    
-
     var userName = '';
     
-    socket.on('subscribe', function(data) {
-        console.log('subscribe trigged')
-        const room_data = JSON.parse(data)
+    socket.on('set-nickname', (data) => {   
+        const room_data = JSON.parse(data);
         userName = room_data.userName;
         const roomName = room_data.roomName;
-    
+
         socket.join(`${roomName}`)
         console.log(`Username : ${userName} joined Room Name : ${roomName}`)
-        
-        io.to(`${roomName}`).emit('newUserToChatRoom',userName);
 
-    })
+        io.to(`${roomName}`).emit('users-changed', {user: userName, event: 'joined'});    
+    });
+
+    socket.on('add-message', (data) => {
+        
+        const messageData = JSON.parse(data)
+        const messageContent = messageData.messageContent
+        const roomName = messageData.roomName
+        
+         console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
+
+        socket.broadcast.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
+    });   
+    
 
     socket.on('unsubscribe',function(data) {
         console.log('unsubscribe trigged')
@@ -113,25 +103,7 @@ io.on('connection', socket => {
         socket.leave(`${roomName}`)
     })
 
-    socket.on('newMessage',function(data) {
-        console.log('newMessage triggered')
-
-        const messageData = JSON.parse(data)
-        const messageContent = messageData.messageContent
-        const roomName = messageData.roomName
-        const state = messageData.state
-
-        console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
-
-        const chatData = {
-            userName : userName,
-            messageContent : messageContent,
-            roomName : roomName,
-            state : state
-        }
-        // user.addMessages(chatData.messageContent,chatData.roomName, chatData.state)
-        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
-    })
+    
 
     socket.on('disconnect', () => { 
         homerProvider.deleteProvider(socket.userId).then(response => {
