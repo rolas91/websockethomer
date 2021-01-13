@@ -70,6 +70,7 @@ io.on('connection', socket => {
     let userName = '';
     
     socket.on('set-nickname', (data) => {   
+        console.log(data);
         const room_data = data;
         userName = room_data.userName;
         const roomName = room_data.roomName;
@@ -82,8 +83,8 @@ io.on('connection', socket => {
 
     socket.on('add-message', (data) => {
         
-        const messageData = JSON.parse(data)
-        const messageContent = messageData.messageContent
+        const messageData = data;
+        const messageContent = messageData.text
         const roomName = messageData.roomName
         
          console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
@@ -109,7 +110,7 @@ io.on('connection', socket => {
         homerProvider.deleteProvider(socket.userId).then(response => {
             io.emit("user disconnected", socket.userId);           
         })
-        io.emit('users-changed', {user: socket.nickname, event: 'left'});
+        io.emit('users-changed', {user: userName, event: 'left'});
     });
     
 });
