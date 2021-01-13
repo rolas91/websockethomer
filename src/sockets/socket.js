@@ -26,9 +26,10 @@ io.on('connection', socket => {
 
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
+        socket.join(`${data.id}`)
         setInterval(() => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
-                io.emit('getordersbyproviders',result)
+                io.to(`${data.id}`).emit('getordersbyproviders',result)
             });
         },2000);
     });
