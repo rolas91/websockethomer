@@ -2,7 +2,7 @@ const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
 
 const activeUsers = [];
-const DATE_TARGET = new Date('01/14/2021 0:01 AM');
+const DATE_TARGET = new Date('01/14/2021 03:40 AM');
 const MILLISECONDS_OF_A_SECOND = 1000;
 const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
 const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
