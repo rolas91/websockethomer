@@ -5,7 +5,7 @@ const activeUsers = [];
 let countdown = 10;
 
 
-function countdown( minutes, seconds )
+function countDown( minutes, seconds )
 {
     var element, endTime, hours, mins, msLeft, time;
 
@@ -58,7 +58,7 @@ io.on('connection', socket => {
     
     socket.on('getCountDown', (data) => {
         socket.join(`${data.id}`)
-        setInterval(countdown( 10, 0 ),1000);
+        setInterval(countDown( 10, 0 ),1000);
     });
 
     socket.on('getordersbyproviders', (data) => { 
