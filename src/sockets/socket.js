@@ -32,7 +32,7 @@ io.on('connection', socket => {
         socket.join(`${data.id}`)
         setInterval(()=>{
             countdown = --countdown <= 0 ? 10 : countdown
-            io.to(`${data.id}`).emit('getCountDown',countDown)
+            io.to(`${data.id}`).emit('getCountDown',countdown)
 
         },1000);
     });
