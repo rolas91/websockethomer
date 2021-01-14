@@ -2,6 +2,13 @@ const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
 
 const activeUsers = [];
+const MILLISECONDS_OF_A_SECOND = 1000;
+const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
+const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
+const MILLISECONDS_OF_A_DAY = MILLISECONDS_OF_A_HOUR * 24
+
+
+
 io.on('connection', socket => {
     console.log("usuario conectado")
     let userName = '';
@@ -23,6 +30,25 @@ io.on('connection', socket => {
             // console.log('user add',activeUsers);
         // }
     }); 
+    
+    socket.on('getCountDown', (data) => {
+        socket.join(`${data.id}`)
+        setInterval(()=>{
+             // Calcs
+            const NOW = new Date()
+            const DURATION = DATE_TARGET - NOW;
+            const REMAINING_DAYS = Math.floor(DURATION / MILLISECONDS_OF_A_DAY);
+            const REMAINING_HOURS = Math.floor((DURATION % MILLISECONDS_OF_A_DAY) / MILLISECONDS_OF_A_HOUR);
+            const REMAINING_MINUTES = Math.floor((DURATION % MILLISECONDS_OF_A_HOUR) / MILLISECONDS_OF_A_MINUTE);
+            const REMAINING_SECONDS = Math.floor((DURATION % MILLISECONDS_OF_A_MINUTE) / MILLISECONDS_OF_A_SECOND);
+           
+
+            // Render
+            let countDown = REMAINING_DAYS + REMAINING_HOURS +  REMAINING_MINUTES + REMAINING_SECONDS;
+            io.to(`${data.id}`).emit('getCountDown',countDown)
+
+        }, MILLISECONDS_OF_A_SECOND);
+    });
 
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
