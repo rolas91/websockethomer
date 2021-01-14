@@ -58,7 +58,31 @@ io.on('connection', socket => {
     
     socket.on('getCountDown', (data) => {
         socket.join(`${data.id}`)
-        setInterval(countDown( 10, 0 ),1000);
+        setInterval(() => {
+            var  endTime, hours, mins, msLeft, time;
+
+            function twoDigits( n )
+            {
+                return (n <= 9 ? "0" + n : n);
+            }
+
+            function updateTimer()
+            {
+                msLeft = endTime - (+new Date);
+                if ( msLeft < 1000 ) {
+                    console.log("Time is up!");
+                } else {
+                    time = new Date( msLeft );
+                    hours = time.getUTCHours();
+                    mins = time.getUTCMinutes();
+                    console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
+                    io.to(`${data.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                    setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+                }
+            }
+            endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
+            updateTimer();
+        },1000);
     });
 
     socket.on('getordersbyproviders', (data) => { 
