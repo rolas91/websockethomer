@@ -2,6 +2,7 @@ const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
 
 const activeUsers = [];
+const DATE_TARGET = new Date('01/14/2021 0:01 AM');
 const MILLISECONDS_OF_A_SECOND = 1000;
 const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
 const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
@@ -45,6 +46,7 @@ io.on('connection', socket => {
 
             // Render
             let countDown = REMAINING_DAYS + REMAINING_HOURS +  REMAINING_MINUTES + REMAINING_SECONDS;
+            console.log(countDown)
             io.to(`${data.id}`).emit('getCountDown',countDown)
 
         }, MILLISECONDS_OF_A_SECOND);
