@@ -45,8 +45,8 @@ io.on('connection', socket => {
            
 
             // Render
-            let countDown = REMAINING_DAYS + REMAINING_HOURS +  REMAINING_MINUTES + REMAINING_SECONDS;
-            console.log(countDown)
+            let countDown = REMAINING_DAYS +','+ REMAINING_HOURS + ',' + REMAINING_MINUTES + ',' + REMAINING_SECONDS;
+            console.log(REMAINING_DAYS, REMAINING_HOURS, REMAINING_MINUTES, REMAINING_SECONDS )
             io.to(`${data.id}`).emit('getCountDown',countDown)
 
         }, MILLISECONDS_OF_A_SECOND);
