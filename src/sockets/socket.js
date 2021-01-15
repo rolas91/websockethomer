@@ -57,8 +57,6 @@ io.on('connection', socket => {
     }); 
     
     socket.on('getCountDown', (data) => {
-        socket.join(`${data.id}`)
-       
             var  endTime, hours, mins, msLeft, time;
 
             function twoDigits( n )
@@ -67,7 +65,7 @@ io.on('connection', socket => {
             }
 
             function updateTimer()
-            {
+            {                
                 msLeft = endTime - (+new Date);
                 if ( msLeft < 1000 ) {
                     console.log("Time is up!");
@@ -76,7 +74,12 @@ io.on('connection', socket => {
                     hours = time.getUTCHours();
                     mins = time.getUTCMinutes();
                     console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
-                    io.to(`${data.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                    homerProvider.getOrderByProvider(socket.userId).then(result => {
+                        if(result.isCount != false){   
+                            socket.join(`${result.id}`)                         
+                            io.to(`${result.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                        }
+                    });
                     setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                 }
             }
