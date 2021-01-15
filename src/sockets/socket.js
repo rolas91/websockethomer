@@ -79,9 +79,9 @@ io.on('connection', socket => {
                         if( result.length > 0 && result.isCount != false){   
                             socket.join(`${result.id}`)                         
                             io.to(`${result.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                         }
                     });
-                    setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                 }
             }
             endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
