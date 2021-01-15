@@ -141,18 +141,17 @@ module.exports.getOrderByProvider = async(provider) => {
     }
 }
 
-module.exports.getOrderCancelByProvider = async(provider) => {
+module.exports.getOrderCancelByProvider = async(req, res) => {
     try{    
-        return await sequelize.query(
+        let response = await sequelize.query(
             `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
-             where productsproviders.providerId = ${provider} and orders.status = 7`,{
+             where productsproviders.providerId = ${req.body.provider} and orders.status = 7`,{
                 type: sequelize.QueryTypes.SELECT
               });
+        res.status(200).json({message:"success", data:response})
     }catch(e){
-        return {
-            message:'Something goes wrong'+error
-        }
+        console.log(`error ${e}`)
     }
 }
 
