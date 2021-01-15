@@ -58,31 +58,34 @@ io.on('connection', socket => {
     socket.on('getCountDown', (data) => {
             var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
-                homerProvider.getOrderByProvider(socket.userId).then(result => {  
-                    console.log(result)                  
-                    if( result.length > 0 && result.isCount != false){                                                              
-                        function twoDigits( n )
-                        {
-                            return (n <= 9 ? "0" + n : n);
-                        }
+                homerProvider.getOrderByProvider(socket.userId).then(result => {           
+                    if( result.length > 0 ){  
+                        for(let i = 0; i < result.length; i++){ 
+                            socket.join(`${result[i].id}`)  
+                            if(result[i].isCount != false) {                                                         
+                                function twoDigits( n )
+                                {
+                                    return (n <= 9 ? "0" + n : n);
+                                }
 
-                        function updateTimer()
-                        {            
-                            msLeft = endTime - (+new Date);
-                            if ( msLeft < 1000 ) {
-                                console.log("Time is up!");
-                            } else {
-                                time = new Date( msLeft );
-                                hours = time.getUTCHours();
-                                mins = time.getUTCMinutes();
-                                console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
-                                socket.join(`${result.id}`)                         
-                                io.to(`${result.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
-                                setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+                                function updateTimer()
+                                {            
+                                    msLeft = endTime - (+new Date);
+                                    if ( msLeft < 1000 ) {
+                                        console.log("Time is up!");
+                                    } else {
+                                        time = new Date( msLeft );
+                                        hours = time.getUTCHours();
+                                        mins = time.getUTCMinutes();
+                                        console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                                               
+                                        io.to(`${result[i].id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                                        setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+                                    }
+                                }
+                                endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
+                                updateTimer();
                             }
                         }
-                        endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
-                        updateTimer();
                     }
                 });
         },1000)  
