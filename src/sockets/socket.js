@@ -2,7 +2,6 @@ const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
 
 const activeUsers = [];
-let countdown = 10;
 
 
 // function countDown( minutes, seconds )
@@ -58,34 +57,35 @@ io.on('connection', socket => {
     
     socket.on('getCountDown', (data) => {
             var  endTime, hours, mins, msLeft, time;
-
-            function twoDigits( n )
-            {
-                return (n <= 9 ? "0" + n : n);
-            }
-
-            function updateTimer()
-            {                
-                msLeft = endTime - (+new Date);
-                if ( msLeft < 1000 ) {
-                    console.log("Time is up!");
-                } else {
-                    time = new Date( msLeft );
-                    hours = time.getUTCHours();
-                    mins = time.getUTCMinutes();
-                    console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
-                    homerProvider.getOrderByProvider(socket.userId).then(result => {
-                        console.log(result)
-                        if( result.length > 0 && result.isCount != false){   
-                            socket.join(`${result.id}`)                         
-                            io.to(`${result.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
-                            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+            setTimeout(() =>{
+                homerProvider.getOrderByProvider(socket.userId).then(result => {  
+                    console.log(result)                  
+                    if( result.length > 0 && result.isCount != false){                                                              
+                        function twoDigits( n )
+                        {
+                            return (n <= 9 ? "0" + n : n);
                         }
-                    });
-                }
-            }
-            endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
-            updateTimer();
+
+                        function updateTimer()
+                        {            
+                            msLeft = endTime - (+new Date);
+                            if ( msLeft < 1000 ) {
+                                console.log("Time is up!");
+                            } else {
+                                time = new Date( msLeft );
+                                hours = time.getUTCHours();
+                                mins = time.getUTCMinutes();
+                                console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
+                                socket.join(`${result.id}`)                         
+                                io.to(`${result.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                                setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+                            }
+                        }
+                        endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
+                        updateTimer();
+                    }
+                });
+        },1000)  
     });
 
     socket.on('getordersbyproviders', (data) => { 
