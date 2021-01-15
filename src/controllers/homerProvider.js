@@ -163,6 +163,7 @@ module.exports.ChangeOrders = async(req, res) => {
    try{
         const {order} = req.body;
         let { state } = req.body;
+        let {isCancel} = req.body;
         let response;
         if(state==="solicitado"){
             response = await Order.update(
@@ -194,7 +195,7 @@ module.exports.ChangeOrders = async(req, res) => {
             )
         }else if(state==="cancelado"){            
             response = await Order.update(
-                {status:"cancelado"},
+                {status:"cancelado",isCancel:isCancel},
                 {where:{
                     id:order                
                 }}

@@ -24,6 +24,9 @@ const RequestClient = sequelize.define('order', {
         values: ['solicitado','aceptado','he llegado','iniciado','finalizado', 'rechazado', 'cancelado'],
         defaultValue: 'solicitado'
     },
+    isCancel:{
+        type:Sequelize.STRING
+    },
     date:{
         type: Sequelize.DATEONLY
     },
