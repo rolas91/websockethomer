@@ -63,6 +63,21 @@ module.exports.deleteProvider = async(ui) => {
     }
 }
 
+module.exports.getMessage = async(req, res) => {
+    try{
+        let response = await Message.findAll({
+            where:{
+                roomName:req.body.roomName
+            }
+        });
+        if(response.length > 0){
+            res.status(200).json({message:"success", data:response});
+        }
+    }catch(e){
+        console.log(`error ${e}`)
+    }
+}
+
 module.exports.addMessage = async(messageContent, userName, roomName, created) => {
     try{
         await Message.create({
