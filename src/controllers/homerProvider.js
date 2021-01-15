@@ -158,8 +158,8 @@ module.exports.getOrderCancelByProvider = async(req, res) => {
 module.exports.getOrderByClient = async(client) => {
     try{
         return await sequelize.query(
-            `SELECT DISTINCT(productsproviders.providerId), orders.*, homerproviders.*  FROM orders as o LEFT JOIN
-            productsproviders on productsproviders.ui = orders.productUi LEFT JOIN homerproviders on homerproviders.ui = productsproviders.providerId 
+            `SELECT DISTINCT(productsproviders.providerId), orders.*, homerproviders.onesignal  FROM orders as o INNER JOIN
+            productsproviders on productsproviders.ui = orders.productUi INNER JOIN homerproviders on homerproviders.ui = productsproviders.providerId 
             where orders.clientUi = ${client}`,{
                 type: sequelize.QueryTypes.SELECT
               });
