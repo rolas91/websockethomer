@@ -100,6 +100,7 @@ io.on('connection', socket => {
         socket.join(`${data.id}`)
         setInterval(() => {
             homerProvider.getOrderByClient(socket.userId).then(result => {
+                console.log(result)
                 io.to(`${data.id}`).emit('getordersbyclients',result)
             });
         },2000);
