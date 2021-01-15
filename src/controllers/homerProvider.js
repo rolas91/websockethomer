@@ -63,12 +63,12 @@ module.exports.deleteProvider = async(ui) => {
     }
 }
 
-module.exports.addMessage = async(data) => {
+module.exports.addMessage = async(messageContent, userName, roomName, created) => {
     try{
-        const { txt, from, roomName, created} = data;
+       
         await Message.create({
-            txt:txt, 
-            from:from, 
+            txt:messageContent, 
+            from:userName, 
             roomName:roomName,
             created:created
         })

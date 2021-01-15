@@ -138,7 +138,7 @@ io.on('connection', socket => {
         const roomName = messageData.roomName
         
          console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
-        homerProvider.addMessage({messageContent, userName, roomName, Date()})
+        homerProvider.addMessage(messageContent, userName, roomName, Date())
         io.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
     });   
     
