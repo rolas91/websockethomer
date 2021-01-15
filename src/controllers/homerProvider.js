@@ -65,9 +65,8 @@ module.exports.deleteProvider = async(ui) => {
 
 module.exports.addMessage = async(messageContent, userName, roomName, created) => {
     try{
-       
         await Message.create({
-            txt:messageContent, 
+            text:messageContent, 
             from:userName, 
             roomName:roomName,
             created:created
