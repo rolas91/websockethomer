@@ -76,7 +76,7 @@ io.on('connection', socket => {
                     console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
                     homerProvider.getOrderByProvider(socket.userId).then(result => {
                         console.log(result)
-                        if(result.isCount != false){   
+                        if( result.length > 0 && result.isCount != false){   
                             socket.join(`${result.id}`)                         
                             io.to(`${result.id}`).emit('getCountDown', { count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
                         }
