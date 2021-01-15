@@ -127,13 +127,7 @@ module.exports.createOrders = async(req, res) => {
 }
 
 module.exports.getOrderByProvider = async(provider) => {
-    try{
-        // return await Order.findAll({
-        //     where:{
-        //         productUi:provider,
-        //         status:"solicitado"
-        //     }
-        // })
+    try{    
         return await sequelize.query(
             `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
@@ -147,14 +141,23 @@ module.exports.getOrderByProvider = async(provider) => {
     }
 }
 
+module.exports.getOrderCancelByProvider = async(provider) => {
+    try{    
+        return await sequelize.query(
+            `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
+             productsproviders on productsproviders.ui = orders.productUi
+             where productsproviders.providerId = ${provider} and orders.status = 7`,{
+                type: sequelize.QueryTypes.SELECT
+              });
+    }catch(e){
+        return {
+            message:'Something goes wrong'+error
+        }
+    }
+}
+
 module.exports.getOrderByClient = async(client) => {
     try{
-        // return await Order.findAll({
-        //     where:{
-        //         productUi:provider,
-        //         status:"solicitado"
-        //     }
-        // })
         return await sequelize.query(
             `SELECT DISTINCT(productsproviders.providerId), orders.*, homerproviders.*  FROM orders INNER JOIN
             productsproviders on productsproviders.ui = orders.productUi INNER JOIN homerproviders on homerproviders.ui = productsproviders.providerId 
