@@ -40,7 +40,7 @@ app.use('/api/v1', router);
 const server = app.listen(port, () => {
     console.log(`connection is successful on port  ${port}`)
 
-    sequelize.sync({force:true}).then(() => {
+    sequelize.sync({force:false}).then(() => {
         console.log('conexion exitosa a la base de datos');
     }).catch(error => {
         console.log('Se ha producido un error', error);
