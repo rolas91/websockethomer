@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-const {nearBy,createOrders, ChangeOrders, getMessage} = require('../controllers/homerProvider');
+const {nearBy,createOrders, ChangeOrders, getMessage, getOrderCancelByProvider} = require('../controllers/homerProvider');
 
 
 router.post('/search', nearBy);
