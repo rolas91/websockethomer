@@ -157,7 +157,7 @@ module.exports.getOrderByClient = async(client) => {
         // })
         return await sequelize.query(
             `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
-            productsproviders on productsproviders.ui = orders.productUi
+            productsproviders on productsproviders.ui = orders.productUi INNER JOIN homerproviders on homerproviders.ui = productsproviders.providerId 
             where orders.clientUi = ${client}`,{
                 type: sequelize.QueryTypes.SELECT
               });
