@@ -27,6 +27,10 @@ const RequestClient = sequelize.define('order', {
     isCancel:{
         type:Sequelize.STRING
     },
+    isCount:{
+        type: Sequelize.BOOLEAN,
+        defaultValue:false
+    },
     date:{
         type: Sequelize.DATEONLY
     },
