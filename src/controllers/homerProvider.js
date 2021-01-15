@@ -3,6 +3,7 @@ const axios = require('axios');
 const HomerProvider = require('../models/HomerProvider');
 const ProductsProvider = require('../models/Productsprovider');
 const Order = require('../models/Order');
+const Message = require('../models/Message');
 
 module.exports.addProvider = async(data) => {
     try {
@@ -59,6 +60,20 @@ module.exports.deleteProvider = async(ui) => {
             message:'Something goes wrong'+error,
             data:{}
         }
+    }
+}
+
+module.exports.addMessage = async(data) => {
+    try{
+        const { txt, from, roomName, created} = data;
+        await Message.create({
+            txt:txt, 
+            from:from, 
+            roomName:roomName,
+            created:created
+        })
+    }catch(e){
+        console.log(`error ${e}`)
     }
 }
 
