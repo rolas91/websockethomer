@@ -61,6 +61,7 @@ io.on('connection', socket => {
                 homerProvider.getOrderByProvider(socket.userId).then(result => {           
                     if( result.length > 0 ){  
                         for(let i = 0; i < result.length; i++){ 
+                            console.log(result[i].id)
                             socket.join(`${result[i].id}`)  
                             if(result[i].isCount != false) {                                                         
                                 function twoDigits( n )
