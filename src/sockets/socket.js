@@ -78,7 +78,7 @@ io.on('connection', socket => {
                                         time = new Date( msLeft );
                                         hours = time.getUTCHours();
                                         mins = time.getUTCMinutes();
-                                        console.log(( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                                               
+                                        console.log(result[i].id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                                               
                                         io.to(`${result[i].id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
                                         setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                                     }
