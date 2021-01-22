@@ -37,6 +37,7 @@ io.on('connection', socket => {
     console.log("usuario conectado")
     let userName = '';
     socket.on('adduser', async(data) => {
+        console.log(data)
         socket.userId = data.id;
         let response = await homerProvider.searchProvider(data.id);
         if(response == null){
@@ -165,10 +166,7 @@ io.on('connection', socket => {
 
     
 
-    socket.on('disconnect', () => { 
-        // homerProvider.deleteProvider(socket.userId).then(response => {
-                      
-        // })
+    socket.on('disconnect', () => {       
         io.emit("user disconnected", socket.userId);
         io.emit('users-changed', {user: userName, event: 'left'});
     });
