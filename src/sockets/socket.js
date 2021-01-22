@@ -40,12 +40,12 @@ io.on('connection', socket => {
         socket.userId = data.id;
         homerProvider.searchProvider(data.id)
             .then(result => {
-                console.log(result)
-                
-                if(result.length == 0){
+                if(result.length < 0){
                     homerProvider.addProvider(data).then(result => {
                         io.emit('adduser',result);
                     });                    
+                }else{
+                    console.log("veo si existe")
                 }
             });
 
