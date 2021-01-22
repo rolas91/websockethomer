@@ -75,6 +75,7 @@ io.on('connection', socket => {
                                 {            
                                     msLeft = endTime - (+new Date);
                                     if ( msLeft < 1000 ) {
+                                        homerProvider.updateOrder(result[i].id)
                                         console.log("Time is up!");
                                     } else {
                                         time = new Date( msLeft );
