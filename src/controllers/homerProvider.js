@@ -13,6 +13,17 @@ module.exports.updateProvider = async(homerid, state) => {
         }});
 }
 
+module.exports.updateOrder = async(orderId) => {
+    return await Order.update(
+        {
+            isCount:true,
+            isCountNow:false
+        },
+        {where:{
+            id:orderId                
+        }});
+}
+
 module.exports.addProvider = async(data) => {
     try {
         
