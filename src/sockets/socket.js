@@ -84,7 +84,8 @@ io.on('connection', socket => {
                                         objectEmit = {
                                             order:result[i].id,
                                             count:countDown
-                                        }   
+                                        } 
+                                        console.log(countDown)    
                                         console.log(objectEmit)                                                  
                                         io.to(`${result[i].id}`).emit('getCountDown', objectEmit);
                                         setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
