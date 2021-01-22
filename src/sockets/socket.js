@@ -40,12 +40,12 @@ io.on('connection', socket => {
         socket.userId = data.id;
         homerProvider.searchProvider(data.id)
             .then(result => {
+                console.log(result)
+                
                 if(result.length == 0){
-                    console.log(result)
                     homerProvider.addProvider(data).then(result => {
                         io.emit('adduser',result);
-                    });
-                    
+                    });                    
                 }
             });
 

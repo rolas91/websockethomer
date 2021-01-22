@@ -7,7 +7,7 @@ const Message = require('../models/Message');
 
 module.exports.addProvider = async(data) => {
     try {
-        console.log(data);
+        
         const {id, lat, lng, products,onesignal} = data;
 
         // await HomerProvider.find
