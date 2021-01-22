@@ -10,6 +10,10 @@ const HomerProvider = sequelize.define('homerprovider', {
     ui:{
         type:Sequelize.INTEGER
     },
+    state:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
+    },
     lat:{
         type:Sequelize.TEXT
     },
