@@ -59,11 +59,11 @@ io.on('connection', socket => {
             var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
                 homerProvider.getOrderByProvider(socket.userId).then(result => {           
-                    if( result.length > 0 ){  
+                    if( result.length > 0){  
                         for(let i = 0; i < result.length; i++){ 
                             console.log(result[i].id)
                             socket.join(`${result[i].id}`)  
-                            if(result[i].isCount == false) {                                                         
+                            if(result[i].isCount == false && result[i].isCountNow == true) {                                                         
                                 function twoDigits( n )
                                 {
                                     return (n <= 9 ? "0" + n : n);
