@@ -41,6 +41,7 @@ io.on('connection', socket => {
         homerProvider.searchProvider(data.id)
             .then(result => {
                 if(result.length == 0){
+                    console.log(result)
                     homerProvider.addProvider(data).then(result => {
                         io.emit('adduser',result);
                     });
