@@ -83,7 +83,7 @@ io.on('connection', socket => {
                         for(let i = 0; i < result.length; i++){ 
                             console.log(result[i].id)
                             socket.join(`${result[i].id}`)  
-                            if(result[i].isCount == false && result[i].isCountNow == true) {                                                         
+                            if(result[i].isCount == false && result[i].isCountNow != true) {                                                         
                                 function twoDigits( n )
                                 {
                                     return (n <= 9 ? "0" + n : n);
@@ -104,7 +104,8 @@ io.on('connection', socket => {
                                         time = new Date( msLeft );
                                         hours = time.getUTCHours();
                                         mins = time.getUTCMinutes();
-                                        console.log(result[i].id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                                               
+                                        console.log(result[i].id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
+                                                                                                    
                                         io.to(`${result[i].id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
                                         setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                                     }
