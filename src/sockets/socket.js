@@ -47,8 +47,8 @@ io.on('connection', socket => {
             // if(!result.state){
             //     homerProvider.updateProvider(result.id, result.state)
             // }
-           
-            console.log(Object.values(response))
+           let values = Object.values(response);
+            console.log(values[0])
            
         }
 
