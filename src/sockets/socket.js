@@ -41,11 +41,11 @@ io.on('connection', socket => {
         homerProvider.searchProvider(data.id)
             .then(result => {
                 if(result.length < 0){
-                    console.log("si hay pues busco otra vez para saber si esta activo o no")             
-                }else{
                     homerProvider.addProvider(data).then(result => {
                         io.emit('adduser',result);
-                    });                 
+                    });                    
+                }else{
+                    console.log("veo si existe")
                 }
             });
 
