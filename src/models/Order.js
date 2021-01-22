@@ -31,6 +31,10 @@ const RequestClient = sequelize.define('order', {
         type: Sequelize.BOOLEAN,
         defaultValue:false
     },
+    isCountNow:{
+        type: Sequelize.BOOLEAN,
+        defaultValue:true
+    },
     date:{
         type: Sequelize.DATEONLY
     },
