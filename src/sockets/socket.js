@@ -49,7 +49,7 @@ io.on('connection', socket => {
                     //     homerProvider.updateProvider(result.id, result.state)
                     // }
                     let data = await result; 
-                    console.log(data)
+                    console.log(data.homerprovider)
                     // console.log(!result[0])
                    
                 }
