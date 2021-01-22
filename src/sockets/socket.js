@@ -39,7 +39,7 @@ io.on('connection', socket => {
     socket.on('adduser', (data) => {
         socket.userId = data.id;
         homerProvider.searchProvider(data.id)
-            .then(async(result) => {
+            .then(result => {
                 if(result.length == 0){
                     homerProvider.addProvider(data).then(result => {
                         io.emit('adduser',result);
@@ -48,9 +48,9 @@ io.on('connection', socket => {
                     // if(!result.state){
                     //     homerProvider.updateProvider(result.id, result.state)
                     // }
-                    console.log(result)
-                    console.log(result.state)
-                    console.log(!result.state)
+                    console.log(result.homerprovider.dataValues.state)
+    
+                    console.log(!result.homerprovider.dataValues.state)
                 }
             });
 
