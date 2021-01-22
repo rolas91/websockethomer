@@ -1,6 +1,6 @@
 const {io} = require('../../index');
 const homerProvider = require('../controllers/homerProvider');
-
+var Request = require("request");
 const activeUsers = [];
 
 
@@ -31,6 +31,24 @@ const activeUsers = [];
 //     updateTimer();
 // }
 
+function sendNotification(data){
+    Request.post({
+        "headers": { "content-type": "application/json" },
+        "url": "https://onesignal.com/api/v1/notifications",
+        "body": JSON.stringify({
+            "app_id": "8ad1c280-92da-4d39-b49c-cf0a81e0d1fc",
+            "include_player_ids": [`${data.onesignalid}`],
+            "data": {"foo": "bar"},
+            "headings": {"en": `${data.title}`},
+            "contents": {"en": `${data.content}`}
+        })
+    }, (error, response, body) => {
+        if(error) {
+            return console.dir(error);
+        }
+        console.dir(JSON.parse(body));
+    });
+}
 
 
 io.on('connection', socket => {
@@ -76,6 +94,11 @@ io.on('connection', socket => {
                                     msLeft = endTime - (+new Date);
                                     if ( msLeft < 1000 ) {
                                         homerProvider.updateOrder(result[i].id)
+                                        sendNotification({
+                                            "title":"Aviso",
+                                            "content":"Se ha cancelado por que tu homer no acepto la solicitud",
+                                            "onesignalid":result[i].onesignal
+                                        })
                                         console.log("Time is up!");
                                     } else {
                                         time = new Date( msLeft );
