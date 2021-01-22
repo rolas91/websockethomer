@@ -36,10 +36,10 @@ const activeUsers = [];
 io.on('connection', socket => {
     console.log("usuario conectado")
     let userName = '';
-    socket.on('adduser', async(data) => {
+    socket.on('adduser', (data) => {
         socket.userId = data.id;
         homerProvider.searchProvider(data.id)
-            .then(result => {
+            .then(async(result) => {
                 if(result.length == 0){
                     homerProvider.addProvider(data).then(result => {
                         io.emit('adduser',result);
@@ -48,7 +48,8 @@ io.on('connection', socket => {
                     // if(!result.state){
                     //     homerProvider.updateProvider(result.id, result.state)
                     // }
-                    console.log(result.homerprovider)
+                    let data = await result; 
+                    console.log(data.isCount)
                     // console.log(!result[0])
                    
                 }
