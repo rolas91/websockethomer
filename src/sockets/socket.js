@@ -48,7 +48,7 @@ io.on('connection', socket => {
             //     homerProvider.updateProvider(result.id, result.state)
             // }
            
-            console.log(result)
+            console.log(response)
             // console.log(!result[0])
            
         }
