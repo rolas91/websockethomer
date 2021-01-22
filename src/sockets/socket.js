@@ -38,8 +38,8 @@ io.on('connection', socket => {
     let userName = '';
     socket.on('adduser', async(data) => {
         socket.userId = data.id;
-        var response = await homerProvider.searchProvider(data.id);
-        if(response == null){
+        let {homerprovider} = await homerProvider.searchProvider(data.id);
+        if(homerprovider == null){
             homerProvider.addProvider(data).then(result => {
                 io.emit('adduser',result);
             });                    
@@ -48,7 +48,7 @@ io.on('connection', socket => {
             //     homerProvider.updateProvider(result.id, result.state)
             // }
            
-            console.log(response.homerprovider)
+            console.log(homerprovider)
             // console.log(!result[0])
            
         }
