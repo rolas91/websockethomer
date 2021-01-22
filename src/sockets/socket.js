@@ -83,7 +83,8 @@ io.on('connection', socket => {
                         for(let i = 0; i < result.length; i++){ 
                             console.log(result[i].id)
                             socket.join(`${result[i].id}`)  
-                            if(result[i].isCount == false && result[i].isCountNow != true) {                                                         
+                            if(result[i].isCount == false && result[i].isCountNow != true) {   
+                                homerProvider.updateStateOrderCount(result[i].id)                                                      
                                 function twoDigits( n )
                                 {
                                     return (n <= 9 ? "0" + n : n);

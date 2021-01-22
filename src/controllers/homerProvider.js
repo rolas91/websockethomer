@@ -26,6 +26,16 @@ module.exports.updateOrder = async(orderId) => {
         }});
 }
 
+module.exports.updateStateOrderCount = async(orderId) => {
+    return await Order.update(
+        {
+            isCountNow:true,
+        },
+        {where:{
+            id:orderId                
+        }});
+}
+
 module.exports.addProvider = async(data) => {
     try {
         
