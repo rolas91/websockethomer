@@ -49,11 +49,7 @@ module.exports.addProvider = async(data) => {
 }
 module.exports.searchProvider = async(ui) => {
     try {
-        let result = await HomerProvider.findOne({where:{ui:ui}});
-            console.log(result)
-       return result
-
-        
+        return await HomerProvider.findOne({where:{ui:ui}});      
     } catch (error) {
         console.log('error'+error)
     }

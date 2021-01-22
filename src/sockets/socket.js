@@ -36,25 +36,22 @@ const activeUsers = [];
 io.on('connection', socket => {
     console.log("usuario conectado")
     let userName = '';
-    socket.on('adduser', (data) => {
+    socket.on('adduser', async(data) => {
         socket.userId = data.id;
-        homerProvider.searchProvider(data.id)
-            .then(async(result) => {
-                console.log(result)
-                if(result == null){
-                    homerProvider.addProvider(data).then(result => {
-                        io.emit('adduser',result);
-                    });                    
-                }else{
-                    // if(!result.state){
-                    //     homerProvider.updateProvider(result.id, result.state)
-                    // }
-                   
-                    // console.log(result)
-                    // console.log(!result[0])
-                   
-                }
-            });
+        let response = await homerProvider.searchProvider(data.id);
+        if(response == null){
+            homerProvider.addProvider(data).then(result => {
+                io.emit('adduser',result);
+            });                    
+        }else{
+            // if(!result.state){
+            //     homerProvider.updateProvider(result.id, result.state)
+            // }
+           
+            console.log(result)
+            // console.log(!result[0])
+           
+        }
 
         // if(!activeUsers.includes(socket.userId)){
             // activeUsers.push(socket.userId);
