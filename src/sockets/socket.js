@@ -49,8 +49,8 @@ io.on('connection', socket => {
                     // if(!result.state){
                     //     homerProvider.updateProvider(result.id, result.state)
                     // }
-                    let data = await result; 
-                    console.log(data.homerprovider)
+                   
+                    // console.log(result)
                     // console.log(!result[0])
                    
                 }
