@@ -48,8 +48,8 @@ io.on('connection', socket => {
                     // if(!result.state){
                     //     homerProvider.updateProvider(result.id, result.state)
                     // }
-                    console.log(result)
-    
+                    console.log(result[0].homerprovider.dataValues.state)
+                    console.log(!result[0].homerprovider.dataValues.state)
                    
                 }
             });
