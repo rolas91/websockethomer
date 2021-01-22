@@ -22,6 +22,7 @@ module.exports.addProvider = async(data) => {
 
         let newProvider = await  HomerProvider.create({
             ui:id,
+            state:true,
             lat:lat,
             lng:lng,
             onesignal:onesignal
