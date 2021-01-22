@@ -16,6 +16,7 @@ module.exports.updateProvider = async(homerid, state) => {
 module.exports.updateOrder = async(orderId) => {
     return await Order.update(
         {
+            status:"cancelado",
             isCount:true,
             isCountNow:false
         },
