@@ -43,12 +43,13 @@ io.on('connection', socket => {
             homerProvider.addProvider(data).then(result => {
                 io.emit('adduser',result);
             });                    
-        }else{
-            // if(!result.state){
-            //     homerProvider.updateProvider(result.id, result.state)
-            // }
+        }else{            
            let values = Object.values(response);
-            console.log(values[0].id)
+           console.log(!values[0].state)
+           if(!values[0].state == true){
+
+                // homerProvider.updateProvider(values[0].id, result.state)
+            }
            
         }
 
