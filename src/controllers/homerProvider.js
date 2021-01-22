@@ -50,8 +50,8 @@ module.exports.addProvider = async(data) => {
 module.exports.searchProvider = async(ui) => {
     try {
         let result = await HomerProvider.findOne({where:{ui:ui}});
-
-        log(result)
+            console.log(result)
+       return result
 
         
     } catch (error) {
