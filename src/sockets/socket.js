@@ -57,6 +57,7 @@ io.on('connection', socket => {
     }); 
     
     socket.on('getCountDown', (data) => {
+        console.log("estoy dentro")
             var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
                 homerProvider.getOrderByProvider(socket.userId).then(result => {           
