@@ -37,7 +37,6 @@ io.on('connection', socket => {
     console.log("usuario conectado")
     let userName = '';
     socket.on('adduser', async(data) => {
-        console.log(data)
         socket.userId = data.id;
         let response = await homerProvider.searchProvider(data.id);
         if(response == null){
@@ -58,11 +57,12 @@ io.on('connection', socket => {
     }); 
     
     socket.on('getCountDown', (data) => {
-            var  endTime, hours, mins, msLeft, time, countDown, objectEmit;
+            var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
                 homerProvider.getOrderByProvider(socket.userId).then(result => {           
                     if( result.length > 0){  
                         for(let i = 0; i < result.length; i++){ 
+                            console.log(result[i].id)
                             socket.join(`${result[i].id}`)  
                             if(result[i].isCount == false && result[i].isCountNow == true) {                                                         
                                 function twoDigits( n )
@@ -74,20 +74,13 @@ io.on('connection', socket => {
                                 {            
                                     msLeft = endTime - (+new Date);
                                     if ( msLeft < 1000 ) {
-                                        homerProvider.updateOrder(objectEmit.order)
                                         console.log("Time is up!");
                                     } else {
                                         time = new Date( msLeft );
                                         hours = time.getUTCHours();
                                         mins = time.getUTCMinutes();
-                                        countDown = ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())
-                                        objectEmit = {
-                                            order:result[i].id,
-                                            count:countDown
-                                        } 
-                                        console.log(countDown)    
-                                        console.log(objectEmit)                                                  
-                                        io.to(`${result[i].id}`).emit('getCountDown', objectEmit);
+                                        console.log(result[i].id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                                               
+                                        io.to(`${result[i].id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
                                         setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                                     }
                                 }
