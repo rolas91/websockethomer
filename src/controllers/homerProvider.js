@@ -5,6 +5,14 @@ const ProductsProvider = require('../models/Productsprovider');
 const Order = require('../models/Order');
 const Message = require('../models/Message');
 
+module.exports.updateProvider = async(homerid, state) => {
+    return await HomerProvider.update(
+        {state:state},
+        {where:{
+            id:homerid                
+        }});
+}
+
 module.exports.addProvider = async(data) => {
     try {
         

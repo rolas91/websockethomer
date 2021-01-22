@@ -45,7 +45,11 @@ io.on('connection', socket => {
                         io.emit('adduser',result);
                     });                    
                 }else{
-                    console.log("veo si existe")
+                    // if(!result.state){
+                    //     homerProvider.updateProvider(result.id, result.state)
+                    // }
+                    console.log(resul.state)
+                    console.log(!resul.state)
                 }
             });
 
