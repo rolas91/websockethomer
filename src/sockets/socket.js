@@ -127,7 +127,7 @@ io.on('connection', socket => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
                 io.to(`${data.id}`).emit('getordersbyproviders',result)
             });
-        },1000);
+        },2000);
     });
 
     socket.on('getordersbyclients', (data) => { 
@@ -138,7 +138,7 @@ io.on('connection', socket => {
             homerProvider.getOrderByClient(socket.userId).then(result => {
                 io.to(`${data.id}`).emit('getordersbyclients',result)
             });
-        },1000);
+        },2000);
     });
 
     socket.on('validaactiveprovider', (data) => {
