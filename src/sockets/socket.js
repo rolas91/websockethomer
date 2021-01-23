@@ -117,7 +117,7 @@ io.on('connection', socket => {
                         }
                     }
                 });
-        },1000)  
+        },2000)  
     });
 
     socket.on('getordersbyproviders', (data) => { 
