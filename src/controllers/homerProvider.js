@@ -36,6 +36,41 @@ module.exports.updateStateOrderCount = async(orderId) => {
         }});
 }
 
+module.exports.addProvider2 = async(data) => {
+    try {
+        
+        const {id, lat, lng, products,onesignal} = data;
+
+        // await HomerProvider.find
+
+        let newProvider = await  HomerProvider.create({
+            ui:id,
+            state:true,
+            lat:lat,
+            lng:lng,
+            onesignal:onesignal
+        });
+        if(newProvider){
+            let providerId = newProvider.ui;
+            for(let i=0; i<products.length; i++){
+                await ProductsProvider.create({
+                    ui:products[i].id,
+                    providerId:providerId
+                });
+            }
+            return {
+                message:'Provider created successfully',
+                data:newProvider
+            }
+        }
+    } catch (error) {
+        return {
+            message:'Something goes wrong'+error,
+            data:{}
+        }
+    }
+}
+
 module.exports.addProvider = async(data) => {
     try {
         
