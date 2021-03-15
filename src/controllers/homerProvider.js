@@ -57,10 +57,10 @@ module.exports.addProvider2 = async (req, res) => {
     });
     if (newProvider) {
       let providerId = newProvider.ui;
-      console.log(req.body.products.length);
       for (let i = 0; i < req.body.products.length; i++) {
+        console.log(req.body.products[i]);
         await ProductsProvider.create({
-          ui: req.body.products[i].id,
+          ui: req.body.products[i],
           providerId: providerId,
         });
       }
