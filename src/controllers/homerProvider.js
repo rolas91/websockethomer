@@ -48,6 +48,7 @@ module.exports.updateStateOrderCount = async (orderId) => {
 module.exports.addProvider2 = async (req, res) => {
   try {
     console.log(
+        'hola mundo',
         req.body        
     );
     let newProvider = await HomerProvider.create({
