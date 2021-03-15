@@ -47,24 +47,19 @@ module.exports.updateStateOrderCount = async (orderId) => {
 
 module.exports.addProvider2 = async (req, res) => {
   try {
-    const { id, lat, lng, products, onesignal } = req.body;
-
-    console.log("mio",req.body);
-
-    // await HomerProvider.find
-
+    
     let newProvider = await HomerProvider.create({
-      ui: id,
+      ui: req.body.id,
       state: true,
-      lat: lat,
-      lng: lng,
-      onesignal: onesignal,
+      lat: req.body.lat,
+      lng: req.body.lng,
+      onesignal: req.body.onesignal,
     });
     if (newProvider) {
       let providerId = newProvider.ui;
-      for (let i = 0; i < products.length; i++) {
+      for (let i = 0; i < req.body.products.length; i++) {
         await ProductsProvider.create({
-          ui: products[i].id,
+          ui: req.body.products[i].id,
           providerId: providerId,
         });
       }
