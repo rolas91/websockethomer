@@ -350,3 +350,17 @@ module.exports.ChangeOrders = async (req, res) => {
     console.log(e);
   }
 };
+
+module.exports.providerOneSignal = async(req, res) => {
+    let providers = await sequelize.query(
+        `SELECT * FROM homerproviders INNER JOIN
+             productsproviders on homerproviders.ui = productsproviders.providerId
+             where productsproviders.ui = ${req.body.product}`,
+        {
+          // replacements: {ui: ui},
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      res.status(200).json({providers})
+}
