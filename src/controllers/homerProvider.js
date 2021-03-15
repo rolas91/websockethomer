@@ -49,7 +49,7 @@ module.exports.addProvider2 = async (req, res) => {
   try {
     const { id, lat, lng, products, onesignal } = req.body;
 
-    console.log(req.body);
+    console.log("body",req.body);
 
     // await HomerProvider.find
 
