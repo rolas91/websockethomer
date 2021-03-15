@@ -7,6 +7,7 @@ const {
   getMessage,
   getOrderCancelByProvider,
   addProvider2,
+  providerOneSignal
 } = require("../controllers/homerProvider");
 
 router.post("/search", nearBy);
@@ -15,6 +16,6 @@ router.post("/orders/changestate", ChangeOrders);
 router.post("/orders/endorders", getOrderCancelByProvider);
 router.post("/message/getmessages", getMessage);
 router.post("/provider/register", addProvider2);
-// router.post("/provider/getonesignal",providerOneSignal)
+router.post("/provider/getonesignal",providerOneSignal)
 
 module.exports = router;
