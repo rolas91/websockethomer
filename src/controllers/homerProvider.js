@@ -202,7 +202,7 @@ module.exports.createOrders = async (req, res) => {
       stateServiceId: stateServiceId,
       date: date,
       hour: hour,
-      location: "Mangua, Nicaragua",
+      location: location,
       lat: lat,
       lng: lng,
       onesignal,
