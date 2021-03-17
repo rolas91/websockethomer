@@ -308,7 +308,6 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
-      response.state = "Aceptar"
     } else if (state === "aceptado") {
       response = await Order.update(
         { status: "he llegado" },
