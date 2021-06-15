@@ -14,6 +14,9 @@ router.post("/search", nearBy);
 router.post("/test", (req, res) => {
   res.status(200).json({ code: "success", msg: "procesado correctamente" });
 });
+router.get("/test", (req, res) => {
+  res.status(200).json({ code: "success", msg: "procesado correctamente" });
+});
 router.post("/orders/create", createOrders);
 router.post("/orders/changestate", ChangeOrders);
 router.post("/orders/endorders", getOrderCancelByProvider);

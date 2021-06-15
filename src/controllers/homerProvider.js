@@ -4,6 +4,7 @@ const HomerProvider = require("../models/HomerProvider");
 const ProductsProvider = require("../models/Productsprovider");
 const Order = require("../models/Order");
 const Message = require("../models/Message");
+const moment = require("moment");
 
 module.exports.updateProvider = async (homerid, state) => {
   return await HomerProvider.update(
@@ -47,10 +48,7 @@ module.exports.updateStateOrderCount = async (orderId) => {
 
 module.exports.addProvider2 = async (req, res) => {
   try {
-    console.log(
-        'hola mundo',
-        req.body        
-    );
+    console.log("hola mundo", req.body);
     let newProvider = await HomerProvider.create({
       ui: req.body.id,
       state: true,
@@ -60,7 +58,7 @@ module.exports.addProvider2 = async (req, res) => {
     });
     if (newProvider) {
       let providerId = newProvider.ui;
-      for (let i = 0; i < req.body.products.length; i++) {        
+      for (let i = 0; i < req.body.products.length; i++) {
         await ProductsProvider.create({
           ui: req.body.products[i],
           providerId: providerId,
@@ -185,22 +183,22 @@ module.exports.createOrders = async (req, res) => {
       lng,
       onesignal,
     } = req.body;
-    console.log("coord", lat, lng);
-    let googleInfo = await axios.get(
-      "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-        lat +
-        "," +
-        lng +
-        "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
-    );
-    console.log(googleInfo);
+    // let googleInfo = await axios.get(
+    //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+    //     lat +
+    //     "," +
+    //     lng +
+    //     "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
+    // );
+    // console.log(googleInfo);
+
     let newService = await Order.create({
       clientUi: clientUi,
       nameClient: nameClient,
       productUi: productUi,
       productName: productName,
       stateServiceId: stateServiceId,
-      date: date,
+      date: moment(date, "YYYY-MM-DD"),
       hour: hour,
       location: location,
       lat: lat,
@@ -351,16 +349,16 @@ module.exports.ChangeOrders = async (req, res) => {
   }
 };
 
-module.exports.providerOneSignal = async(req, res) => {
-    let providers = await sequelize.query(
-        `SELECT * FROM homerproviders INNER JOIN
+module.exports.providerOneSignal = async (req, res) => {
+  let providers = await sequelize.query(
+    `SELECT * FROM homerproviders INNER JOIN
              productsproviders on homerproviders.ui = productsproviders.providerId
              where productsproviders.ui = ${req.body.product}`,
-        {
-          // replacements: {ui: ui},
-          type: sequelize.QueryTypes.SELECT,
-        }
-      );
+    {
+      // replacements: {ui: ui},
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
 
-      res.status(200).json({providers})
-}
+  res.status(200).json({ providers });
+};
