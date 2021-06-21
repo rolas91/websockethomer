@@ -82,7 +82,8 @@ io.on('connection', socket => {
                     if( result.length > 0){  
                         for(let i = 0; i < result.length; i++){ 
                             console.log("resultado de la busqueda de la orden",result[i].id)
-                            socket.join(`${result[i].id}`)  
+                            // socket.join(`${result[i].id}`)  
+                            socket.join(`${data.id}`)  
                             if(result[i].isCount == false && result[i].isCountNow != true) {   
                                 homerProvider.updateStateOrderCount(result[i].id)                                                      
                                 function twoDigits( n )
@@ -107,7 +108,7 @@ io.on('connection', socket => {
                                         mins = time.getUTCMinutes();
                                         console.log(result[i].id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
                                                                                                     
-                                        io.to(`${result[i].id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                                        io.to(`${data.id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
                                         setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
                                     }
                                 }
