@@ -78,7 +78,8 @@ io.on('connection', socket => {
             var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
                 console.log("conectado", data.id);
-                homerProvider.getOrderByProvider(socket.userId).then(result => {           
+                homerProvider.getOrderByProvider(data.id).then(result => {    
+                    console.log(result);       
                     if( result.length > 0){  
                         for(let i = 0; i < result.length; i++){ 
                             console.log("resultado de la busqueda de la orden",result[i].id)
@@ -106,7 +107,7 @@ io.on('connection', socket => {
                                         time = new Date( msLeft );
                                         hours = time.getUTCHours();
                                         mins = time.getUTCMinutes();
-                                        console.log(result[i].id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
+                                        console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
                                                                                                     
                                         io.to(`${data.id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
                                         setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
