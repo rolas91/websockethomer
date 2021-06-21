@@ -77,7 +77,7 @@ io.on('connection', socket => {
     socket.on('getCountDown', (data) => {
             var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
-                console.log("conectado",socket.userId);
+                console.log("conectado", data.id);
                 homerProvider.getOrderByProvider(socket.userId).then(result => {           
                     if( result.length > 0){  
                         for(let i = 0; i < result.length; i++){ 
