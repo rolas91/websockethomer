@@ -125,7 +125,7 @@ io.on('connection', socket => {
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
         socket.join(`${data.id}`)
-        setInterval(() => {
+        setTimeout(() => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
                 if( result.length > 0){  
                     for(let i = 0; i < result.length; i++){                                       
