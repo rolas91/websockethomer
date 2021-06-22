@@ -84,6 +84,7 @@ io.on('connection', socket => {
                             // socket.join(`${result[i].id}`)  
                             socket.join(`${data.id}`)  
                             console.log("ver que pasa",result[i].isCount == false && result[i].isCountNow != true);
+                            console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
                             if(result[i].isCount == false && result[i].isCountNow != true) {   
                                 console.log("entro o no");
                                 homerProvider.updateStateOrderCount(result[i].id)                                                      
