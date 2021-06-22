@@ -83,7 +83,7 @@ io.on('connection', socket => {
                         for(let i = 0; i < result.length; i++){                        
                             // socket.join(`${result[i].id}`)  
                             socket.join(`${data.id}`)  
-                            console.log("ver que pasa",result[i].isCount == false && result[i].isCountNow != true);
+                            console.log("ver que pasa",result[i].isCount == 0 && result[i].isCountNow != 1);
                             console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
                             if(result[i].isCount == 0 && result[i].isCountNow != 1) {   
                                 console.log("entro o no");
