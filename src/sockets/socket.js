@@ -78,14 +78,13 @@ io.on('connection', socket => {
             var  endTime, hours, mins, msLeft, time;
             setTimeout(() =>{
                 console.log("conectado", data.id);
-                homerProvider.getOrderByProvider(data.id).then(result => {    
-                    console.log(result);       
+                homerProvider.getOrderByProvider(data.id).then(result => {           
                     if( result.length > 0){  
-                        for(let i = 0; i < result.length; i++){ 
-                            console.log("resultado de la busqueda de la orden",result[i].id)
+                        for(let i = 0; i < result.length; i++){                        
                             // socket.join(`${result[i].id}`)  
                             socket.join(`${data.id}`)  
                             if(result[i].isCount == false && result[i].isCountNow != true) {   
+                                console.log("entro o no");
                                 homerProvider.updateStateOrderCount(result[i].id)                                                      
                                 function twoDigits( n )
                                 {
