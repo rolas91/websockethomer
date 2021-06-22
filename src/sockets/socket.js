@@ -85,7 +85,7 @@ io.on('connection', socket => {
                             socket.join(`${data.id}`)  
                             console.log("ver que pasa",result[i].isCount === 0 && result[i].isCountNow !== 1);
                             console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
-                            if(result[i].isCount === 0 && result[i].isCountNow !== 1) {   
+                            if(result[i].isCount == 0 && result[i].isCountNow == 1) {   
                                 console.log("entro o no");
                                 homerProvider.updateStateOrderCount(result[i].id)                                                      
                                 function twoDigits( n )
