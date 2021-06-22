@@ -74,63 +74,90 @@ io.on('connection', socket => {
         // }
     }); 
     
-    socket.on('getCountDown', (data) => {
-            var  endTime, hours, mins, msLeft, time;
-            setTimeout(() =>{
-                console.log("conectado", data.id);
-                homerProvider.getOrderByProvider(data.id).then(result => {           
-                    if( result.length > 0){  
-                        for(let i = 0; i < result.length; i++){                        
-                            // socket.join(`${result[i].id}`)  
-                            socket.join(`${data.id}`)  
-                            console.log("ver que pasa",result[i].isCount == 0 && result[i].isCountNow == 1);
-                            console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
-                            if(result[i].isCount == 0 && result[i].isCountNow == 1) {   
-                                console.log("entro o no");
-                                homerProvider.updateStateOrderCount(result[i].id)                                                      
-                                function twoDigits( n )
-                                {
-                                    return (n <= 9 ? "0" + n : n);
-                                }
+    // socket.on('getCountDown', (data) => {
+    //         var  endTime, hours, mins, msLeft, time;
+    //         setTimeout(() =>{                
+    //             homerProvider.getOrderByProvider(data.id).then(result => {           
+    //                 if( result.length > 0){  
+    //                     for(let i = 0; i < result.length; i++){                        
+    //                         // socket.join(`${result[i].id}`)  
+    //                         socket.join(`${data.id}`)  
+    //                         console.log("ver que pasa",result[i].isCount == 0 && result[i].isCountNow == 1);
+    //                         console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
+    //                         if(result[i].isCount == 0 && result[i].isCountNow == 1) {   
+    //                             console.log("entro o no");
+    //                             homerProvider.updateStateOrderCount(result[i].id)                                                      
+    //                             function twoDigits( n )
+    //                             {
+    //                                 return (n <= 9 ? "0" + n : n);
+    //                             }
 
-                                function updateTimer()
-                                {            
-                                    msLeft = endTime - (+new Date);
-                                    if ( msLeft < 1000 ) {
-                                        homerProvider.updateOrder(result[i].id)
-                                        sendNotification({
-                                            "title":"Aviso",
-                                            "content":"Se ha cancelado por que tu homer no acepto la solicitud",
-                                            "onesignalid":result[i].onesignal
-                                        })
-                                        console.log("Time is up!");
-                                    } else {
-                                        time = new Date( msLeft );
-                                        hours = time.getUTCHours();
-                                        mins = time.getUTCMinutes();
-                                        console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
+    //                             function updateTimer()
+    //                             {            
+    //                                 msLeft = endTime - (+new Date);
+    //                                 if ( msLeft < 1000 ) {
+    //                                     homerProvider.updateOrder(result[i].id)
+    //                                     sendNotification({
+    //                                         "title":"Aviso",
+    //                                         "content":"Se ha cancelado por que tu homer no acepto la solicitud",
+    //                                         "onesignalid":result[i].onesignal
+    //                                     })
+    //                                     console.log("Time is up!");
+    //                                 } else {
+    //                                     time = new Date( msLeft );
+    //                                     hours = time.getUTCHours();
+    //                                     mins = time.getUTCMinutes();
+    //                                     console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
                                                                                                     
-                                        io.to(`${data.id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
-                                        setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
-                                    }
-                                }
-                                endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
-                                updateTimer();
-                            }
-                        }
-                    }
-                });
-        },1000)  
-    });
+    //                                     io.to(`${data.id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+    //                                     setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+    //                                 }
+    //                             }
+    //                             endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
+    //                             updateTimer();
+    //                         }
+    //                     }
+    //                 }
+    //             });
+    //     },1000)  
+    // });
 
     socket.on('getordersbyproviders', (data) => { 
         socket.userId = data.id;
         socket.join(`${data.id}`)
         setInterval(() => {
             homerProvider.getOrderByProvider(socket.userId).then(result => {
-                io.to(`${data.id}`).emit('getordersbyproviders',result)
+                if( result.length > 0){  
+                    for(let i = 0; i < result.length; i++){                                       
+                        // if(result[i].isCount == 0 && result[i].isCountNow == 1) {                                                                               
+                            function twoDigits( n )
+                            {
+                                return (n <= 9 ? "0" + n : n);
+                            }
+
+                            function updateTimer()
+                            {            
+                                msLeft = endTime - (+new Date);
+                                if ( msLeft < 1000 ) {                                    
+                                    console.log("Time is up!");
+                                } else {
+                                    time = new Date( msLeft );
+                                    hours = time.getUTCHours();
+                                    mins = time.getUTCMinutes();
+                                    console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                       
+                                                                                                
+                                    io.to(`${data.id}`).emit('getordersbyproviders', {result, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+                                    setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+                                }
+                            }
+                            endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
+                            updateTimer();
+                        // }
+                    }
+                }
+                // io.to(`${data.id}`).emit('getordersbyproviders',result)
             });
-        },2000);
+        },1000);
     });
 
     socket.on('getordersbyclients', (data) => { 
