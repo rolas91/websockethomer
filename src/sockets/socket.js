@@ -175,10 +175,10 @@ io.on("connection", (socket) => {
               }
             }
             // }
+            console.log("loco",results);
           }
           endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
           updateTimer();
-          console.log(results);
           io.to(`${data.id}`).emit("getordersbyproviders", results);
         }
       });
