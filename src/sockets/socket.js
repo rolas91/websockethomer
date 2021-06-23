@@ -149,8 +149,7 @@ io.on("connection", (socket) => {
                 twoDigits(time.getUTCSeconds()),
 
                 // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                
-
-                io.to(`${data.id}`).emit("getordersbyproviders", results);
+               
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
@@ -177,6 +176,7 @@ io.on("connection", (socket) => {
                   count:mytimer
                     
                 });
+                io.to(`${data.id}`).emit("getordersbyproviders", results);
             // }
           }
         }
