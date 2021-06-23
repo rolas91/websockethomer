@@ -1,8 +1,7 @@
-const {io} = require('../../index');
-const homerProvider = require('../controllers/homerProvider');
+const { io } = require("../../index");
+const homerProvider = require("../controllers/homerProvider");
 var Request = require("request");
 const activeUsers = [];
-
 
 // function countDown( minutes, seconds )
 // {
@@ -31,200 +30,222 @@ const activeUsers = [];
 //     updateTimer();
 // }
 
-function sendNotification(data){
-    Request.post({
-        "headers": { "content-type": "application/json" },
-        "url": "https://onesignal.com/api/v1/notifications",
-        "body": JSON.stringify({
-            "app_id": "8ad1c280-92da-4d39-b49c-cf0a81e0d1fc",
-            "include_player_ids": [`${data.onesignalid}`],
-            "data": {"foo": "bar"},
-            "headings": {"en": `${data.title}`},
-            "contents": {"en": `${data.content}`}
-        })
-    }, (error, response, body) => {
-        if(error) {
-            return console.dir(error);
-        }
-        console.dir(JSON.parse(body));
-    });
+function sendNotification(data) {
+  Request.post(
+    {
+      headers: { "content-type": "application/json" },
+      url: "https://onesignal.com/api/v1/notifications",
+      body: JSON.stringify({
+        app_id: "8ad1c280-92da-4d39-b49c-cf0a81e0d1fc",
+        include_player_ids: [`${data.onesignalid}`],
+        data: { foo: "bar" },
+        headings: { en: `${data.title}` },
+        contents: { en: `${data.content}` },
+      }),
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.dir(error);
+      }
+      console.dir(JSON.parse(body));
+    }
+  );
 }
 
+io.on("connection", (socket) => {
+  console.log("usuario conectado");
+  let userName = "";
+  socket.on("adduser", async (data) => {
+    socket.userId = data.id;
+    let response = await homerProvider.searchProvider(data.id);
+    if (response == null) {
+      homerProvider.addProvider(data).then((result) => {
+        io.emit("adduser", result);
+      });
+    } else {
+      let values = Object.values(response);
+      homerProvider.updateProvider(values[0].id, !values[0].state);
+    }
 
-io.on('connection', socket => {
-    console.log("usuario conectado")
-    let userName = '';
-    socket.on('adduser', async(data) => {
-        socket.userId = data.id;
-        let response = await homerProvider.searchProvider(data.id);
-        if(response == null){
-            homerProvider.addProvider(data).then(result => {
-                io.emit('adduser',result);
-            });                    
-        }else{            
-           let values = Object.values(response);
-           homerProvider.updateProvider(values[0].id, !values[0].state)
-           
-        }
+    // if(!activeUsers.includes(socket.userId)){
+    // activeUsers.push(socket.userId);
+    // console.log('usuario activo');
+    // console.log('user add',activeUsers);
+    // }
+  });
 
-        // if(!activeUsers.includes(socket.userId)){
-            // activeUsers.push(socket.userId);
-            // console.log('usuario activo');
-            // console.log('user add',activeUsers);
-        // }
-    }); 
-    
-    // socket.on('getCountDown', (data) => {
-    //         var  endTime, hours, mins, msLeft, time;
-    //         setTimeout(() =>{                
-    //             homerProvider.getOrderByProvider(data.id).then(result => {           
-    //                 if( result.length > 0){  
-    //                     for(let i = 0; i < result.length; i++){                        
-    //                         // socket.join(`${result[i].id}`)  
-    //                         socket.join(`${data.id}`)  
-    //                         console.log("ver que pasa",result[i].isCount == 0 && result[i].isCountNow == 1);
-    //                         console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
-    //                         if(result[i].isCount == 0 && result[i].isCountNow == 1) {   
-    //                             console.log("entro o no");
-    //                             homerProvider.updateStateOrderCount(result[i].id)                                                      
-    //                             function twoDigits( n )
-    //                             {
-    //                                 return (n <= 9 ? "0" + n : n);
-    //                             }
+  // socket.on('getCountDown', (data) => {
+  //         var  endTime, hours, mins, msLeft, time;
+  //         setTimeout(() =>{
+  //             homerProvider.getOrderByProvider(data.id).then(result => {
+  //                 if( result.length > 0){
+  //                     for(let i = 0; i < result.length; i++){
+  //                         // socket.join(`${result[i].id}`)
+  //                         socket.join(`${data.id}`)
+  //                         console.log("ver que pasa",result[i].isCount == 0 && result[i].isCountNow == 1);
+  //                         console.log("ver que pasa2",result[i].isCount, result[i].isCountNow);
+  //                         if(result[i].isCount == 0 && result[i].isCountNow == 1) {
+  //                             console.log("entro o no");
+  //                             homerProvider.updateStateOrderCount(result[i].id)
+  //                             function twoDigits( n )
+  //                             {
+  //                                 return (n <= 9 ? "0" + n : n);
+  //                             }
 
-    //                             function updateTimer()
-    //                             {            
-    //                                 msLeft = endTime - (+new Date);
-    //                                 if ( msLeft < 1000 ) {
-    //                                     homerProvider.updateOrder(result[i].id)
-    //                                     sendNotification({
-    //                                         "title":"Aviso",
-    //                                         "content":"Se ha cancelado por que tu homer no acepto la solicitud",
-    //                                         "onesignalid":result[i].onesignal
-    //                                     })
-    //                                     console.log("Time is up!");
-    //                                 } else {
-    //                                     time = new Date( msLeft );
-    //                                     hours = time.getUTCHours();
-    //                                     mins = time.getUTCMinutes();
-    //                                     console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));   
-                                                                                                    
-    //                                     io.to(`${data.id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
-    //                                     setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
-    //                                 }
-    //                             }
-    //                             endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
-    //                             updateTimer();
-    //                         }
-    //                     }
-    //                 }
-    //             });
-    //     },1000)  
-    // });
+  //                             function updateTimer()
+  //                             {
+  //                                 msLeft = endTime - (+new Date);
+  //                                 if ( msLeft < 1000 ) {
+  //                                     homerProvider.updateOrder(result[i].id)
+  //                                     sendNotification({
+  //                                         "title":"Aviso",
+  //                                         "content":"Se ha cancelado por que tu homer no acepto la solicitud",
+  //                                         "onesignalid":result[i].onesignal
+  //                                     })
+  //                                     console.log("Time is up!");
+  //                                 } else {
+  //                                     time = new Date( msLeft );
+  //                                     hours = time.getUTCHours();
+  //                                     mins = time.getUTCMinutes();
+  //                                     console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
 
-    socket.on('getordersbyproviders', (data) => { 
-        socket.userId = data.id;
-        socket.join(`${data.id}`)
-        setTimeout(() => {
-            homerProvider.getOrderByProvider(socket.userId).then(result => {
-                if( result.length > 0){  
-                    for(let i = 0; i < result.length; i++){                                       
-                        // if(result[i].isCount == 0 && result[i].isCountNow == 1) {                                                                               
-                            function twoDigits( n )
-                            {
-                                return (n <= 9 ? "0" + n : n);
-                            }
+  //                                     io.to(`${data.id}`).emit('getCountDown', {order:result[i].id, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
+  //                                     setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+  //                                 }
+  //                             }
+  //                             endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
+  //                             updateTimer();
+  //                         }
+  //                     }
+  //                 }
+  //             });
+  //     },1000)
+  // });
 
-                            function updateTimer()
-                            {            
-                                msLeft = endTime - (+new Date);
-                                if ( msLeft < 1000 ) {                                    
-                                    console.log("Time is up!");
-                                } else {
-                                    time = new Date( msLeft );
-                                    hours = time.getUTCHours();
-                                    mins = time.getUTCMinutes();
-                                    console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                                       
-                                                                                                
-                                    io.to(`${data.id}`).emit('getordersbyproviders', {result, count : ( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds())});
-                                    setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
-                                }
-                            }
-                            endTime = (+new Date) + 1000 * (60*10 + 0) + 500;
-                            updateTimer();
-                        // }
-                    }
-                }
-                // io.to(`${data.id}`).emit('getordersbyproviders',result)
-            });
-        },1000);
-    });
-
-    socket.on('getordersbyclients', (data) => { 
-        socket.userId = data.id;
-        console.log(socket.userId)
-        socket.join(`${data.id}`)
-        setInterval(() => {
-            homerProvider.getOrderByClient(socket.userId).then(result => {
-                io.to(`${data.id}`).emit('getordersbyclients',result)
-            });
-        },2000);
-    });
-
-    socket.on('validaactiveprovider', (data) => {
-        let dataEntry = data;
-        let sendNewData = [];
-        for(let i = 0; i < dataEntry.length; i++){
-            for(let j = 0; j < activeUsers.length; j++){
-                if(activeUsers[j] == dataEntry[i]){
-                    sendNewData.push(activeUsers[j]);
-                }
+  socket.on("getordersbyproviders", (data) => {
+    socket.userId = data.id;
+    socket.join(`${data.id}`);
+    setTimeout(() => {
+      homerProvider.getOrderByProvider(socket.userId).then((result) => {
+        if (result.length > 0) {
+          for (let i = 0; i < result.length; i++) {
+            // if(result[i].isCount == 0 && result[i].isCountNow == 1) {
+            function twoDigits(n) {
+              return n <= 9 ? "0" + n : n;
             }
+
+            function updateTimer() {
+              msLeft = endTime - +new Date();
+              if (msLeft < 1000) {
+                console.log("Time is up!");
+              } else {
+                time = new Date(msLeft);
+                hours = time.getUTCHours();
+                mins = time.getUTCMinutes();
+                let results = {
+                  providerId: result.providerId,
+                  id: result.id,
+                  clientUi: result.clientUi,
+                  nameClient: result.nameClient,
+                  productUi: result.productUi,
+                  productName: result.productName,
+                  status: result.status,
+                  isCancel: result.isCancel,
+                  isCount: result.isCount,
+                  isCountNow: result.isCountNow,
+                  date: result.date,
+                  hour: result.hour,
+                  location: result.location,
+                  lat: result.lat,
+                  lng: result.lng,
+                  onesignal: result.onesignal,
+                  count:
+                    (hours ? hours + ":" + twoDigits(mins) : mins) +
+                    ":" +
+                    twoDigits(time.getUTCSeconds()),
+                };
+                // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
+
+                io.to(`${data.id}`).emit("getordersbyproviders", results);
+                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+              }
+            }
+            endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
+            updateTimer();
+            // }
+          }
         }
-        
-        io.emit('validaactiveprovider',[sendNewData]);
-    }); 
-    
-    
-    
-    socket.on('set-nickname', (data) => {   
-        const room_data = data;
-        userName = room_data.userName;
-        const roomName = room_data.roomName;
+        // io.to(`${data.id}`).emit('getordersbyproviders',result)
+      });
+    }, 1000);
+  });
 
-        socket.join(`${roomName}`)
-        console.log(`Username : ${userName} joined Room Name : ${roomName}`)
+  socket.on("getordersbyclients", (data) => {
+    socket.userId = data.id;
+    console.log(socket.userId);
+    socket.join(`${data.id}`);
+    setInterval(() => {
+      homerProvider.getOrderByClient(socket.userId).then((result) => {
+        io.to(`${data.id}`).emit("getordersbyclients", result);
+      });
+    }, 2000);
+  });
 
-        io.to(`${roomName}`).emit('users-changed', {user: userName, event: 'joined'});    
+  socket.on("validaactiveprovider", (data) => {
+    let dataEntry = data;
+    let sendNewData = [];
+    for (let i = 0; i < dataEntry.length; i++) {
+      for (let j = 0; j < activeUsers.length; j++) {
+        if (activeUsers[j] == dataEntry[i]) {
+          sendNewData.push(activeUsers[j]);
+        }
+      }
+    }
+
+    io.emit("validaactiveprovider", [sendNewData]);
+  });
+
+  socket.on("set-nickname", (data) => {
+    const room_data = data;
+    userName = room_data.userName;
+    const roomName = room_data.roomName;
+
+    socket.join(`${roomName}`);
+    console.log(`Username : ${userName} joined Room Name : ${roomName}`);
+
+    io.to(`${roomName}`).emit("users-changed", {
+      user: userName,
+      event: "joined",
     });
+  });
 
-    socket.on('add-message', (data) => {
-        const messageData = data;
-        const messageContent = messageData.text
-        const roomName = messageData.roomName
-        
-         console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
-        homerProvider.addMessage(messageContent, userName, roomName, Date())
-        io.to(`${roomName}`).emit('message', {text: messageContent, from:userName, created: new Date()})   
-    });   
-    
+  socket.on("add-message", (data) => {
+    const messageData = data;
+    const messageContent = messageData.text;
+    const roomName = messageData.roomName;
 
-    socket.on('unsubscribe',function(data) {
-        console.log('unsubscribe trigged')
-        const room_data = JSON.parse(data)
-        const userName = room_data.userName;
-        const roomName = room_data.roomName;
-    
-        console.log(`Username : ${userName} leaved Room Name : ${roomName}`)
-        socket.broadcast.to(`${roomName}`).emit('userLeftChatRoom',userName)
-        socket.leave(`${roomName}`)
-    })
-
-    
-
-    socket.on('disconnect', () => {       
-        io.emit("user disconnected", socket.userId);
-        io.emit('users-changed', {user: userName, event: 'left'});
+    console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`);
+    homerProvider.addMessage(messageContent, userName, roomName, Date());
+    io.to(`${roomName}`).emit("message", {
+      text: messageContent,
+      from: userName,
+      created: new Date(),
     });
-    
+  });
+
+  socket.on("unsubscribe", function (data) {
+    console.log("unsubscribe trigged");
+    const room_data = JSON.parse(data);
+    const userName = room_data.userName;
+    const roomName = room_data.roomName;
+
+    console.log(`Username : ${userName} leaved Room Name : ${roomName}`);
+    socket.broadcast.to(`${roomName}`).emit("userLeftChatRoom", userName);
+    socket.leave(`${roomName}`);
+  });
+
+  socket.on("disconnect", () => {
+    io.emit("user disconnected", socket.userId);
+    io.emit("users-changed", { user: userName, event: "left" });
+  });
 });
