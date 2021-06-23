@@ -168,7 +168,7 @@ io.on("connection", (socket) => {
                 // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
                 console.log("pruebass",result);
 
-                io.to(`${data.id}`).emit("getordersbyproviders", results);
+                io.to(`${data.id}`).emit("getordersbyproviders", [results]);
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
