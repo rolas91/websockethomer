@@ -153,7 +153,9 @@ io.on("connection", (socket) => {
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
-
+            
+            endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
+            updateTimer();
             results.push({
               providerId: result[i].providerId,
               id: result[i].id,
@@ -175,8 +177,6 @@ io.on("connection", (socket) => {
             });
             // }
           }
-          endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
-          updateTimer();
           io.to(`${data.id}`).emit("getordersbyproviders", results);
         }
       });
