@@ -151,30 +151,32 @@ io.on("connection", (socket) => {
                   twoDigits(time.getUTCSeconds()),
                   // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
 
+                  results.push({
+                    providerId: result[i].providerId,
+                    id: result[i].id,
+                    clientUi: result[i].clientUi,
+                    nameClient: result[i].nameClient,
+                    productUi: result[i].productUi,
+                    productName: result[i].productName,
+                    status: result[i].status,
+                    isCancel: result[i].isCancel,
+                    isCount: result[i].isCount,
+                    isCountNow: result[i].isCountNow,
+                    date: result[i].date,
+                    hour: result[i].hour,
+                    location: result[i].location,
+                    lat: result[i].lat,
+                    lng: result[i].lng,
+                    onesignal: result[i].onesignal,
+                    count: mytimer,
+                  });
+
                   setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
             endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
             updateTimer();
-            results.push({
-              providerId: result[i].providerId,
-              id: result[i].id,
-              clientUi: result[i].clientUi,
-              nameClient: result[i].nameClient,
-              productUi: result[i].productUi,
-              productName: result[i].productName,
-              status: result[i].status,
-              isCancel: result[i].isCancel,
-              isCount: result[i].isCount,
-              isCountNow: result[i].isCountNow,
-              date: result[i].date,
-              hour: result[i].hour,
-              location: result[i].location,
-              lat: result[i].lat,
-              lng: result[i].lng,
-              onesignal: result[i].onesignal,
-              count: mytimer,
-            });
+          
             // io.to(`${data.id}`).emit("getordersbyproviders", results);
             // }
           }
