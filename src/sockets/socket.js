@@ -145,10 +145,10 @@ io.on("connection", (socket) => {
                 hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
 
-                (mytimer =
+                mytimer =
                   (hours ? hours + ":" + twoDigits(mins) : mins) +
                   ":" +
-                  twoDigits(time.getUTCSeconds())),
+                  twoDigits(time.getUTCSeconds())
                   // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
 
                   results.push({
@@ -171,12 +171,13 @@ io.on("connection", (socket) => {
                     count: mytimer,
                   });
 
-                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+               return setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+               
               }
             }
             endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
             updateTimer();
-            console.log("mierda loca", endTime);
+            console.log(updateTimer());
             io.to(`${data.id}`).emit("getordersbyproviders", results);
             // }
           }
