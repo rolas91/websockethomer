@@ -143,38 +143,38 @@ io.on("connection", (socket) => {
                 time = new Date(msLeft);
                 hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
-               
+                let results = {
+                  providerId: result.providerId,
+                  id: result.id,
+                  clientUi: result.clientUi,
+                  nameClient: result.nameClient,
+                  productUi: result.productUi,
+                  productName: result.productName,
+                  status: result.status,
+                  isCancel: result.isCancel,
+                  isCount: result.isCount,
+                  isCountNow: result.isCountNow,
+                  date: result.date,
+                  hour: result.hour,
+                  location: result.location,
+                  lat: result.lat,
+                  lng: result.lng,
+                  onesignal: result.onesignal,
+                  count:
+                    (hours ? hours + ":" + twoDigits(mins) : mins) +
+                    ":" +
+                    twoDigits(time.getUTCSeconds()),
+                };
                 // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
-                mytimer = (hours ? hours + ":" + twoDigits(mins) : mins) +
-                ":" +
-                twoDigits(time.getUTCSeconds()),               
+                console.log("pruebass",results);
+
+                io.to(`${data.id}`).emit("getordersbyproviders", results);
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
             endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
             updateTimer();
             // }
-            let results = {
-                providerId: result.providerId,
-                id: result.id,
-                clientUi: result.clientUi,
-                nameClient: result.nameClient,
-                productUi: result.productUi,
-                productName: result.productName,
-                status: result.status,
-                isCancel: result.isCancel,
-                isCount: result.isCount,
-                isCountNow: result.isCountNow,
-                date: result.date,
-                hour: result.hour,
-                location: result.location,
-                lat: result.lat,
-                lng: result.lng,
-                onesignal: result.onesignal             
-                 
-              };
-              console.log("sirvo la data",result);
-              io.to(`${data.id}`).emit("getordersbyproviders", results);
           }
         }
         // io.to(`${data.id}`).emit('getordersbyproviders',result)
