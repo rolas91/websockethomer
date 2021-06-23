@@ -181,7 +181,7 @@ io.on("connection", (socket) => {
         //     // io.to(`${data.id}`).emit("getordersbyproviders", results);
         //     // }
         //   }
-          io.to(`${data.id}`).emit('getordersbyproviders',results)
+          io.to(`${data.id}`).emit('getordersbyproviders',result)
         }
       });
     }, 1000);
