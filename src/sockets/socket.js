@@ -171,7 +171,7 @@ io.on("connection", (socket) => {
                 lat: result.lat,
                 lng: result.lng,
                 onesignal: result.onesignal,
-                count: mytimer
+             
                  
               };
               io.to(`${data.id}`).emit("getordersbyproviders", results);
