@@ -130,58 +130,57 @@ io.on("connection", (socket) => {
     setTimeout(() => {
       homerProvider.getOrderByProvider(socket.userId).then((result) => {
         if (result.length > 0) {
-        //   for (let i = 0; i < result.length; i++) {
-        //     // if(result[i].isCount == 0 && result[i].isCountNow == 1) {
-        //     function twoDigits(n) {
-        //       return n <= 9 ? "0" + n : n;
-        //     }
+          for (let i = 0; i < result.length; i++) {
+            // if(result[i].isCount == 0 && result[i].isCountNow == 1) {
+            function twoDigits(n) {
+              return n <= 9 ? "0" + n : n;
+            }
 
-        //     function updateTimer() {
-        //       msLeft = endTime - +new Date();
-        //       if (msLeft < 1000) {
-        //         console.log("Time is up!");
-        //       } else {
-        //         time = new Date(msLeft);
-        //         hours = time.getUTCHours();
-        //         mins = time.getUTCMinutes();
+            function updateTimer() {
+              msLeft = endTime - +new Date();
+              if (msLeft < 1000) {
+                console.log("Time is up!");
+              } else {
+                time = new Date(msLeft);
+                hours = time.getUTCHours();
+                mins = time.getUTCMinutes();
 
-        //         mytimer =
-        //           (hours ? hours + ":" + twoDigits(mins) : mins) +
-        //           ":" +
-        //           twoDigits(time.getUTCSeconds()),
-        //           // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
+                (mytimer =
+                  (hours ? hours + ":" + twoDigits(mins) : mins) +
+                  ":" +
+                  twoDigits(time.getUTCSeconds())),
+                  // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
 
-        //           results.push({
-        //             providerId: result[i].providerId,
-        //             id: result[i].id,
-        //             clientUi: result[i].clientUi,
-        //             nameClient: result[i].nameClient,
-        //             productUi: result[i].productUi,
-        //             productName: result[i].productName,
-        //             status: result[i].status,
-        //             isCancel: result[i].isCancel,
-        //             isCount: result[i].isCount,
-        //             isCountNow: result[i].isCountNow,
-        //             date: result[i].date,
-        //             hour: result[i].hour,
-        //             location: result[i].location,
-        //             lat: result[i].lat,
-        //             lng: result[i].lng,
-        //             onesignal: result[i].onesignal,
-        //             count: mytimer,
-        //           });
-        //           console.log("dentro del objeto", results);
-        //           console.log("solo mytimer", mytimer);
-        //           setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
-        //       }
-        //     }
-        //     endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
-        //     updateTimer();
-          
-        //     // io.to(`${data.id}`).emit("getordersbyproviders", results);
-        //     // }
-        //   }
-          io.to(`${data.id}`).emit('getordersbyproviders',result)
+                  results.push({
+                    providerId: result[i].providerId,
+                    id: result[i].id,
+                    clientUi: result[i].clientUi,
+                    nameClient: result[i].nameClient,
+                    productUi: result[i].productUi,
+                    productName: result[i].productName,
+                    status: result[i].status,
+                    isCancel: result[i].isCancel,
+                    isCount: result[i].isCount,
+                    isCountNow: result[i].isCountNow,
+                    date: result[i].date,
+                    hour: result[i].hour,
+                    location: result[i].location,
+                    lat: result[i].lat,
+                    lng: result[i].lng,
+                    onesignal: result[i].onesignal,
+                    count: mytimer,
+                  });
+
+                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+              }
+            }
+            endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
+            updateTimer();
+            console.log("mierda loca", endTime);
+            io.to(`${data.id}`).emit("getordersbyproviders", results);
+            // }
+          }
+          //   io.to(`${data.id}`).emit('getordersbyproviders',result)
         }
       });
     }, 1000);
