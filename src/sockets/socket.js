@@ -143,7 +143,8 @@ io.on("connection", (socket) => {
                 time = new Date(msLeft);
                 hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
-                let results = {
+                let results = [];
+                results.push({
                   providerId: result[i].providerId,
                   id: result[i].id,
                   clientUi: result[i].clientUi,
@@ -164,11 +165,12 @@ io.on("connection", (socket) => {
                     (hours ? hours + ":" + twoDigits(mins) : mins) +
                     ":" +
                     twoDigits(time.getUTCSeconds()),
-                };
-                // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
-                console.log("pruebass",result);
+                });
 
-                io.to(`${data.id}`).emit("getordersbyproviders", [results]);
+                // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
+                console.log("pruebass", result);
+
+                io.to(`${data.id}`).emit("getordersbyproviders", results);
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
