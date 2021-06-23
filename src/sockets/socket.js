@@ -123,7 +123,7 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("getordersbyproviders", (data) => {
-    let mytimer;
+    var mytimer;
     socket.userId = data.id;
     socket.join(`${data.id}`);
     setTimeout(() => {
@@ -141,41 +141,40 @@ io.on("connection", (socket) => {
                 console.log("Time is up!");
               } else {
                 time = new Date(msLeft);
-                hours = time.getUTCHours();
+                hours = time.getUTCH = ours();
                 mins = time.getUTCMinutes();
-                let results = [];
-                results.push({
-                  providerId: result[i].providerId,
-                  id: result[i].id,
-                  clientUi: result[i].clientUi,
-                  nameClient: result[i].nameClient,
-                  productUi: result[i].productUi,
-                  productName: result[i].productName,
-                  status: result[i].status,
-                  isCancel: result[i].isCancel,
-                  isCount: result[i].isCount,
-                  isCountNow: result[i].isCountNow,
-                  date: result[i].date,
-                  hour: result[i].hour,
-                  location: result[i].location,
-                  lat: result[i].lat,
-                  lng: result[i].lng,
-                  onesignal: result[i].onesignal,
-                  count:
-                    (hours ? hours + ":" + twoDigits(mins) : mins) +
-                    ":" +
-                    twoDigits(time.getUTCSeconds()),
-                });
+                (mytimer =
+                  (hours ? hours + ":" + twoDigits(mins) : mins) +
+                  ":" +
+                  twoDigits(time.getUTCSeconds())),
+                  // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
 
-                // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
-                console.log("pruebass", result);
-
-                io.to(`${data.id}`).emit("getordersbyproviders", results);
-                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+                  setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
             endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
             updateTimer();
+            let results = [];
+            results.push({
+              providerId: result[i].providerId,
+              id: result[i].id,
+              clientUi: result[i].clientUi,
+              nameClient: result[i].nameClient,
+              productUi: result[i].productUi,
+              productName: result[i].productName,
+              status: result[i].status,
+              isCancel: result[i].isCancel,
+              isCount: result[i].isCount,
+              isCountNow: result[i].isCountNow,
+              date: result[i].date,
+              hour: result[i].hour,
+              location: result[i].location,
+              lat: result[i].lat,
+              lng: result[i].lng,
+              onesignal: result[i].onesignal,
+              count: mytimer,
+            });
+            io.to(`${data.id}`).emit("getordersbyproviders", results);
             // }
           }
         }
