@@ -170,7 +170,8 @@ io.on("connection", (socket) => {
                     onesignal: result[i].onesignal,
                     count: mytimer,
                   });
-
+                  console.log("dentro del objeto", results.count);
+                  console.log("solo mytimer", mytimer);
                   setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
