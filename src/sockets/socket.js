@@ -170,17 +170,15 @@ io.on("connection", (socket) => {
                   onesignal: result[i].onesignal,
                   count: mytimer,
                 });
-                results.map(res => console.log("solo count",res.count));
-                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);                
+
+                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
-            endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
-            updateTimer();
-            console.log(updateTimer());
-            io.to(`${data.id}`).emit("getordersbyproviders", results);
             // }
           }
-          //   io.to(`${data.id}`).emit('getordersbyproviders',result)
+          endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
+          updateTimer();
+          io.to(`${data.id}`).emit("getordersbyproviders", results);
         }
       });
     }, 1000);
