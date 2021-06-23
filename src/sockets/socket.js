@@ -171,11 +171,11 @@ io.on("connection", (socket) => {
                   count: mytimer,
                 });
 
+                console.log("loco",results);
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
             // }
-            console.log("loco",results);
           }
           endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
           updateTimer();
