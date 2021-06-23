@@ -170,9 +170,8 @@ io.on("connection", (socket) => {
                   onesignal: result[i].onesignal,
                   count: mytimer,
                 });
-
-                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
-                return results;
+                results.map(res => console.log("solo count",res.count));
+                setTimeout(updateTimer, time.getUTCMilliseconds() + 500);                
               }
             }
             endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
