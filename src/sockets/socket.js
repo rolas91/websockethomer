@@ -151,10 +151,11 @@ io.on("connection", (socket) => {
                 // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                
                
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+                return mytimer;
               }
             }
             endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
-            updateTimer();
+            // updateTimer();
             let results = [];
                 results.push({
                   providerId: result[i].providerId,
@@ -173,7 +174,7 @@ io.on("connection", (socket) => {
                   lat: result[i].lat,
                   lng: result[i].lng,
                   onesignal: result[i].onesignal,
-                  count:mytimer
+                  count:updateTimer()
                     
                 });
                 io.to(`${data.id}`).emit("getordersbyproviders", results);
