@@ -178,6 +178,7 @@ io.on("connection", (socket) => {
           }
           endTime = +new Date() + 1000 * (60 * 10 + 0) + 500;
           updateTimer();
+          console.log(results);
           io.to(`${data.id}`).emit("getordersbyproviders", results);
         }
       });
