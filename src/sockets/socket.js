@@ -170,10 +170,10 @@ io.on("connection", (socket) => {
                 location: result.location,
                 lat: result.lat,
                 lng: result.lng,
-                onesignal: result.onesignal,
-             
+                onesignal: result.onesignal             
                  
               };
+              console.log("sirvo la data",result);
               io.to(`${data.id}`).emit("getordersbyproviders", results);
           }
         }
