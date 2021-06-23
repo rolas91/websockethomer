@@ -144,7 +144,7 @@ io.on("connection", (socket) => {
                 hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
                 let results = {
-                  providerId: result.providerId,
+                  providerId: result[i].providerId,
                   id: result[i].id,
                   clientUi: result[i].clientUi,
                   nameClient: result[i].nameClient,
