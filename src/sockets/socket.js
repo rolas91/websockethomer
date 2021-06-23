@@ -145,10 +145,10 @@ io.on("connection", (socket) => {
                 hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
 
-                (mytimer =
+                mytimer =
                   (hours ? hours + ":" + twoDigits(mins) : mins) +
                   ":" +
-                  twoDigits(time.getUTCSeconds())),
+                  twoDigits(time.getUTCSeconds()),
                   // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));
 
                   setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
