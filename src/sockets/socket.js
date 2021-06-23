@@ -123,7 +123,7 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("getordersbyproviders", (data) => {
-    var mytimer;
+    let mytimer;
     socket.userId = data.id;
     socket.join(`${data.id}`);
     setTimeout(() => {
@@ -141,7 +141,7 @@ io.on("connection", (socket) => {
                 console.log("Time is up!");
               } else {
                 time = new Date(msLeft);
-                hours = time.getUTCH = ours();
+                hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
                 
                 mytimer = (hours ? hours + ":" + twoDigits(mins) : mins) +
@@ -150,7 +150,7 @@ io.on("connection", (socket) => {
 
                 // console.log(data.id,( hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds()));                
 
-               
+                io.to(`${data.id}`).emit("getordersbyproviders", results);
                 setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
               }
             }
@@ -174,9 +174,9 @@ io.on("connection", (socket) => {
                   lat: result[i].lat,
                   lng: result[i].lng,
                   onesignal: result[i].onesignal,
-                  count:1                    
+                  count:mytimer
+                    
                 });
-                io.to(`${data.id}`).emit("getordersbyproviders", results);
             // }
           }
         }
