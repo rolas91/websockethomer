@@ -123,15 +123,10 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("getordersbyproviders", (data) => {
-    let mytimer;
-    let results = [];
-    socket.userId = data.id;
     socket.join(`${data.id}`);
     setTimeout(() => {
-      homerProvider.getOrderByProvider(socket.userId).then((result) => {
-        if (result.length > 0) {          
-          io.to(`${data.id}`).emit("getordersbyproviders", result);
-        }
+      homerProvider.getOrderByProvider(data.id).then((result) => {
+        io.to(`${data.id}`).emit("getordersbyproviders", result);
       });
     }, 1000);
   });
