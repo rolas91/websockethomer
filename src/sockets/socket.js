@@ -124,7 +124,7 @@ io.on("connection", (socket) => {
 
   socket.on("getordersbyproviders", (data) => {
     socket.join(`${data.id}`);
-    setTimeout(() => {
+    setInterval(() => {
       homerProvider.getOrderByProvider(data.id).then((result) => {
         io.to(`${data.id}`).emit("getordersbyproviders", result);
       });
