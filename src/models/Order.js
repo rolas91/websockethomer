@@ -1,60 +1,76 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../db');
+const Sequelize = require("sequelize");
+const sequelize = require("../db");
 
-const RequestClient = sequelize.define('order', {
+const RequestClient = sequelize.define(
+  "order",
+  {
     id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey:true
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    clientUi:{
-        type: Sequelize.INTEGER,
+    clientUi: {
+      type: Sequelize.INTEGER,
     },
-    nameClient:{
-        type: Sequelize.STRING
+    nameClient: {
+      type: Sequelize.STRING,
     },
-    productUi:{
-        type: Sequelize.INTEGER
+    productUi: {
+      type: Sequelize.INTEGER,
     },
-    productName:{
-        type: Sequelize.STRING
+    productName: {
+      type: Sequelize.STRING,
     },
-    status:{
-        type: Sequelize.ENUM,
-        values: ['solicitado','aceptado','he llegado','iniciado','finalizado', 'rechazado', 'cancelado'],
-        defaultValue: 'solicitado'
+    status: {
+      type: Sequelize.ENUM,
+      values: [
+        "solicitado",
+        "aceptado",
+        "he llegado",
+        "iniciado",
+        "finalizado",
+        "rechazado",
+        "cancelado",
+      ],
+      defaultValue: "solicitado",
     },
-    isCancel:{
-        type:Sequelize.STRING
+    isCancel: {
+      type: Sequelize.STRING,
     },
-    isCount:{
-        type: Sequelize.BOOLEAN,
-        defaultValue:false
+    isCount: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
-    isCountNow:{
-        type: Sequelize.BOOLEAN,
-        defaultValue:true
+    isCountNow: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
     },
-    date:{
-        type: Sequelize.DATEONLY
+    date: {
+      type: Sequelize.DATEONLY,
     },
-    hour:{
-        type: Sequelize.TIME
+    hour: {
+      type: Sequelize.TIME,
     },
-    location:{
-        type:Sequelize.STRING
+    location: {
+      type: Sequelize.STRING,
     },
-    lat:{
-        type:Sequelize.STRING
+    lat: {
+      type: Sequelize.STRING,
     },
-    lng:{
-        type:Sequelize.STRING
+    lng: {
+      type: Sequelize.STRING,
     },
-    onesignal:{
-        type:Sequelize.TEXT
-    }
-},{
-    timestamps:false
-});
+    onesignal: {
+      type: Sequelize.TEXT,
+    },
+    countDown: {
+      type: Sequelize.INTEGER,
+      defaultValue: 10,
+    },
+  },
+  {
+    timestamps: false,
+  }
+);
 
 module.exports = RequestClient;

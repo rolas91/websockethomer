@@ -7,6 +7,8 @@ const app = express();
 const port = process.env.PORT || 8000;
 const bodyParser = require("body-parser");
 const haversine = require("haversine");
+const cron = require("node-cron");
+const { changeState } = require("./src/controllers/homerProvider");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,19 +38,19 @@ app.post("/validaactiveprovider", function (req, res) {
 const router = require("./src/routes");
 app.use("/api/v1", router);
 
-const server = app.listen(port, () => {  
+const server = app.listen(port, () => {
   sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("conexion exitosa a la base de datos");
-  })
-  .catch((error) => {
-    console.log("Se ha producido un error", error);
-  });
-  cron.schedule(
-		'* * * * *',() => {
-            
+    .sync({ force: false })
+    .then(() => {
+      console.log("conexion exitosa a la base de datos");
+    })
+    .catch((error) => {
+      console.log("Se ha producido un error", error);
     });
+  cron.schedule("* * * * *", () => {
+    console.log("se ejecuta cron");
+    changeState();
+  });
   console.log(`connection is successful on port  ${port}`);
 });
 

@@ -293,9 +293,8 @@ module.exports.nearBy = async (req, res) => {
 
 module.exports.ChangeOrders = async (req, res) => {
   try {
-    const { order } = req.body;
-    let { state } = req.body;
-    let { isCancel } = req.body;
+    const { order, state, isCancel } = req.body;
+
     let response;
     if (state === "solicitado") {
       response = await Order.update(
@@ -365,7 +364,11 @@ module.exports.providerOneSignal = async (req, res) => {
 
 module.exports.changeState = async () => {
   try {
-    
+    let order = await Order.update(
+      { countDown: 'countDown' - 1 },
+      { where: { status: "solicitado", countDown: 'countDown' > 0} }
+    );
+    console.log(order);
   } catch (error) {
     console.log(`error ${error}`);
   }
