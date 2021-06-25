@@ -128,9 +128,9 @@ io.on("connection", (socket) => {
     socket.userId = data.id;
     socket.join(`${data.id}`);
     setTimeout(() => {
-      homerProvider.getOrderByProvider(socket.userId).then((results) => {
+      homerProvider.getOrderByProvider(socket.userId).then((result) => {
         if (result.length > 0) {          
-          io.to(`${data.id}`).emit("getordersbyproviders", results);
+          io.to(`${data.id}`).emit("getordersbyproviders", result);
         }
       });
     }, 1000);

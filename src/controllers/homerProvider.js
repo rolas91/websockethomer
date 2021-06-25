@@ -365,9 +365,8 @@ module.exports.providerOneSignal = async (req, res) => {
 module.exports.changeState = async () => {
   try {
     let order = await Order.decrement(
-      ["countDown"],
-      { by: "1" },
-      { where: { status: "solicitado" } }
+      {"countDown":1},
+      { where: { status: 1 } }
     );
     console.log(order);
   } catch (error) {
