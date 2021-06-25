@@ -36,17 +36,20 @@ app.post("/validaactiveprovider", function (req, res) {
 const router = require("./src/routes");
 app.use("/api/v1", router);
 
-const server = app.listen(port, () => {
-  console.log(`connection is successful on port  ${port}`);
-
+const server = app.listen(port, () => {  
   sequelize
-    .sync({ force: false })
-    .then(() => {
-      console.log("conexion exitosa a la base de datos");
-    })
-    .catch((error) => {
-      console.log("Se ha producido un error", error);
+  .sync({ force: false })
+  .then(() => {
+    console.log("conexion exitosa a la base de datos");
+  })
+  .catch((error) => {
+    console.log("Se ha producido un error", error);
+  });
+  cron.schedule(
+		'* * * * *',() => {
+            
     });
+  console.log(`connection is successful on port  ${port}`);
 });
 
 module.exports.io = require("socket.io")(server);

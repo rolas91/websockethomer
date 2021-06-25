@@ -362,3 +362,11 @@ module.exports.providerOneSignal = async (req, res) => {
 
   res.status(200).json({ providers });
 };
+
+module.exports.changeState = async () => {
+  try {
+    
+  } catch (error) {
+    console.log(`error ${error}`);
+  }
+};
