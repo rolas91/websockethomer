@@ -5,6 +5,7 @@ const ProductsProvider = require("../models/Productsprovider");
 const Order = require("../models/Order");
 const Message = require("../models/Message");
 const moment = require("moment");
+const { Op } = require("sequelize");
 
 module.exports.updateProvider = async (homerid, state) => {
   return await HomerProvider.update(
@@ -366,8 +367,8 @@ module.exports.changeState = async () => {
   try {
     // let findAll = await Order.findAll();
     let order = await Order.decrement(
-      {"countDown":1},
-      { where: { status: 1, countDown: "countDown" > 0 } }
+      { countDown: 1 },
+      { where: { status: 1, countDown: { [Op.gt]: 0 } } }
     );
     console.log(order);
   } catch (error) {
