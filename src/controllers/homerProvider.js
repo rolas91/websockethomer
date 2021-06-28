@@ -3,7 +3,7 @@ const HomerProvider = require("../models/HomerProvider");
 const ProductsProvider = require("../models/Productsprovider");
 const Order = require("../models/Order");
 const Message = require("../models/Message");
-const {send} = require("../utils/notification");
+const { sendNotification } = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
 
@@ -369,14 +369,34 @@ module.exports.changeState = async () => {
       { countDown: 1 },
       { where: { status: 1, countDown: { [Op.gt]: 0 } } }
     );
-    // await Order.update({ status: 7 }, { where: { countDown: 0, status: 1 } });
 
     Order.findAll({ where: { countDown: 0, status: 1 } }).then(function (
-      thingie
+      order
     ) {
-      thingie.forEach(function (t) {
-        send(t.onesignal, "Servicio cancelado","Estimado usuario el servicio no fue aceptado por lo tanto ha sido cancelado intente con otro homer")
+      order.forEach(async function (t) {
+        sendNotification(
+          t.onesignal,
+          "Servicio expirado",
+          "Estimado usuario, el servicio no fue aceptado, por lo tanto expiró. Intente nuevamente, o intente con otro Homer"
+        );
+
         t.update({ status: 7 });
+
+        let providers = await sequelize.query(
+          `SELECT * FROM homerproviders as hp INNER JOIN                 
+                 productsproviders as pp on pp.providerId = hp.ui 
+                 where pp.ui = ${t.productUi} `,
+          {
+            type: sequelize.QueryTypes.SELECT,
+          }
+        );
+        providers.forEach(function (t) {
+          sendNotification(
+            t.onesignal,
+            "Servicio expirado",
+            "Estimado Homer, no has aceptado un servicio y por lo tanto se le ha notificado al cliente que no estas disponible"
+          );
+        });
       });
     });
   } catch (error) {
