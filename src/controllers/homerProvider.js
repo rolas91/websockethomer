@@ -394,7 +394,7 @@ module.exports.changeState = async () => {
           sendNotification(
             t.onesignal,
             "Servicio expirado",
-            "Estimado Homer, no has aceptado un servicio y por lo tanto se le ha notificado al cliente que no estas disponible"
+            "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
           );
         });
       });
