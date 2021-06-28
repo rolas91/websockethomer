@@ -1,9 +1,9 @@
 const sequelize = require("../db");
-const axios = require("axios");
 const HomerProvider = require("../models/HomerProvider");
 const ProductsProvider = require("../models/Productsprovider");
 const Order = require("../models/Order");
 const Message = require("../models/Message");
+const {send} = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
 
@@ -365,12 +365,20 @@ module.exports.providerOneSignal = async (req, res) => {
 
 module.exports.changeState = async () => {
   try {
-    // let findAll = await Order.findAll();
     await Order.decrement(
       { countDown: 1 },
       { where: { status: 1, countDown: { [Op.gt]: 0 } } }
     );
-    await Order.update({ status: 7 }, { where: { countDown: 0, status: 1 } });
+    // await Order.update({ status: 7 }, { where: { countDown: 0, status: 1 } });
+
+    Order.findAll({ where: { countDown: 0, status: 1 } }).then(function (
+      thingie
+    ) {
+      thingie.forEach(function (t) {
+        send(t.onesignal, "Servicio cancelado","Estimado usuario el servicio no fue aceptado por lo tanto ha sido cancelado intente con otro homer")
+        t.update({ status: 7 });
+      });
+    });
   } catch (error) {
     console.log(`error ${error}`);
   }
