@@ -370,7 +370,8 @@ module.exports.changeState = async () => {
       { countDown: 1 },
       { where: { status: 1, countDown: { [Op.gt]: 0 } } }
     );
-    await Order.update({status:7}, {where:{countDown:0}});
+   let up = await Order.update({status:7}, {where:{countDown:0}});
+      console.log("updates",up);
   } catch (error) {
     console.log(`error ${error}`);
   }
