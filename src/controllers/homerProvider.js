@@ -22,7 +22,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
         where: { providerId: homer.ui },
       });
       if (productsFound.length > 0) {
-        console.log(products);
+        console.log(products.id);
        
       //  for (let i = 0; i < productsFound.length; i++) {   
         
