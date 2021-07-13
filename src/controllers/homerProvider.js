@@ -22,12 +22,10 @@ module.exports.updateProvider = async (homerid, state, data) => {
         where: { providerId: homer.ui },
       });
       if (productsFound.length > 0) {
-       let filtrado = products.filter(product => {
-         return productsFound.filter(productfound => {
-           return product.id !== productfound.ui
-         })
-       })
-       console.log(filtrado);
+        for(let i = 0; i < productsFound.length; i++) {
+          products.push({id:productsFound[i].ui})
+        }
+       console.log(products);
       }else{
         console.log("entro en el else");
         // for (let i = 0; i < products.length; i++) {
