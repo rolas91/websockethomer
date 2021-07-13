@@ -25,6 +25,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
        
        for (let i = 0; i < productsFound.length; i++) {
          console.log(productsFound[i].ui);
+         console.log(products.includes(productsFound[i].ui));
        }
         // for (let i = 0; i < productsFound.length; i++) {
         //   for (let j = 0; j < products.length; j++) {
