@@ -8,12 +8,42 @@ const moment = require("moment");
 const { Op } = require("sequelize");
 
 module.exports.updateProvider = async (homerid, state, data) => {
-  let homer = await HomerProvider.findOne({
-    where: {
-      id: homerid,
-    },
-  });
-  console.log(homer);
+  try {
+    const { id, lat, lng, products, onesignal } = data;
+
+    let homer = await HomerProvider.findOne({
+      where: {
+        id: homerid,
+      },
+    });
+
+    if (homer) {
+      let productsFound = await ProductsProvider.findAll({
+        where: { providerId: homer.ui },
+      });
+      if (productsFound.length > 0) {
+        for (let i = 0; i < productsFound.length; i++) {
+          for (let j = 0; j < products.length; j++) {
+            if (productsFound[i].ui != products[j].id) {
+              await ProductsProvider.create({
+                ui: products[j].id,
+                providerId: productsFound[i].providerId,
+              });
+            }
+          }
+        }
+      }else{
+        for (let i = 0; i < products.length; i++) {
+          await ProductsProvider.create({
+            ui: products[i].id,
+            providerId:productsFound[0].providerId,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    console.log(`error en ${error}`);
+  }
 };
 
 module.exports.updateOrder = async (orderId) => {
@@ -47,7 +77,6 @@ module.exports.updateStateOrderCount = async (orderId) => {
 
 module.exports.addProvider2 = async (req, res) => {
   try {
-    console.log("hola mundo", req.body);
     let newProvider = await HomerProvider.create({
       ui: req.body.id,
       state: true,
