@@ -26,7 +26,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
           products.push({id:productsFound[i].ui})
         }
         let result = products.filter((item,index)=>{
-          return products.indexOf(item) === index;
+          return products.values.indexOf(item) === index;
         })
         console.log(result);
       }else{
