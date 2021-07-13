@@ -7,15 +7,13 @@ const { sendNotification } = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
 
-module.exports.updateProvider = async (homerid, state) => {
-  return await HomerProvider.update(
-    { state: state },
-    {
-      where: {
-        id: homerid,
-      },
-    }
-  );
+module.exports.updateProvider = async (homerid, state, data) => {
+  let homer = await HomerProvider.findOne({
+    where: {
+      id: homerid,
+    },
+  });
+  console.log(homer);
 };
 
 module.exports.updateOrder = async (orderId) => {

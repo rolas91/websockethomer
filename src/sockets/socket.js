@@ -63,9 +63,8 @@ io.on("connection", (socket) => {
         io.emit("adduser", result);
       });
     } else {
-      let values = Object.values(response);
-      console.log(values[0].id, !values[0].state);
-      homerProvider.updateProvider(values[0].id, !values[0].state);
+      let values = Object.values(response);   
+      homerProvider.updateProvider(values[0].id, !values[0].state, data);
     }
 
     // if(!activeUsers.includes(socket.userId)){
