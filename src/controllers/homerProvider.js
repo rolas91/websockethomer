@@ -25,7 +25,10 @@ module.exports.updateProvider = async (homerid, state, data) => {
         for(let i = 0; i < productsFound.length; i++) {
           products.push({id:productsFound[i].ui})
         }
-       console.log(products);
+        let result = products.filter((item,index)=>{
+          return products.indexOf(item) === index;
+        })
+        console.log(result);
       }else{
         console.log("entro en el else");
         // for (let i = 0; i < products.length; i++) {
