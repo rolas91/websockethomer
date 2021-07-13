@@ -24,7 +24,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
       if (productsFound.length > 0) {
        let filtrado = products.filter(product => {
          return productsFound.filter(productfound => {
-           product.id !== productfound.ui
+           return product.id !== productfound.ui
          })
        })
        console.log(filtrado);
