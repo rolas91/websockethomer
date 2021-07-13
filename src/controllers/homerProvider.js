@@ -22,17 +22,18 @@ module.exports.updateProvider = async (homerid, state, data) => {
         where: { providerId: homer.ui },
       });
       if (productsFound.length > 0) {
-        for (let i = 0; i < productsFound.length; i++) {
-          for (let j = 0; j < products.length; j++) {
-            console.log(productsFound[i].ui, products[j].id,"comparacion =>",productsFound[i].ui != products[j].id);
-            // if (productsFound[i].ui != products[j].id) {
-            //   await ProductsProvider.create({
-            //     ui: products[j].id,
-            //     providerId: productsFound[i].providerId,
-            //   });
-            // }
-          }
-        }
+       console.log(productsFound);
+        // for (let i = 0; i < productsFound.length; i++) {
+        //   for (let j = 0; j < products.length; j++) {
+        //     console.log(productsFound[i].ui, products[j].id,"comparacion =>",productsFound[i].ui != products[j].id);
+        //     // if (productsFound[i].ui != products[j].id) {
+        //     //   await ProductsProvider.create({
+        //     //     ui: products[j].id,
+        //     //     providerId: productsFound[i].providerId,
+        //     //   });
+        //     // }
+        //   }
+        // }
       }else{
         for (let i = 0; i < products.length; i++) {
           await ProductsProvider.create({
