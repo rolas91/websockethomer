@@ -22,7 +22,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
         where: { providerId: homer.ui },
       });
       if (productsFound.length > 0) {
-       console.log(productsFound);
+       console.log(productsFound.length);
         // for (let i = 0; i < productsFound.length; i++) {
         //   for (let j = 0; j < products.length; j++) {
         //     console.log(productsFound[i].ui, products[j].id,"comparacion =>",productsFound[i].ui != products[j].id);
@@ -35,12 +35,12 @@ module.exports.updateProvider = async (homerid, state, data) => {
         //   }
         // }
       }else{
-        for (let i = 0; i < products.length; i++) {
-          await ProductsProvider.create({
-            ui: products[i].id,
-            providerId:productsFound[0].providerId,
-          });
-        }
+        // for (let i = 0; i < products.length; i++) {
+        //   await ProductsProvider.create({
+        //     ui: products[i].id,
+        //     providerId:productsFound[0].providerId,
+        //   });
+        // }
       }
     }
   } catch (error) {
