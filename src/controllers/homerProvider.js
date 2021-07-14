@@ -26,7 +26,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
             for(let j = 0; j < products.length; j++) {           
                 if(productsFound[i].ui != products[j].id ){
                   console.log("en la bd",productsFound[i].ui);
-                  console.log("viene de la app", products[j].ui );
+                  console.log("viene de la app", products[j].id );
                   break;
                 }
             }            
