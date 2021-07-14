@@ -64,7 +64,7 @@ io.on("connection", (socket) => {
       });
     } else {
       let values = Object.values(response);   
-      homerProvider.updateProvider(values[0].id, !values[0].state, data);
+      homerProvider.updateProvider(values[0].id, !values[0].state, data, values[0].ui);
     }
 
     // if(!activeUsers.includes(socket.userId)){

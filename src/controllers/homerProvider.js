@@ -7,7 +7,7 @@ const { sendNotification } = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
 
-module.exports.updateProvider = async (homerid, state, data) => {
+module.exports.updateProvider = async (homerid, state, data, ui) => {
   try {
     const { id, lat, lng, products, onesignal } = data;
 
@@ -21,7 +21,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
       let productsFound = await ProductsProvider.findAll({
         where: { providerId: homer.ui },
       });
-      console.log("data",productsFound);
+     
       if (productsFound.length > 0) {
         await ProductsProvider.destroy({
           where: { providerId: productsFound[0].providerId },
@@ -37,7 +37,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
         for (let i = 0; i < products.length; i++) {
           await ProductsProvider.create({
             ui: products[i].id,
-            providerId: productsFound[0].providerId,
+            providerId: ui,
           });
         }
       }
