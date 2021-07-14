@@ -23,15 +23,15 @@ module.exports.updateProvider = async (homerid, state, data) => {
       });
       if (productsFound.length > 0) {
         for (let i = 0; i < productsFound.length; i++) {
-          products.push({ id: productsFound[i].ui });
+            for(let j = 0; j < products.length; j++) {
+              console.log(products[j].id);
+              console.log(productsFount[i].ui);
+                // if(products[i].id){
+
+                // }
+            }
         }
-        var hash = {};
-        let array = products.filter(function (current) {
-          var exists = !hash[current.id];
-          hash[current.id] = true;
-          return exists;
-        });
-        console.log(array);
+       
       } else {
         console.log("entro en el else");
         // for (let i = 0; i < products.length; i++) {
