@@ -23,8 +23,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
       });
       if (productsFound.length > 0) {
         await ProductsProvider.destroy({
-          where: {},
-          truncate: true,
+          where: { providerId: productsFound[0].providerId },
         });
         for (let i = 0; i < products.length; i++) {
           await ProductsProvider.create({
