@@ -29,6 +29,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
                   break;
                 }
             }
+            break;
         }
        
       } else {
