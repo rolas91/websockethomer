@@ -24,7 +24,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
       if (productsFound.length > 0) {
         for (let i = 0; i < productsFound.length; i++) {
             for(let j = 0; j < products.length; j++) {           
-                if(productsFound[i].ui == products[j].id ){
+                if(productsFound[i].ui != products[j].id ){
                                     break;
                 }else{
                   console.log(products[j].id);
