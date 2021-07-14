@@ -23,12 +23,11 @@ module.exports.updateProvider = async (homerid, state, data) => {
       });
       if (productsFound.length > 0) {
         for (let i = 0; i < productsFound.length; i++) {
-            for(let j = 0; j < products.length; j++) {
-              console.log(products[j].id);
-              console.log(productsFound[i].ui);
-                // if(products[i].id){
-
-                // }
+            for(let j = 0; j < products.length; j++) {           
+                if(products[j].id != productsFound[i].ui){
+                  console.log(products[j].id);
+                  break;
+                }
             }
         }
        
