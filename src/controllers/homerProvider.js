@@ -32,6 +32,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
           });
         }
       } else {
+        console.log("entro al else con ", productsFound);
         for (let i = 0; i < products.length; i++) {
           await ProductsProvider.create({
             ui: products[i].id,
