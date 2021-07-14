@@ -21,6 +21,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
       let productsFound = await ProductsProvider.findAll({
         where: { providerId: homer.ui },
       });
+      console.log("data",productsFound);
       if (productsFound.length > 0) {
         await ProductsProvider.destroy({
           where: { providerId: productsFound[0].providerId },
