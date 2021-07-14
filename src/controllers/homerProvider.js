@@ -22,7 +22,7 @@ module.exports.updateProvider = async (homerid, state, data) => {
         where: { providerId: homer.ui },
       });
       if (productsFound.length > 0) {
-        await productsFound.destroy();
+        await ProductsProvider.destroy();
          for (let i = 0; i < products.length; i++) {
           await ProductsProvider.create({
             ui: products[i].id,
