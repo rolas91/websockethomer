@@ -220,8 +220,7 @@ module.exports.createOrders = async (req, res) => {
     //     lng +
     //     "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
     // );
-    console.log(bookingId);
-
+    
     let newService = await Order.create({
       clientUi: clientUi,
       nameClient: nameClient,
