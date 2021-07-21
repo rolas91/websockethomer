@@ -211,6 +211,7 @@ module.exports.createOrders = async (req, res) => {
       lng,
       onesignal,
       cart,
+      bookingId,
     } = req.body;
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
@@ -234,7 +235,7 @@ module.exports.createOrders = async (req, res) => {
       lng: lng,
       onesignal,
       cart,
-      bookingId
+      bookingId,
     });
     if (newService) {
       res.status(200).json({
