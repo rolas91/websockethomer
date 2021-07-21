@@ -420,6 +420,7 @@ module.exports.changeState = async () => {
             type: sequelize.QueryTypes.SELECT,
           }
         );
+        console.log("providers", providers);
         providers.forEach(function (t) {
           sendNotification(
             t.onesignal,
