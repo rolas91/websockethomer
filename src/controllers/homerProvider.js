@@ -399,11 +399,12 @@ module.exports.changeState = async () => {
       { countDown: 1 },
       { where: { status: 1, countDown: { [Op.gt]: 0 } } }
     );
-
+    
     Order.findAll({ where: { countDown: 0, status: 1 } }).then(function (
       order
     ) {
       order.forEach(async function (t) {
+        console.log("order", t);
         sendNotification(
           t.onesignal,
           "Servicio expirado",
@@ -419,8 +420,7 @@ module.exports.changeState = async () => {
           {
             type: sequelize.QueryTypes.SELECT,
           }
-        );
-        console.log("providers", providers);
+        );        
         providers.forEach(function (t) {
           sendNotification(
             t.onesignal,
