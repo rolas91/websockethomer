@@ -70,6 +70,9 @@ const RequestClient = sequelize.define(
     cart: {
       type: Sequelize.STRING,
     },
+    bookingId: {
+      type: Sequelize.STRING,
+    },
   },
   {
     timestamps: false,

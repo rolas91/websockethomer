@@ -234,6 +234,7 @@ module.exports.createOrders = async (req, res) => {
       lng: lng,
       onesignal,
       cart,
+      bookingId
     });
     if (newService) {
       res.status(200).json({
