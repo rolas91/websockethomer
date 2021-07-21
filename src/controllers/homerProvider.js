@@ -21,7 +21,7 @@ module.exports.updateProvider = async (homerid, state, data, ui) => {
       let productsFound = await ProductsProvider.findAll({
         where: { providerId: homer.ui },
       });
-     
+
       if (productsFound.length > 0) {
         await ProductsProvider.destroy({
           where: { providerId: productsFound[0].providerId },
@@ -210,6 +210,7 @@ module.exports.createOrders = async (req, res) => {
       lat,
       lng,
       onesignal,
+      cart,
     } = req.body;
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
@@ -232,6 +233,7 @@ module.exports.createOrders = async (req, res) => {
       lat: lat,
       lng: lng,
       onesignal,
+      cart,
     });
     if (newService) {
       res.status(200).json({

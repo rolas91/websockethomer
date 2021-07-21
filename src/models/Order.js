@@ -67,6 +67,9 @@ const RequestClient = sequelize.define(
       type: Sequelize.INTEGER,
       defaultValue: 10,
     },
+    cart: {
+      type: Sequelize.STRING,
+    },
   },
   {
     timestamps: false,
