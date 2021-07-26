@@ -384,7 +384,7 @@ module.exports.ChangeOrders = async (req, res) => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
         .then(function (response) {
-          console.log(response);
+          console.log("carrito eliminado correctamente");
         })
         .catch(function (err) {
           console.error(err);
@@ -435,7 +435,7 @@ module.exports.changeState = async () => {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
           .then(function (response) {
-            console.log(response);
+            console.log("carrito eliminado correctamente");
           })
           .catch(function (err) {
             console.error(err);
