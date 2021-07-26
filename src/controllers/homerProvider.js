@@ -6,7 +6,7 @@ const Message = require("../models/Message");
 const { sendNotification } = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
-const axios = require('axios');
+const axios = require("axios");
 
 module.exports.updateProvider = async (homerid, state, data, ui) => {
   try {
@@ -377,9 +377,10 @@ module.exports.ChangeOrders = async (req, res) => {
         where: { id: order, status: "cancelado" },
       });
       await axios
-        .get(
-          `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`
-        )
+        .get({
+          url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        })
         .then(function (response) {
           console.log(response);
         })
@@ -427,9 +428,10 @@ module.exports.changeState = async () => {
         t.update({ status: 7 });
 
         await axios
-          .get(
-            `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${t.cart}`
-          )
+          .get({
+            url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          })
           .then(function (response) {
             console.log(response);
           })
