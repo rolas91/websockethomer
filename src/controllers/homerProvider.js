@@ -8,6 +8,8 @@ const moment = require("moment");
 const { Op } = require("sequelize");
 const axios = require("axios");
 
+let consumer_key = "ck_462b7613b1f89991924e149f7d7df2a1c37eb71a";
+let consumer_secret = "cs_81a58277089318569168ff48defefa83fa740d86";
 module.exports.updateProvider = async (homerid, state, data, ui) => {
   try {
     const { id, lat, lng, products, onesignal } = data;
@@ -378,7 +380,7 @@ module.exports.ChangeOrders = async (req, res) => {
       });
       await axios({
         method: "GET",
-        url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
+        url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${ordered.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
         .then(function (response) {
@@ -429,7 +431,7 @@ module.exports.changeState = async () => {
 
         await axios({
           method: "GET",
-          url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
+          url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${ordered.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
           .then(function (response) {
