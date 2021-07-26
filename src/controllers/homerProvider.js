@@ -376,11 +376,11 @@ module.exports.ChangeOrders = async (req, res) => {
       let ordered = await Order.findOne({
         where: { id: order, status: "cancelado" },
       });
-      await axios
-        .get({
-          url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        })
+      await axios({
+        method: "GET",
+        url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      })
         .then(function (response) {
           console.log(response);
         })
@@ -427,11 +427,11 @@ module.exports.changeState = async () => {
 
         t.update({ status: 7 });
 
-        await axios
-          .get({
-            url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          })
+        await axios({
+          method: "GET",
+          url: `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`,
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        })
           .then(function (response) {
             console.log(response);
           })
