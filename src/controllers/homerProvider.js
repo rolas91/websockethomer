@@ -220,7 +220,7 @@ module.exports.createOrders = async (req, res) => {
     //     lng +
     //     "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
     // );
-    
+
     let newService = await Order.create({
       clientUi: clientUi,
       nameClient: nameClient,
@@ -372,6 +372,16 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
+      await axios
+        .get(
+          `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${response.cart}`
+        )
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (err) {
+          log.error(err);
+        });
     }
     res.status(200).json({ data: response });
   } catch (e) {
@@ -399,12 +409,11 @@ module.exports.changeState = async () => {
       { countDown: 1 },
       { where: { status: 1, countDown: { [Op.gt]: 0 } } }
     );
-    
+
     Order.findAll({ where: { countDown: 0, status: 1 } }).then(function (
       order
     ) {
       order.forEach(async function (t) {
-        console.log("order", t);
         sendNotification(
           t.onesignal,
           "Servicio expirado",
@@ -413,6 +422,17 @@ module.exports.changeState = async () => {
 
         t.update({ status: 7 });
 
+        await axios
+          .get(
+            `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${t.cart}`
+          )
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (err) {
+            log.error(err);
+          });
+
         let providers = await sequelize.query(
           `SELECT * FROM homerproviders as hp INNER JOIN                 
                  productsproviders as pp on pp.providerId = hp.ui 
@@ -420,7 +440,7 @@ module.exports.changeState = async () => {
           {
             type: sequelize.QueryTypes.SELECT,
           }
-        );        
+        );
         providers.forEach(function (t) {
           sendNotification(
             t.onesignal,
