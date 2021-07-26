@@ -385,7 +385,7 @@ module.exports.ChangeOrders = async (req, res) => {
           console.log(response);
         })
         .catch(function (err) {
-          log.error(err);
+          console.error(err);
         });
     }
     res.status(200).json({ data: response });
