@@ -372,9 +372,12 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
+      let ordered = await Order.findOne({
+        where: { id: order, status: "cancelado" },
+      });
       await axios
         .get(
-          `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${response.cart}`
+          `${process.env.URL_WORDPRESS}/wp-admin/admin-ajax.php?action=mstoreapp-remove_cart_item&item_key=${ordered.cart}`
         )
         .then(function (response) {
           console.log(response);
