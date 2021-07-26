@@ -431,7 +431,7 @@ module.exports.changeState = async () => {
 
         await axios({
           method: "GET",
-          url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${ordered.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
+          url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${t.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
           .then(function (response) {
