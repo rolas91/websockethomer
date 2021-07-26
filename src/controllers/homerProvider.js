@@ -379,7 +379,7 @@ module.exports.ChangeOrders = async (req, res) => {
         where: { id: order, status: "cancelado" },
       });
       await axios({
-        method: "GET",
+        method: "DELETE",
         url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${ordered.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
@@ -430,7 +430,7 @@ module.exports.changeState = async () => {
         t.update({ status: 7 });
 
         await axios({
-          method: "GET",
+          method: "DELETE",
           url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${t.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
