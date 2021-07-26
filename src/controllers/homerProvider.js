@@ -436,7 +436,7 @@ module.exports.changeState = async () => {
             console.log(response);
           })
           .catch(function (err) {
-            log.error(err);
+            console.error(err);
           });
 
         let providers = await sequelize.query(
