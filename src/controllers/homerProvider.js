@@ -248,12 +248,14 @@ module.exports.createOrders = async (req, res) => {
     });
     if (newService) {
       res.status(200).json({
+        status: true,
         message: "Provider created successfully",
         data: newService,
       });
     }
   } catch (error) {
     res.status(200).json({
+      status: false,
       message: "Something goes wrong" + error,
       data: {},
     });
