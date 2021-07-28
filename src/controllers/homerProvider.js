@@ -268,7 +268,7 @@ module.exports.getOrderByProvider = async (provider) => {
     return await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
-             where productsproviders.providerId = ${provider} and orders.status = 1 or orders.status = 2 or orders.status = 3 or orders.status = 4 order DESC`,
+             where productsproviders.providerId = ${provider} and orders.status = 1 or orders.status = 2 or orders.status = 3 or orders.status = 4`,
       {
         type: sequelize.QueryTypes.SELECT,
       }
