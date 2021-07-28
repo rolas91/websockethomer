@@ -268,7 +268,7 @@ module.exports.getOrderByProvider = async (provider) => {
     return await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
-             where productsproviders.providerId = ${provider} and orders.status = 1 or orders.status = 2 or orders.status = 3 or orders.status = 4 `,
+             where productsproviders.providerId = ${provider} and orders.status = 1 or orders.status = 2 or orders.status = 3 or orders.status = 4 order DESC`,
       {
         type: sequelize.QueryTypes.SELECT,
       }
@@ -301,7 +301,7 @@ module.exports.getOrderByClient = async (client) => {
     return await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.*, homerproviders.onesignal  FROM orders INNER JOIN
             productsproviders on productsproviders.ui = orders.productUi INNER JOIN homerproviders on homerproviders.ui = productsproviders.providerId 
-            where orders.clientUi = ${client}`,
+            where orders.clientUi = ${client} order by DESC`,
       {
         type: sequelize.QueryTypes.SELECT,
       }
