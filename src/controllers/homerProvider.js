@@ -229,6 +229,7 @@ module.exports.createOrders = async (req, res) => {
         status: false,
         message: "has already registered",
       });
+      return;
     }
 
     let newService = await Order.create({
