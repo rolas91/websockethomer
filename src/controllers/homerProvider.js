@@ -223,6 +223,13 @@ module.exports.createOrders = async (req, res) => {
     //     lng +
     //     "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
     // );
+    const order = await Order.findOne({ where: { bookingId } });
+    if (order) {
+      res.status(200).json({
+        status: false,
+        message: "has already registered",
+      });
+    }
 
     let newService = await Order.create({
       clientUi: clientUi,
