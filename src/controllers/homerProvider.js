@@ -472,3 +472,24 @@ module.exports.changeState = async () => {
     console.log(`error ${error}`);
   }
 };
+
+module.exports = verifyStatus = async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      where: { bookingId: req.body.bookingid },
+    });
+    if (
+      order.status == "cancelado" ||
+      order.status == "rechazado" ||
+      order.status == "finalizado"
+    ) {
+      res
+        .status(200)
+        .json({ code: "success", msg: "order is available for delete" });
+    } else {
+      res
+        .status(200)
+        .json({ code: "error", msg: "order is not available for delete" });
+    }
+  } catch (error) {}
+};
