@@ -333,7 +333,6 @@ module.exports.nearBy = async (req, res) => {
 
   res.status(200).json({ data: providers });
 };
-// WHERE ui = :ui
 
 module.exports.ChangeOrders = async (req, res) => {
   try {
@@ -420,7 +419,7 @@ module.exports.providerOneSignal = async (req, res) => {
   res.status(200).json({ providers });
 };
 
-module.exports.changeState = async () => {
+module.exports.changeState = async (req, res) => {
   try {
     await Order.decrement(
       { countDown: 1 },
@@ -473,7 +472,7 @@ module.exports.changeState = async () => {
   }
 };
 
-module.exports = verifyStatus = async (req, res) => {
+module.exports.verifyStatus = async (req, res) => {
   try {
     const order = await Order.findOne({
       where: { bookingId: req.body.bookingid },
@@ -491,5 +490,7 @@ module.exports = verifyStatus = async (req, res) => {
         .status(200)
         .json({ code: "error", msg: "order is not available for delete" });
     }
-  } catch (error) {}
+  } catch (error) {
+    log.error(error);
+  }
 };
