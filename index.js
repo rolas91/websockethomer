@@ -57,7 +57,7 @@ const server = app.listen(port, () => {
 
 module.exports.io = require("socket.io")(server, {
   cors: {
-    origins: ["http://localhost:8080"],
+    origins: ["http://localhost:8080", "http://localhost:8100"],
   },
 });
 require("./src/sockets/socket");
