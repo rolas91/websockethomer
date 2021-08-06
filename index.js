@@ -35,6 +35,8 @@ app.post("/validaactiveprovider", function (req, res) {
 //     res.status(200).json(haversine(start, end,{ unit: 'mile'}));
 // });
 
+app.use("/test-socket", express.static(path.join(__dirname, "/public")));
+
 const router = require("./src/routes");
 app.use("/api/v1", router);
 
