@@ -60,9 +60,5 @@ const server = app.listen(port, () => {
   console.log(`connection is successful on port  ${port}`);
 });
 
-module.exports.io = require("socket.io")(server, {
-  cors: {
-    origins: ["http://localhost:8080", "http://localhost:8100"],
-  },
-});
+module.exports.io = require("socket.io")(server);
 require("./src/sockets/socket");
