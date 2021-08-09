@@ -357,6 +357,15 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
+    } else if (state === "pagado") {
+      response = await Order.update(
+        { status: "he llegado" },
+        {
+          where: {
+            id: order,
+          },
+        }
+      );
     } else if (state === "he llegado") {
       response = await Order.update(
         { status: "iniciado" },
@@ -477,8 +486,8 @@ module.exports.verifyStatus = async (req, res) => {
     const order = await Order.findOne({
       where: { bookingId: req.body.bookingid },
     });
-    
-    if (     
+
+    if (
       order.status == "cancelado" ||
       order.status == "rechazado" ||
       order.status == "finalizado"

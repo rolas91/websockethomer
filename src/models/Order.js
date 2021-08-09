@@ -26,6 +26,7 @@ const RequestClient = sequelize.define(
       values: [
         "solicitado",
         "aceptado",
+        "pagado",
         "he llegado",
         "iniciado",
         "finalizado",
