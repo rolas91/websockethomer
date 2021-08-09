@@ -14,7 +14,12 @@ const { changeState } = require("./src/controllers/homerProvider");
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 // app.use("/api-node-homer", express.static(path.join(__dirname, "/public")));
 
 app.post("/validaactiveprovider", function (req, res) {
