@@ -344,25 +344,27 @@ module.exports.ChangeOrders = async (req, res) => {
         { status: "aceptado" },
         {
           where: {
-            id: order,
+            bookingId: order,
           },
         }
       );
     } else if (state === "aceptado") {
+      console.log(state, order);
       response = await Order.update(
         { status: "pagado" },
         {
           where: {
-            id: order,
+            bookingId: order,
           },
         }
       );
+      console.log(response);
     } else if (state === "pagado") {
       response = await Order.update(
         { status: "he llegado" },
         {
           where: {
-            id: order,
+            bookingId: order,
           },
         }
       );
@@ -371,7 +373,7 @@ module.exports.ChangeOrders = async (req, res) => {
         { status: "iniciado" },
         {
           where: {
-            id: order,
+            bookingId: order,
           },
         }
       );
@@ -380,7 +382,7 @@ module.exports.ChangeOrders = async (req, res) => {
         { status: "finalizado" },
         {
           where: {
-            id: order,
+            bookingId: order,
           },
         }
       );
@@ -389,12 +391,12 @@ module.exports.ChangeOrders = async (req, res) => {
         { status: "cancelado", isCancel: isCancel },
         {
           where: {
-            id: order,
+            bookingId: order,
           },
         }
       );
       let ordered = await Order.findOne({
-        where: { id: order, status: "cancelado" },
+        where: { bookingId: order, status: "cancelado" },
       });
       await axios({
         method: "DELETE",
