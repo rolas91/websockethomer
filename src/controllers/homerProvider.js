@@ -350,7 +350,7 @@ module.exports.ChangeOrders = async (req, res) => {
       );
     } else if (state === "aceptado") {
       response = await Order.update(
-        { status: "he llegado" },
+        { status: "pagado" },
         {
           where: {
             id: order,
