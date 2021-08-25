@@ -136,6 +136,7 @@ io.on("connection", (socket) => {
     console.log(socket.userId);
     socket.join(`${data.id}`);
     setInterval(() => {
+      console.log(socket.userId);
       homerProvider.getOrderByClient(socket.userId).then((result) => {
         console.log("data",result);
         io.to(`${data.id}`).emit("getordersbyclients", result);
