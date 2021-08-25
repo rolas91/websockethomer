@@ -133,12 +133,9 @@ io.on("connection", (socket) => {
 
   socket.on("getordersbyclients", (data) => {
     socket.userId = data.id;
-    console.log(socket.userId);
     socket.join(`${data.id}`);
-    setInterval(() => {
-      console.log(socket.userId);
-      homerProvider.getOrderByClient(socket.userId).then((result) => {
-        console.log("data",result);
+    setInterval(() => {      
+      homerProvider.getOrderByClient(socket.userId).then((result) => {        
         io.to(`${data.id}`).emit("getordersbyclients", result);
       });
     }, 2000);
