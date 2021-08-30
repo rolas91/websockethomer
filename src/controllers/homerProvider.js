@@ -285,7 +285,7 @@ module.exports.getOrderCancelByProvider = async (req, res) => {
     let response = await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.* FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
-             where productsproviders.providerId = ${req.body.provider} and orders.status = 7 or orders.status = 6 or orders.status = 8`,
+             where productsproviders.providerId = ${req.body.provider} and (orders.status = 7 or orders.status = 6 or orders.status = 8) order by orders.id DESC`,
       {
         type: sequelize.QueryTypes.SELECT,
       }
