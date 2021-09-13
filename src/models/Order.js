@@ -55,9 +55,6 @@ const RequestClient = sequelize.define(
     hour_end:{
       type: Sequelize.TIME,
     },
-    date_end:{
-      type: Sequelize.DATEONLY,
-    },
     location: {
       type: Sequelize.STRING,
     },
