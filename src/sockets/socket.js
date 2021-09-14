@@ -66,12 +66,6 @@ io.on("connection", (socket) => {
       let values = Object.values(response);   
       homerProvider.updateProvider(values[0].id, !values[0].state, data, values[0].ui);
     }
-
-    // if(!activeUsers.includes(socket.userId)){
-    // activeUsers.push(socket.userId);
-    // console.log('usuario activo');
-    // console.log('user add',activeUsers);
-    // }
   });
 
   // socket.on('getCountDown', (data) => {

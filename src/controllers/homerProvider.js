@@ -20,6 +20,8 @@ module.exports.updateProvider = async (homerid, state, data, ui) => {
       },
     });
 
+    await HomerProvider.update({ onesignal: onesignal }, { where: { id: id } });
+
     if (homer) {
       let productsFound = await ProductsProvider.findAll({
         where: { providerId: homer.ui },
@@ -217,7 +219,7 @@ module.exports.createOrders = async (req, res) => {
       cart,
       bookingId,
     } = req.body;
-    
+
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     //     lat +
