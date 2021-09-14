@@ -20,7 +20,9 @@ module.exports.updateProvider = async (homerid, state, data, ui) => {
       },
     });
 
-    await HomerProvider.update({ onesignal: onesignal }, { where: { id: id } });
+    await HomerProvider.update({ onesignal: onesignal }, { where: { id: id } })
+      .then((result) => console.log("updated success", result))
+      .catch((err) => console.log("error", err));
 
     if (homer) {
       let productsFound = await ProductsProvider.findAll({
