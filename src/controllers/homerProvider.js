@@ -20,6 +20,8 @@ module.exports.updateProvider = async (homerid, state, data, ui) => {
       },
     });
     
+    console.log("test si viene onesignal hash",onesignal);
+
     await HomerProvider.update({ onesignal: onesignal }, { where: { ui: id } })
       .then((result) => console.log("updated success", result))
       .catch((err) => console.log("error", err));
@@ -115,8 +117,6 @@ module.exports.addProvider2 = async (req, res) => {
 module.exports.addProvider = async (data) => {
   try {
     const { id, lat, lng, products, onesignal } = data;
-
-    // await HomerProvider.find
 
     let newProvider = await HomerProvider.create({
       ui: id,
