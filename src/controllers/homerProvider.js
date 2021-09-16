@@ -3,7 +3,7 @@ const HomerProvider = require("../models/HomerProvider");
 const ProductsProvider = require("../models/Productsprovider");
 const Order = require("../models/Order");
 const Message = require("../models/Message");
-const { sendNotification } = require("../utils/notification");
+const { sendNotificationClient,sendNotificationProvider } = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
 const axios = require("axios");
@@ -448,7 +448,7 @@ module.exports.changeState = async (req, res) => {
       order
     ) {
       order.forEach(async function (t) {
-        sendNotification(
+        sendNotificationClient(
           t.onesignal,
           "Servicio expirado",
           "Estimado usuario, el servicio no fue aceptado, por lo tanto expiró. Intente nuevamente, o intente con otro Homer"
@@ -477,7 +477,7 @@ module.exports.changeState = async (req, res) => {
           }
         );
         providers.forEach(function (t) {
-          sendNotification(
+          sendNotificationProvider(
             t.onesignal,
             "Servicio expirado",
             "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
