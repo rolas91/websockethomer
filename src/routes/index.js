@@ -9,6 +9,7 @@ const {
   addProvider2,
   providerOneSignal,
   verifyStatus,
+  verifyStatusForPay
 } = require("../controllers/homerProvider");
 
 router.post("/test", (req, res) => {
@@ -22,5 +23,6 @@ router.post("/message/getmessages", getMessage);
 router.post("/provider/register", addProvider2);
 router.post("/provider/getonesignal", providerOneSignal);
 router.post("/provider/verify-order-status", verifyStatus);
+router.post("/provider/verify-order-forpay", verifyStatusForPay);
 
 module.exports = router;

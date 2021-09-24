@@ -513,3 +513,22 @@ module.exports.verifyStatus = async (req, res) => {
     console.error(error);
   }
 };
+module.exports.verifyStatusForPay = async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      where: { bookingId: req.body.bookingid },
+    });
+
+    if (order.status === "solicitado") {
+      res
+        .status(200)
+        .json({ code: "error", msg: "order is not available for pay" });
+    } else {
+      res
+        .status(200)
+        .json({ code: "success", msg: "order is available for pay" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
