@@ -3,7 +3,10 @@ const HomerProvider = require("../models/HomerProvider");
 const ProductsProvider = require("../models/Productsprovider");
 const Order = require("../models/Order");
 const Message = require("../models/Message");
-const { sendNotificationClient,sendNotificationProvider } = require("../utils/notification");
+const {
+  sendNotificationClient,
+  sendNotificationProvider,
+} = require("../utils/notification");
 const moment = require("moment");
 const { Op } = require("sequelize");
 const axios = require("axios");
@@ -19,8 +22,8 @@ module.exports.updateProvider = async (homerid, state, data, ui) => {
         id: homerid,
       },
     });
-    
-    console.log("test si viene onesignal hash",onesignal);
+
+    console.log("test si viene onesignal hash", onesignal);
 
     await HomerProvider.update({ onesignal: onesignal }, { where: { ui: id } })
       .then((result) => console.log("updated success", result))
@@ -36,17 +39,27 @@ module.exports.updateProvider = async (homerid, state, data, ui) => {
           where: { providerId: productsFound[0].providerId },
         });
         for (let i = 0; i < products.length; i++) {
-          await ProductsProvider.create({
-            ui: products[i].id,
-            providerId: productsFound[0].providerId,
+          let product_provider = await ProductsProvider.findOne({
+            where: { ui: products[i].id },
           });
+          if (product_provider == null || product_provider == undefined) {
+            await ProductsProvider.create({
+              ui: products[i].id,
+              providerId: productsFound[0].providerId,
+            });
+          }
         }
       } else {
         for (let i = 0; i < products.length; i++) {
-          await ProductsProvider.create({
-            ui: products[i].id,
-            providerId: ui,
+          let product_provider = await ProductsProvider.findOne({
+            where: { ui: products[i].id },
           });
+          if (product_provider == null || product_provider == undefined) {
+            await ProductsProvider.create({
+              ui: products[i].id,
+              providerId: ui,
+            });
+          }
         }
       }
     }
@@ -128,10 +141,15 @@ module.exports.addProvider = async (data) => {
     if (newProvider) {
       let providerId = newProvider.ui;
       for (let i = 0; i < products.length; i++) {
-        await ProductsProvider.create({
-          ui: products[i].id,
-          providerId: providerId,
+        let product_provider = await ProductsProvider.findOne({
+          where: { ui: products[i].id },
         });
+        if (product_provider == null || product_provider == undefined) {
+          await ProductsProvider.create({
+            ui: products[i].id,
+            providerId: providerId,
+          });
+        }
       }
       return {
         message: "Provider created successfully",
