@@ -423,6 +423,13 @@ module.exports.ChangeOrders = async (req, res) => {
       let ordered = await Order.findOne({
         where: { bookingId: order, status: "cancelado" },
       });
+
+      sendNotificationClient(
+        ordered.onesignal,
+        "Servicio expirado",
+        "Estimado usuario, el servicio no fue aceptado, por lo tanto expiró. Intente nuevamente, o intente con otro Homer"
+      );
+
       await axios({
         method: "DELETE",
         url: `${process.env.URL_WORDPRESS}/wp-json/wc-bookings/v1/bookings/${ordered.bookingId}?consumer_key=${consumer_key}&consumer_secret=${consumer_secret}`,
@@ -433,6 +440,23 @@ module.exports.ChangeOrders = async (req, res) => {
         })
         .catch(function (err) {
           console.error(err);
+        });
+
+        let providers = await sequelize.query(
+          `SELECT * FROM homerproviders as hp INNER JOIN                 
+                 productsproviders as pp on pp.providerId = hp.ui 
+                 where pp.ui = ${ordered.productUi} `,
+          {
+            type: sequelize.QueryTypes.SELECT,
+          }
+        );
+
+        providers.forEach(function (t) {
+          sendNotificationProvider(
+            t.onesignal,
+            "Servicio expirado",
+            "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
+          );
         });
     }
     res.status(200).json({ data: response });
