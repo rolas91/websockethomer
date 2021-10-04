@@ -240,6 +240,8 @@ module.exports.createOrders = async (req, res) => {
       bookingId,
     } = req.body;
 
+    console.log(date);
+
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     //     lat +
