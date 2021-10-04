@@ -264,7 +264,7 @@ module.exports.createOrders = async (req, res) => {
       productUi: productUi,
       productName: productName,
       stateServiceId: stateServiceId,
-      date: moment(date),
+      date: date,
       hour: hour,
       hour_end: hour_end,
       location: location,
