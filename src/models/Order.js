@@ -69,7 +69,7 @@ const RequestClient = sequelize.define(
     },
     countDown: {
       type: Sequelize.INTEGER,
-      defaultValue: 10,
+      defaultValue: 15,
     },
     cart: {
       type: Sequelize.STRING,
