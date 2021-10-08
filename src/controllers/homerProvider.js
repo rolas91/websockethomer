@@ -132,16 +132,22 @@ module.exports.createProvider = async (req, res) => {
     const provider = await HomerProvider.findOne({
       where: { ui: req.body.providerId },
     });
-    if(provider != null){
-      for (let i = 0; i < req.body.products.length; i++) {
-        await ProductsProvider.create({
-          ui: req.body.products[i],
-          providerId: provider.ui,
-        });
-      }
-      res.status(200).json({
-        code:"success",
-        message: "Provider created successfully"
+    if (provider != null) {
+      ProductsProvider.create({
+        ui: req.body.product,
+        providerId: provider.ui,
+      }).then((success) => {
+        if (success) {
+          res.status(200).json({
+            code: "success",
+            message: "Provider created successfully",
+          });
+        }else{
+          res.status(200).json({
+            code: "error",
+            message: "Provider created error",
+          });
+        }
       });
     }
   } catch (error) {}
