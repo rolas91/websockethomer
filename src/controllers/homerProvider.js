@@ -127,6 +127,26 @@ module.exports.addProvider2 = async (req, res) => {
   }
 };
 
+module.exports.createProvider = async (req, res) => {
+  try {
+    const provider = await HomerProvider.findOne({
+      where: { ui: req.body.providerId },
+    });
+    if(provider != null){
+      for (let i = 0; i < req.body.products.length; i++) {
+        await ProductsProvider.create({
+          ui: req.body.products[i],
+          providerId: provider.ui,
+        });
+      }
+      res.status(200).json({
+        code:"success",
+        message: "Provider created successfully"
+      });
+    }
+  } catch (error) {}
+};
+
 module.exports.addProvider = async (data) => {
   try {
     const { id, lat, lng, products, onesignal } = data;
@@ -444,22 +464,22 @@ module.exports.ChangeOrders = async (req, res) => {
           console.error(err);
         });
 
-        let providers = await sequelize.query(
-          `SELECT * FROM homerproviders as hp INNER JOIN                 
+      let providers = await sequelize.query(
+        `SELECT * FROM homerproviders as hp INNER JOIN                 
                  productsproviders as pp on pp.providerId = hp.ui 
                  where pp.ui = ${ordered.productUi} `,
-          {
-            type: sequelize.QueryTypes.SELECT,
-          }
-        );
+        {
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
 
-        providers.forEach(function (t) {
-          sendNotificationProvider(
-            t.onesignal,
-            "Servicio expirado",
-            "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
-          );
-        });
+      providers.forEach(function (t) {
+        sendNotificationProvider(
+          t.onesignal,
+          "Servicio expirado",
+          "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
+        );
+      });
     }
     res.status(200).json({ data: response });
   } catch (e) {
