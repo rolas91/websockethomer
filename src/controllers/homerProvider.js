@@ -142,7 +142,7 @@ module.exports.createProvider = async (req, res) => {
             code: "success",
             message: "Provider created successfully",
           });
-        }else{
+        } else {
           res.status(200).json({
             code: "error",
             message: "Provider created error",
@@ -550,7 +550,7 @@ module.exports.changeState = async (req, res) => {
           sendNotificationProvider(
             t.onesignal,
             "Servicio expirado",
-            "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
+            "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 15 minutos para su aceptación. Estad atento."
           );
         });
       });
