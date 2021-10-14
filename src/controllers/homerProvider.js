@@ -407,7 +407,7 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
-    } else if (state === "aceptado") {
+    } else if (state === "pagado") {
       console.log(state, order);
       response = await Order.update(
         { status: "pagado" },
@@ -416,9 +416,8 @@ module.exports.ChangeOrders = async (req, res) => {
             bookingId: order,
           },
         }
-      );
-      console.log(response);
-    } else if (state === "pagado") {      
+      );   
+    } else if (state === "iniciado") {      
       response = await Order.update(
         { status: "iniciado" },
         {
@@ -427,7 +426,7 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
-    } else if (state === "iniciado") {
+    } else if (state === "finalizado") {
       response = await Order.update(
         { status: "finalizado" },
         {
