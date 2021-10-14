@@ -418,16 +418,7 @@ module.exports.ChangeOrders = async (req, res) => {
         }
       );
       console.log(response);
-    } else if (state === "pagado") {
-      response = await Order.update(
-        { status: "he llegado" },
-        {
-          where: {
-            bookingId: order,
-          },
-        }
-      );
-    } else if (state === "he llegado") {
+    } else if (state === "pagado") {      
       response = await Order.update(
         { status: "iniciado" },
         {
