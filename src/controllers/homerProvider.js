@@ -396,7 +396,7 @@ module.exports.nearBy = async (req, res) => {
 module.exports.ChangeOrders = async (req, res) => {
   try {
     const { order, state, isCancel, client } = req.body;
-
+    console.log("cancelado por cliente",client);
     let response;
     if (state === "solicitado") {
       response = await Order.update(
@@ -470,7 +470,7 @@ module.exports.ChangeOrders = async (req, res) => {
         where: { bookingId: order, status: "cancelado" },
       });
 
-      if(client){
+      if(client == true){
         sendNotificationClient(
           ordered.onesignal,
           "Servicio cancelado",
@@ -500,7 +500,7 @@ module.exports.ChangeOrders = async (req, res) => {
         }
       );
 
-      if(client){
+      if(client == true){
         providers.forEach(function (t) {
           sendNotificationProvider(
             t.onesignal,
