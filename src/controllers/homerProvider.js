@@ -395,7 +395,7 @@ module.exports.nearBy = async (req, res) => {
 
 module.exports.ChangeOrders = async (req, res) => {
   try {
-    const { order, state, isCancel } = req.body;
+    const { order, state, isCancel, client } = req.body;
 
     let response;
     if (state === "solicitado") {
@@ -444,15 +444,19 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
+
       let ordered = await Order.findOne({
         where: { bookingId: order, status: "cancelado" },
       });
 
-      sendNotificationClient(
-        ordered.onesignal,
-        "Servicio expirado",
-        "Estimado usuario, el servicio no fue aceptado, por lo tanto expiró. Intente nuevamente, o intente con otro Homer"
-      );
+      if(client){
+        sendNotificationClient(
+          ordered.onesignal,
+          "Servicio expirado",
+          "Estimado usuario, el servicio no fue aceptado, por lo tanto expiró. Intente nuevamente, o intente con otro Homer"
+        );
+      }
+
 
       await axios({
         method: "DELETE",
@@ -475,13 +479,15 @@ module.exports.ChangeOrders = async (req, res) => {
         }
       );
 
-      providers.forEach(function (t) {
-        sendNotificationProvider(
-          t.onesignal,
-          "Servicio expirado",
-          "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 10 minutos para su aceptación. Estad atento."
-        );
-      });
+      if(client){
+        providers.forEach(function (t) {
+          sendNotificationProvider(
+            t.onesignal,
+            "Servicio expirado",
+            "Un cliente ha solicitado tu servicio, sin embargo, ha expirado el tiempo de espera de 15 minutos para su aceptación. Estate atento."
+          );
+        });
+      }
     }
     res.status(200).json({ data: response });
   } catch (e) {
@@ -546,7 +552,7 @@ module.exports.changeState = async (req, res) => {
           sendNotificationProvider(
             t.onesignal,
             "Servicio expirado",
-            "Un cliente ha solicitado tu servicio, sin embargo, ya expirado el tiempo de espera de 15 minutos para su aceptación. Estad atento."
+            "Un cliente ha solicitado tu servicio, sin embargo, ha expirado el tiempo de espera de 15 minutos para su aceptación. Estate atento."
           );
         });
       });
