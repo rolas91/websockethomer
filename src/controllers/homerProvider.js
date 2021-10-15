@@ -407,8 +407,7 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
-    } else if (state === "pagado") {
-      console.log(state, order);
+    } else if (state === "pagado") {      
       response = await Order.update(
         { status: "pagado" },
         {
@@ -417,6 +416,28 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );   
+
+      let ordered = await Order.findOne({
+        where: { bookingId: order, status: "pagado" },
+      });
+
+      let providers = await sequelize.query(
+        `SELECT * FROM homerproviders as hp INNER JOIN                 
+                 productsproviders as pp on pp.providerId = hp.ui 
+                 where pp.ui = ${ordered.productUi} `,
+        {
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      providers.forEach(function (t) {
+        sendNotificationProvider(
+          t.onesignal,
+          "Servicio pagado",
+          "El cliente ha pagado el servicio."
+        );
+      });
+
     } else if (state === "iniciado") {      
       response = await Order.update(
         { status: "iniciado" },
@@ -452,8 +473,8 @@ module.exports.ChangeOrders = async (req, res) => {
       if(client){
         sendNotificationClient(
           ordered.onesignal,
-          "Servicio expirado",
-          "Estimado usuario, el servicio no fue aceptado, por lo tanto expiró. Intente nuevamente, o intente con otro Homer"
+          "Servicio cancelado",
+          "Estimado usuario, has cancelado el pago del servicio por tanto el servicio se ha cancelado"
         );
       }
 
@@ -483,8 +504,8 @@ module.exports.ChangeOrders = async (req, res) => {
         providers.forEach(function (t) {
           sendNotificationProvider(
             t.onesignal,
-            "Servicio expirado",
-            "Un cliente ha solicitado tu servicio, sin embargo, ha expirado el tiempo de espera de 15 minutos para su aceptación. Estate atento."
+            "Servicio cancelado",
+            "El cliente ha cancelado el pago del servicio por tanto no se ha completado."
           );
         });
       }
