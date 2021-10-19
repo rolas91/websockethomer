@@ -265,9 +265,8 @@ module.exports.createOrders = async (req, res) => {
       cart,
       bookingId,
     } = req.body;
-
-    console.log(date);
-
+    
+    
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     //     lat +
@@ -275,6 +274,7 @@ module.exports.createOrders = async (req, res) => {
     //     lng +
     //     "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
     // );
+
     const order = await Order.findOne({ where: { bookingId } });
     if (order) {
       res.status(200).json({
@@ -290,7 +290,7 @@ module.exports.createOrders = async (req, res) => {
       productUi: productUi,
       productName: productName,
       stateServiceId: stateServiceId,
-      date: date,
+      date: moment(date, "DD-MM-YYYY").format(),
       hour: hour,
       hour_end: hour_end,
       location: location,
@@ -396,7 +396,6 @@ module.exports.nearBy = async (req, res) => {
 module.exports.ChangeOrders = async (req, res) => {
   try {
     const { order, state, isCancel, client } = req.body;
-    console.log("cancelado por cliente",client);
     let response;
     if (state === "solicitado") {
       response = await Order.update(
@@ -407,7 +406,7 @@ module.exports.ChangeOrders = async (req, res) => {
           },
         }
       );
-    } else if (state === "pagado") {      
+    } else if (state === "pagado") {
       response = await Order.update(
         { status: "pagado" },
         {
@@ -415,7 +414,7 @@ module.exports.ChangeOrders = async (req, res) => {
             bookingId: order,
           },
         }
-      );   
+      );
 
       let ordered = await Order.findOne({
         where: { bookingId: order, status: "pagado" },
@@ -437,8 +436,7 @@ module.exports.ChangeOrders = async (req, res) => {
           "El cliente ha pagado el servicio."
         );
       });
-
-    } else if (state === "iniciado") {      
+    } else if (state === "iniciado") {
       response = await Order.update(
         { status: "iniciado" },
         {
@@ -470,14 +468,13 @@ module.exports.ChangeOrders = async (req, res) => {
         where: { bookingId: order, status: "cancelado" },
       });
 
-      if(client == true){
+      if (client == true) {
         sendNotificationClient(
           ordered.onesignal,
           "Servicio cancelado",
           "Estimado usuario, has cancelado el pago del servicio por tanto el servicio se ha cancelado"
         );
       }
-
 
       await axios({
         method: "DELETE",
@@ -500,7 +497,7 @@ module.exports.ChangeOrders = async (req, res) => {
         }
       );
 
-      if(client == true){
+      if (client == true) {
         providers.forEach(function (t) {
           sendNotificationProvider(
             t.onesignal,
