@@ -126,13 +126,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("getordersbyclients", (data) => {
-    socket.userId = data.id;
     socket.join(`${data.id}`);
     setInterval(() => {      
-      homerProvider.getOrderByClient(socket.userId).then((result) => {        
+      homerProvider.getOrderByClient( data.id).then((result) => {        
         io.to(`${data.id}`).emit("getordersbyclients", result);
       });
-    }, 2000);
+    }, 1000);
   });
 
   socket.on("validaactiveprovider", (data) => {

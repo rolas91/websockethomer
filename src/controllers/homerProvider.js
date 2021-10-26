@@ -265,8 +265,7 @@ module.exports.createOrders = async (req, res) => {
       cart,
       bookingId,
     } = req.body;
-    
-    
+
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     //     lat +
@@ -274,6 +273,8 @@ module.exports.createOrders = async (req, res) => {
     //     lng +
     //     "&key=AIzaSyBofvEOcrzbxSfBA7LTFSypr5SX3TT94Dk&sensor=false"
     // );
+
+    // console.log(googleInfo);
 
     const order = await Order.findOne({ where: { bookingId } });
     if (order) {
