@@ -74,7 +74,7 @@ module.exports.updateOrder = async (orderId) => {
       status: "cancelado",
       isCount: true,
       isCountNow: false,
-      isCancel: "Se ha cancelado por que tu homer no acepto la solicitud",
+      isCancel: "Se ha cancelado por que tu Homer no acepto la solicitud",
     },
     {
       where: {
