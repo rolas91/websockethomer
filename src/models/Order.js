@@ -63,6 +63,12 @@ const RequestClient = sequelize.define(
     lng: {
       type: Sequelize.STRING,
     },
+    notes:{
+      type:Sequelize.TEXT,
+    },
+    categories:{
+      type: Sequelize.TEXT,
+    },
     onesignal: {
       type: Sequelize.TEXT,
     },
