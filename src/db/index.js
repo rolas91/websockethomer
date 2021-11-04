@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DB, process.env.USERDB, process.env.PASSWORDDB, {
     host: process.env.Host,
-    dialect:'mysql',/* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
+    dialect:'mysql',
     "logging": false,
     pool:{
         max:5,

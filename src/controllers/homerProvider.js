@@ -263,6 +263,7 @@ module.exports.createOrders = async (req, res) => {
       lng,
       note,
       onesignal,
+      categories,
       cart,
       bookingId,
     } = req.body;
@@ -298,7 +299,8 @@ module.exports.createOrders = async (req, res) => {
       location: location,
       lat: lat,
       lng: lng,
-      notes:note,
+      notes: note,
+      categories,
       onesignal,
       cart,
       bookingId,
