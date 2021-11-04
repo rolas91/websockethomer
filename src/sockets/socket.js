@@ -121,11 +121,12 @@ io.on("connection", (socket) => {
     setInterval(() => {
       homerProvider.getOrderByProvider(data.id).then((result) => {
         let o = result.map((order) => {
-          return order
+          order.categories = JSON.parse(order.categories);
+          return order;
         })
         console.log(o);
         // result.categories = JSON.parse(result.categories);
-        io.to(`${data.id}`).emit("getordersbyproviders", result);
+        io.to(`${data.id}`).emit("getordersbyproviders", o);
       });
     }, 1000);
   });
