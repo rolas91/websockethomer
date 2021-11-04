@@ -120,13 +120,11 @@ io.on("connection", (socket) => {
     socket.join(`${data.id}`);
     setInterval(() => {
       homerProvider.getOrderByProvider(data.id).then((result) => {
-        let o = result.map((order) => {
+        let orders = result.map((order) => {
           order.categories = JSON.parse(order.categories);
           return order;
-        })
-        console.log(o);
-        // result.categories = JSON.parse(result.categories);
-        io.to(`${data.id}`).emit("getordersbyproviders", o);
+        })                
+        io.to(`${data.id}`).emit("getordersbyproviders", orders);
       });
     }, 1000);
   });
@@ -135,8 +133,11 @@ io.on("connection", (socket) => {
     socket.join(`${data.id}`);
     setInterval(() => {      
       homerProvider.getOrderByClient( data.id).then((result) => {    
-        // result.categories = JSON.parse(result.categories);    
-        io.to(`${data.id}`).emit("getordersbyclients", result);
+        let orders = result.map((order) => {
+          order.categories = JSON.parse(order.categories);
+          return order;
+        })       
+        io.to(`${data.id}`).emit("getordersbyclients", orders);
       });
     }, 1000);
   });
