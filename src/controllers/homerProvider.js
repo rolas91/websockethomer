@@ -267,7 +267,7 @@ module.exports.createOrders = async (req, res) => {
       cart,
       bookingId,
     } = req.body;
-
+    console.log("categorias",categories);
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     //     lat +
