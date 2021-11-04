@@ -120,7 +120,7 @@ io.on("connection", (socket) => {
     socket.join(`${data.id}`);
     setInterval(() => {
       homerProvider.getOrderByProvider(data.id).then((result) => {
-        console.log(result.categories);
+        console.log(result);
         // result.categories = JSON.parse(result.categories);
         io.to(`${data.id}`).emit("getordersbyproviders", result);
       });
