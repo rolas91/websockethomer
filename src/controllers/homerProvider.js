@@ -326,7 +326,7 @@ module.exports.getOrderByProvider = async (provider) => {
     return await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.id, orders.clientUi, orders.nameClient,orders.productUi, orders.productName,
       orders.status,orders.isCancel,orders.isCount,orders.isCountNow,orders.date, time_format(orders.hour, '%H:%i') as hour,  time_format(orders.hour_end, '%H:%i') as hour_end ,orders.location,orders.lat,orders.lng,
-      orders.onesignal,orders.countDown,orders.cart,orders.bookingId FROM orders INNER JOIN
+      orders.onesignal,orders.countDown,orders.cart,orders.bookingId, orders.notes, orders.categories FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
              where productsproviders.providerId = ${provider} and (orders.status = 1 or orders.status = 2 or orders.status = 3 or orders.status = 4 ) order by orders.id DESC`,
       {
@@ -345,7 +345,7 @@ module.exports.getOrderCancelByProvider = async (req, res) => {
     let response = await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.id, orders.clientUi, orders.nameClient,orders.productUi, orders.productName,
       orders.status,orders.isCancel,orders.isCount,orders.isCountNow,orders.date, time_format(orders.hour, '%H:%i') as hour,  time_format(orders.hour_end, '%H:%i') as hour_end, orders.location,orders.lat,orders.lng,
-      orders.onesignal,orders.countDown,orders.cart,orders.bookingId FROM orders INNER JOIN
+      orders.onesignal,orders.countDown,orders.cart,orders.bookingId, orders.notes, orders.categories FROM orders INNER JOIN
              productsproviders on productsproviders.ui = orders.productUi
              where productsproviders.providerId = ${req.body.provider} and (orders.status = 5 or orders.status = 6 or orders.status = 7) order by orders.id DESC`,
       {
