@@ -300,7 +300,7 @@ module.exports.createOrders = async (req, res) => {
       lat: lat,
       lng: lng,
       notes: notes,
-      categories,
+      categories:JSON.stringify(categories),
       onesignal,
       cart,
       bookingId,
