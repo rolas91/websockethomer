@@ -47,7 +47,7 @@ app.use("/api/v1", router);
 
 const server = app.listen(port, () => {
   sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
       console.log("conexion exitosa a la base de datos");
     })
