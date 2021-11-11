@@ -363,7 +363,7 @@ module.exports.getOrderByClient = async (client) => {
     return await sequelize.query(
       `SELECT DISTINCT(productsproviders.providerId), orders.id, orders.clientUi, orders.nameClient,orders.productUi, orders.productName,
       orders.status,orders.isCancel,orders.isCount,orders.isCountNow,orders.date, time_format(orders.hour, '%H:%i') as hour,  time_format(orders.hour_end, '%H:%i') as hour_end , orders.location,orders.lat,orders.lng,
-      orders.onesignal,orders.countDown,orders.cart,orders.bookingId, homerproviders.onesignal,  orders.notes, orders.categories  FROM orders INNER JOIN
+      orders.onesignal,orders.countDown,orders.cart,orders.bookingId, homerproviders.onesignal,  orders.notes, orders.categories, orders.isRating  FROM orders INNER JOIN
             productsproviders on productsproviders.ui = orders.productUi INNER JOIN homerproviders on homerproviders.ui = productsproviders.providerId 
             where orders.clientUi = ${client} order by orders.id DESC`,
       {
