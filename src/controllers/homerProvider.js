@@ -634,6 +634,7 @@ module.exports.rating = async (req, res) => {
       { isRating: true },
       { where: { bookingId: req.body.booking } }
     );
+    console.log((updated[0]));
     if(updated[0] == 1){
       res.status(200).json({ code: "success"});
     }else{
