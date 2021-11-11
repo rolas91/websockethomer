@@ -267,7 +267,7 @@ module.exports.createOrders = async (req, res) => {
       cart,
       bookingId,
     } = req.body;
-    console.log("categorias",categories, notes);
+    console.log("categorias", categories, notes);
     // let googleInfo = await axios.get(
     //   "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     //     lat +
@@ -300,7 +300,7 @@ module.exports.createOrders = async (req, res) => {
       lat: lat,
       lng: lng,
       notes: notes,
-      categories:JSON.stringify(categories),
+      categories: JSON.stringify(categories),
       onesignal,
       cart,
       bookingId,
@@ -625,5 +625,17 @@ module.exports.verifyStatusForPay = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+  }
+};
+
+module.exports.rating = async (req, res) => {
+  try {
+    const updated = await Order.update(
+      { isRating: true },
+      { where: { bookingId: req.body.booking } }
+    );
+    console.log(updated);
+  } catch (error) {
+    console.log(error);
   }
 };

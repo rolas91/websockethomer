@@ -11,6 +11,7 @@ const {
   verifyStatus,
   verifyStatusForPay,
   createProvider,
+  rating
 } = require("../controllers/homerProvider");
 
 router.post("/test", (req, res) => {
@@ -26,5 +27,6 @@ router.post("/provider/create-new", createProvider);
 router.post("/provider/getonesignal", providerOneSignal);
 router.post("/provider/verify-order-status", verifyStatus);
 router.post("/provider/verify-order-forpay", verifyStatusForPay);
+router.post("/orders/rating-service", rating);
 
 module.exports = router;

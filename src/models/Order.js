@@ -69,6 +69,10 @@ const RequestClient = sequelize.define(
     categories:{
       type: Sequelize.TEXT,
     },
+    isRating:{
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
     onesignal: {
       type: Sequelize.TEXT,
     },
